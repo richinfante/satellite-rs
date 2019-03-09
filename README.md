@@ -2,12 +2,14 @@
 
 A port of [sattelite-js](https://github.com/shashwatak/satellite-js) to rust.
 
-Currently unstable, and unsuitable for production use.
+Currently unstable, and unsuitable for production use. Zero dependencies.
 
 Known Issues:
 - Deep-space calculations appear to be slightly off. Cause is currently unknown
+- Many portions are currently untested.
 
 Todo List:
+- Refactor code to allow for easier testing
 - Add tests for remaining modules to ensure proper port
   - [ ] constants.rs
   - [ ] ext.rs

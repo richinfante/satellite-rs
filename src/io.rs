@@ -250,16 +250,16 @@ pub fn twoline2satrec(str1: &str, str2: &str) -> Satrec {
 pub fn parse_satrec(str1: &str, str2: &str) -> Satrec {
     let tumin = tumin();
 
-    let xpdotp: f64 = 1440.0 / (2.0 * std::f64::consts::PI);
+    const XPDOTP: f64 = 1440.0 / (2.0 * std::f64::consts::PI);
 
     let satnum = str1[2..7].trim();
     let epochyr = str1[18..20].trim().parse::<i64>().unwrap();
     let epochdays = str1[20..32].trim().parse::<f64>().unwrap();
-    let ndot = str1[33..43].trim().parse::<f64>().unwrap() / (xpdotp * 1440.0);
+    let ndot = str1[33..43].trim().parse::<f64>().unwrap() / (XPDOTP * 1440.0);
     let nddot_0 = str1[44..50].trim().parse::<i64>().unwrap();
     let nddot_1 = str1[50..52].to_string();
     let nddot =
-        format!(".{}E{}", nddot_0, nddot_1).parse::<f64>().unwrap() / (xpdotp * 1440.0 * 1440.0);
+        format!(".{}E{}", nddot_0, nddot_1).parse::<f64>().unwrap() / (XPDOTP * 1440.0 * 1440.0);
     let bstar_0 = str1[53..54].to_string();
     let bstar_1 = str1[54..59].trim().parse::<i64>().unwrap();
     let bstar_2 = str1[59..61].to_string();
@@ -275,7 +275,7 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Satrec {
         .unwrap();
     let argpo = str2[34..42].trim().parse::<f64>().unwrap() * DEG_2_RAD;
     let mo = str2[43..51].trim().parse::<f64>().unwrap() * DEG_2_RAD;
-    let no = str2[52..63].trim().parse::<f64>().unwrap() / xpdotp;
+    let no = str2[52..63].trim().parse::<f64>().unwrap() / XPDOTP;
 
     let a = (no * tumin).powf(-2.0 / 3.0);
 
