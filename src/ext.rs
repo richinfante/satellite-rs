@@ -1,9 +1,9 @@
 pub struct MDHMS {
-  pub month: f64,
-  pub day: f64,
-  pub hour: f64,
-  pub minute: f64,
-  pub second: f64
+    pub month: f64,
+    pub day: f64,
+    pub hour: f64,
+    pub minute: f64,
+    pub second: f64,
 }
 
 /* -----------------------------------------------------------------------------
@@ -43,37 +43,42 @@ pub struct MDHMS {
  *    none.
  * --------------------------------------------------------------------------- */
 pub fn days2mdhms(year: u64, days: f64) -> MDHMS {
-  let mut lmonth : [u64; 12] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  if year % 4 == 0 {
-    lmonth[1] = 29
-  }
+    let mut lmonth: [u64; 12] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if year % 4 == 0 {
+        lmonth[1] = 29
+    }
 
-  let dayofyr = days.floor() as u64;
+    let dayofyr = days.floor() as u64;
 
-  let mut i : u64 = 1;
-  let mut inttemp : u64 = 0;
+    let mut i: u64 = 1;
+    let mut inttemp: u64 = 0;
 
-  while dayofyr > (inttemp + lmonth[(i - 1) as usize]) && i < 12 {
-    inttemp += lmonth[(i - 1) as usize];
-    i += 1;
-  }
+    while dayofyr > (inttemp + lmonth[(i - 1) as usize]) && i < 12 {
+        inttemp += lmonth[(i - 1) as usize];
+        i += 1;
+    }
 
-  let month = i as f64;
-  let day = (dayofyr - inttemp) as f64;
-  let mut temp = (days - dayofyr as f64) * 24.0;
-  let hour = temp.floor();
-  temp = (temp - hour as f64) * 60.0;
-  let minute = temp.floor();
-  let second = ((temp - minute as f64) * 60.0);
+    let month = i as f64;
+    let day = (dayofyr - inttemp) as f64;
+    let mut temp = (days - dayofyr as f64) * 24.0;
+    let hour = temp.floor();
+    temp = (temp - hour as f64) * 60.0;
+    let minute = temp.floor();
+    let second = ((temp - minute as f64) * 60.0);
 
-  MDHMS {
-    month, hour, day, minute, second
-  }
+    MDHMS {
+        month,
+        hour,
+        day,
+        minute,
+        second,
+    }
 }
 
 pub fn jday(year: f64, mon: f64, day: f64, hr: f64, minute: f64, sec: f64, msec: f64) -> f64 {
-  ((367.0 * year) - ((7.0 * (year + ((mon + 9.0) / 12.0).floor())) * 0.25).floor())
-    + ((275.0 * mon) / 9.0).floor()
-    + day + 1721013.5
-    + (((((msec / 60000.0) + (sec / 60.0) + minute) / 60.0) + hr) / 24.0) // ut in days
+    ((367.0 * year) - ((7.0 * (year + ((mon + 9.0) / 12.0).floor())) * 0.25).floor())
+        + ((275.0 * mon) / 9.0).floor()
+        + day
+        + 1721013.5
+        + (((((msec / 60000.0) + (sec / 60.0) + minute) / 60.0) + hr) / 24.0) // ut in days
 }
