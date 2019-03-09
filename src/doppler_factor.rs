@@ -21,5 +21,5 @@ pub fn doppler_factor(location: Vec3, position: Vec3, velocity: Vec3) -> f64 {
     // TODO: is this simply abs()
     range_rate *= sign(range_rate);
 
-    return (1.0 + (range_rate / C));
+    return 1.0 + (range_rate / C);
 }

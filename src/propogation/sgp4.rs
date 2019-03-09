@@ -105,29 +105,29 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
     let mut sineo1 = 0.0;
     let mut cosip;
     let mut sinip;
-    let mut cosisq;
-    let mut delm;
-    let mut delomg;
+    let cosisq;
+    let delm;
+    let delomg;
     let mut eo1;
     let mut argpm;
-    let mut argpp;
+    let argpp;
     let mut su;
-    let mut t3;
-    let mut t4;
-    let mut tc;
+    let t3;
+    let t4;
+    let tc;
     let mut tem5: f64;
     let mut temp;
     let mut tempa;
     let mut tempe;
     let mut templ;
-    let mut inclm;
+    let inclm;
     let mut mm;
     let mut nm;
     let mut nodem;
     let mut xincp;
     let mut xlm;
-    let mut mp;
-    let mut nodep;
+    let mp;
+    let nodep;
 
     /* ------------------ set mathematical constants --------------- */
     // sgp4fix divisor for divide by zero check on inclination
@@ -216,17 +216,17 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
         let dspaceResult = crate::propogation::dspace::dspace(dspaceOptions);
 
         let crate::propogation::dspace::DspaceResult {
-            argpm,
-            inclm,
-            mm,
-            nodem,
-            nm,
+            argpm: _,
+            inclm: _,
+            mm: _,
+            nodem: _,
+            nm: _,
             ..
         } = dspaceResult;
         em = dspaceResult.em;
     }
 
-    if (nm <= 0.0) {
+    if nm <= 0.0 {
         // printf("// error nm %f\n", nm);
         satrec.error = 2;
         // sgp4fix add return
@@ -240,7 +240,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
 
     // fix tolerance for error recognition
     // sgp4fix am is fixed from the previous nm check
-    if (em >= 1.0 || em < -0.001) {
+    if em >= 1.0 || em < -0.001 {
         // || (am < 0.95)
         // printf("// error em %f\n", em);
         satrec.error = 1;
@@ -250,7 +250,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
     }
 
     //  sgp4fix fix tolerance to avoid a divide by zero
-    if (em < 1.0e-6) {
+    if em < 1.0e-6 {
         em = 1.0e-6;
     }
     mm += satrec.no * templ;
@@ -290,7 +290,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
             ep,
             mut nodep,
             mut argpp,
-            mp,
+            mp: _,
             ..
         } = dpperResult;
 
@@ -358,7 +358,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
     let esine = (axnl * sineo1) - (aynl * coseo1);
     let el2 = (axnl * axnl) + (aynl * aynl);
     let pl = am * (1.0 - el2);
-    if (pl < 0.0) {
+    if pl < 0.0 {
         //  printf("// error pl %f\n", pl);
         satrec.error = 4;
         //  sgp4fix add return
@@ -425,7 +425,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
     };
 
     // sgp4fix for decaying satellites
-    if (mrt < 1.0) {
+    if mrt < 1.0 {
         // printf("// decay condition %11.6f \n",mrt);
         satrec.error = 6;
         // return {

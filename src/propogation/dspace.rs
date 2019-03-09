@@ -182,10 +182,10 @@ pub fn dspace(options: DspaceOptions) -> DspaceResult {
     const stepn: f64 = -720.0;
     const step2: f64 = 259200.0;
 
-    let mut delt;
+    let delt;
     let mut x2li;
     let mut x2omi;
-    let mut xl;
+    let xl;
     let mut xldot = 0.0;
     let mut xnddt = 0.0;
     let mut xndt = 0.0;
@@ -228,7 +228,7 @@ pub fn dspace(options: DspaceOptions) -> DspaceResult {
         }
 
         // sgp4fix move check outside loop
-        if (t > 0.0) {
+        if t > 0.0 {
             delt = stepp;
         } else {
             delt = stepn;

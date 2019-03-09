@@ -189,46 +189,46 @@ pub struct DinitResult {
 ----------------------------------------------------------------------------*/
 
 pub fn dsinit(options: DsinitOptions) -> DinitResult {
-    let mut cosim = options.cosim;
-    let mut argpo = options.argpo;
-    let mut s1 = options.s1;
-    let mut s2 = options.s2;
-    let mut s3 = options.s3;
-    let mut s4 = options.s4;
-    let mut s5 = options.s5;
-    let mut sinim = options.sinim;
-    let mut ss1 = options.ss1;
-    let mut ss2 = options.ss2;
-    let mut ss3 = options.ss3;
-    let mut ss4 = options.ss4;
-    let mut ss5 = options.ss5;
-    let mut sz1 = options.sz1;
-    let mut sz3 = options.sz3;
-    let mut sz11 = options.sz11;
-    let mut sz13 = options.sz13;
-    let mut sz21 = options.sz21;
-    let mut sz23 = options.sz23;
-    let mut sz31 = options.sz31;
-    let mut sz33 = options.sz33;
-    let mut t = options.t;
-    let mut tc = options.tc;
-    let mut gsto = options.gsto;
-    let mut mo = options.mo;
-    let mut mdot = options.mdot;
-    let mut no = options.no;
-    let mut nodeo = options.nodeo;
-    let mut nodedot = options.nodedot;
-    let mut xpidot = options.xpidot;
-    let mut z1 = options.z1;
-    let mut z3 = options.z3;
-    let mut z11 = options.z11;
-    let mut z13 = options.z13;
-    let mut z21 = options.z21;
-    let mut z23 = options.z23;
-    let mut z31 = options.z31;
-    let mut z33 = options.z33;
-    let mut ecco = options.ecco;
-    let mut eccsq = options.eccsq;
+    let cosim = options.cosim;
+    let argpo = options.argpo;
+    let s1 = options.s1;
+    let s2 = options.s2;
+    let s3 = options.s3;
+    let s4 = options.s4;
+    let s5 = options.s5;
+    let sinim = options.sinim;
+    let ss1 = options.ss1;
+    let ss2 = options.ss2;
+    let ss3 = options.ss3;
+    let ss4 = options.ss4;
+    let ss5 = options.ss5;
+    let sz1 = options.sz1;
+    let sz3 = options.sz3;
+    let sz11 = options.sz11;
+    let sz13 = options.sz13;
+    let sz21 = options.sz21;
+    let sz23 = options.sz23;
+    let sz31 = options.sz31;
+    let sz33 = options.sz33;
+    let t = options.t;
+    let tc = options.tc;
+    let gsto = options.gsto;
+    let mo = options.mo;
+    let mdot = options.mdot;
+    let no = options.no;
+    let nodeo = options.nodeo;
+    let nodedot = options.nodedot;
+    let xpidot = options.xpidot;
+    let z1 = options.z1;
+    let z3 = options.z3;
+    let z11 = options.z11;
+    let z13 = options.z13;
+    let z21 = options.z21;
+    let z23 = options.z23;
+    let z31 = options.z31;
+    let z33 = options.z33;
+    let ecco = options.ecco;
+    let eccsq = options.eccsq;
     let mut emsq = options.emsq;
     let mut em = options.em;
     let mut argpm = options.argpm;
@@ -262,37 +262,37 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     let mut xli = options.xli;
 
     let mut f220: f64;
-    let mut f221: f64;
-    let mut f311: f64;
-    let mut f321: f64;
-    let mut f322: f64;
+    let f221: f64;
+    let f311: f64;
+    let f321: f64;
+    let f322: f64;
     let mut f330: f64;
-    let mut f441: f64;
-    let mut f442: f64;
-    let mut f522: f64;
-    let mut f523: f64;
-    let mut f542: f64;
-    let mut f543: f64;
-    let mut g200: f64;
-    let mut g201: f64;
-    let mut g211: f64;
-    let mut g300: f64;
+    let f441: f64;
+    let f442: f64;
+    let f522: f64;
+    let f523: f64;
+    let f542: f64;
+    let f543: f64;
+    let g200: f64;
+    let g201: f64;
+    let g211: f64;
+    let g300: f64;
     let mut g310: f64;
-    let mut g322: f64;
-    let mut g410: f64;
-    let mut g422: f64;
-    let mut g520: f64;
-    let mut g521: f64;
-    let mut g532: f64;
-    let mut g533: f64;
-    let mut sini2: f64;
+    let g322: f64;
+    let g410: f64;
+    let g422: f64;
+    let g520: f64;
+    let g521: f64;
+    let g532: f64;
+    let g533: f64;
+    let sini2: f64;
     let mut temp: f64;
     let mut temp1: f64;
-    let mut xno2: f64;
-    let mut ainv2: f64;
-    let mut aonv: f64;
-    let mut cosisq: f64;
-    let mut eoc: f64;
+    let xno2: f64;
+    let ainv2: f64;
+    let aonv: f64;
+    let cosisq: f64;
+    let eoc: f64;
 
     const q22: f64 = 1.7891679e-6;
     const q31: f64 = 2.1460748e-6;
@@ -326,7 +326,7 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     if inclm < 5.2359877e-2 || inclm > PI - 5.2359877e-2 {
         shs = 0.0;
     }
-    if (sinim != 0.0) {
+    if sinim != 0.0 {
         shs /= sinim;
     }
     let sgs = sghs - (cosim * shs);
@@ -394,13 +394,13 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
                 g322 = ((-342.585 + (1554.908 * em)) - (2366.899 * emsq)) + (1215.972 * eoc);
                 g410 = ((-1052.797 + (4758.686 * em)) - (7193.992 * emsq)) + (3651.957 * eoc);
                 g422 = ((-3581.690 + (16178.110 * em)) - (24462.770 * emsq)) + (12422.520 * eoc);
-                if (em > 0.715) {
+                if em > 0.715 {
                     g520 = ((-5149.66 + (29936.92 * em)) - (54087.36 * emsq)) + (31324.56 * eoc);
                 } else {
                     g520 = (1464.74 - (4664.75 * em)) + (3763.64 * emsq);
                 }
             }
-            if (em < 0.7) {
+            if em < 0.7 {
                 g533 = ((-919.22770 + (4988.6100 * em)) - (9064.7700 * emsq)) + (5542.21 * eoc);
                 g521 = ((-822.71072 + (4568.6173 * em)) - (8491.4146 * emsq)) + (5337.524 * eoc);
                 g532 = ((-853.66600 + (4690.2500 * em)) - (8624.7700 * emsq)) + (5341.4 * eoc);

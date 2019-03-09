@@ -117,62 +117,62 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
         xnodeo,
     } = options;
 
-    let mut cosim: f64;
-    let mut sinim: f64;
-    let mut cc1sq;
-    let mut cc2;
+    let mut _cosim: f64;
+    let mut _sinim: f64;
+    let cc1sq;
+    let cc2;
     let mut cc3;
-    let mut coef;
-    let mut coef1;
-    let mut cosio4;
-    let mut em: f64;
-    let mut emsq: f64;
-    let mut eeta;
-    let mut etasq;
-    let mut argpm;
-    let mut nodem;
-    let mut inclm;
-    let mut mm;
-    let mut nm: f64;
-    let mut perige;
-    let mut pinvsq;
-    let mut psisq;
+    let coef;
+    let coef1;
+    let cosio4;
+    let mut _em: f64;
+    let mut _emsq: f64;
+    let eeta;
+    let etasq;
+    let argpm;
+    let nodem;
+    let inclm;
+    let mm;
+    let mut _nm: f64;
+    let perige;
+    let pinvsq;
+    let psisq;
     let mut qzms24;
-    let mut s1: f64;
-    let mut s2: f64;
-    let mut s3: f64;
-    let mut s4: f64;
-    let mut s5: f64;
+    let mut _s1: f64;
+    let mut _s2: f64;
+    let mut _s3: f64;
+    let mut _s4: f64;
+    let mut _s5: f64;
     let mut sfour;
-    let mut ss1: f64;
-    let mut ss2: f64;
-    let mut ss3: f64;
-    let mut ss4: f64;
-    let mut ss5: f64;
-    let mut sz1: f64;
-    let mut sz3: f64;
-    let mut sz11: f64;
-    let mut sz13: f64;
-    let mut sz21: f64;
-    let mut sz23: f64;
-    let mut sz31: f64;
-    let mut sz33: f64;
-    let mut tc;
-    let mut temp;
-    let mut temp1;
-    let mut temp2;
-    let mut temp3;
-    let mut tsi;
-    let mut xpidot;
-    let mut xhdot1;
-    let mut z1: f64;
-    let mut z3: f64;
-    let mut z11: f64;
-    let mut z13: f64;
-    let mut z21: f64;
-    let mut z23: f64;
-    let mut z31: f64;
-    let mut z33: f64;
+    let mut _ss1: f64;
+    let mut _ss2: f64;
+    let mut _ss3: f64;
+    let mut _ss4: f64;
+    let mut _ss5: f64;
+    let mut _sz1: f64;
+    let mut _sz3: f64;
+    let mut _sz11: f64;
+    let mut _sz13: f64;
+    let mut _sz21: f64;
+    let mut _sz23: f64;
+    let mut _sz31: f64;
+    let mut _sz33: f64;
+    let tc;
+    let temp;
+    let temp1;
+    let temp2;
+    let temp3;
+    let tsi;
+    let xpidot;
+    let xhdot1;
+    let mut _z1: f64;
+    let mut _z3: f64;
+    let mut _z11: f64;
+    let mut _z13: f64;
+    let mut _z21: f64;
+    let mut _z23: f64;
+    let mut _z31: f64;
+    let mut _z33: f64;
 
     /* ------------------------ initialization --------------------- */
     // sgp4fix divisor for divide by zero check on inclination
@@ -347,9 +347,9 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
         perige = (rp - 1.0) * EARTH_RADIUS;
 
         // - for perigees below 156 km, s and qoms2t are altered -
-        if (perige < 156.0) {
+        if perige < 156.0 {
             sfour = perige - 78.0;
-            if (perige < 98.0) {
+            if perige < 98.0 {
                 sfour = 20.0;
             }
 
@@ -432,7 +432,7 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
         satrec.x7thm1 = (7.0 * cosio2) - 1.0;
 
         // --------------- deep space initialization -------------
-        if (TWO_PI / satrec.no >= 225.0) {
+        if TWO_PI / satrec.no >= 225.0 {
             satrec.method = InitlMethod::D;
             satrec.isimp = 1;
             tc = 0.0;
@@ -698,7 +698,7 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
         }
 
         // ----------- set variables if not deep space -----------
-        if (satrec.isimp != 1) {
+        if satrec.isimp != 1 {
             cc1sq = satrec.cc1 * satrec.cc1;
             satrec.d2 = 4.0 * ao * tsi * cc1sq;
             temp = (satrec.d2 * tsi * satrec.cc1) / 3.0;

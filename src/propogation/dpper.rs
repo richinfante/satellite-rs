@@ -102,51 +102,51 @@ pub struct DpperOptions {
 *    vallado, crawford, hujsak, kelso  2006
 ----------------------------------------------------------------------------*/
 pub fn dpper(satrec: &Satrec, options: DpperOptions) -> DpperResult {
-    let mut e3 = satrec.e3;
-    let mut ee2 = satrec.ee2;
-    let mut peo = satrec.peo;
-    let mut pgho = satrec.pgho;
-    let mut pho = satrec.pho;
-    let mut pinco = satrec.pinco;
-    let mut plo = satrec.plo;
-    let mut se2 = satrec.se2;
-    let mut se3 = satrec.se3;
-    let mut sgh2 = satrec.sgh2;
-    let mut sgh3 = satrec.sgh3;
-    let mut sgh4 = satrec.sgh4;
-    let mut sh2 = satrec.sh2;
-    let mut sh3 = satrec.sh3;
-    let mut si2 = satrec.si2;
-    let mut si3 = satrec.si3;
-    let mut sl2 = satrec.sl2;
-    let mut sl3 = satrec.sl3;
-    let mut sl4 = satrec.sl4;
-    let mut t = satrec.t;
-    let mut xgh2 = satrec.xgh2;
-    let mut xgh3 = satrec.xgh3;
-    let mut xgh4 = satrec.xgh4;
-    let mut xh2 = satrec.xh2;
-    let mut xh3 = satrec.xh3;
-    let mut xi2 = satrec.xi2;
-    let mut xi3 = satrec.xi3;
-    let mut xl2 = satrec.xl2;
-    let mut xl3 = satrec.xl3;
-    let mut xl4 = satrec.xl4;
-    let mut zmol = satrec.zmol;
-    let mut zmos = satrec.zmos;
+    let e3 = satrec.e3;
+    let ee2 = satrec.ee2;
+    let peo = satrec.peo;
+    let pgho = satrec.pgho;
+    let pho = satrec.pho;
+    let pinco = satrec.pinco;
+    let plo = satrec.plo;
+    let se2 = satrec.se2;
+    let se3 = satrec.se3;
+    let sgh2 = satrec.sgh2;
+    let sgh3 = satrec.sgh3;
+    let sgh4 = satrec.sgh4;
+    let sh2 = satrec.sh2;
+    let sh3 = satrec.sh3;
+    let si2 = satrec.si2;
+    let si3 = satrec.si3;
+    let sl2 = satrec.sl2;
+    let sl3 = satrec.sl3;
+    let sl4 = satrec.sl4;
+    let t = satrec.t;
+    let xgh2 = satrec.xgh2;
+    let xgh3 = satrec.xgh3;
+    let xgh4 = satrec.xgh4;
+    let xh2 = satrec.xh2;
+    let xh3 = satrec.xh3;
+    let xi2 = satrec.xi2;
+    let xi3 = satrec.xi3;
+    let xl2 = satrec.xl2;
+    let xl3 = satrec.xl3;
+    let xl4 = satrec.xl4;
+    let zmol = satrec.zmol;
+    let zmos = satrec.zmos;
 
     // Copy satellite attributes into local variables for convenience
     // and symmetry in writing formulae.
 
     let mut alfdp;
     let mut betdp;
-    let mut cosip;
-    let mut sinip;
-    let mut cosop;
-    let mut sinop;
-    let mut dalf;
-    let mut dbet;
-    let mut dls;
+    let cosip;
+    let sinip;
+    let cosop;
+    let sinop;
+    let dalf;
+    let dbet;
+    let dls;
     let mut f2;
     let mut f3;
     let mut pe;
@@ -156,12 +156,12 @@ pub fn dpper(satrec: &Satrec, options: DpperOptions) -> DpperResult {
     let mut pl;
     let mut sinzf;
     let mut xls;
-    let mut xnoh;
+    let xnoh;
     let mut zf;
     let mut zm;
 
-    let mut init = options.init;
-    let mut opsmode = options.opsmode;
+    let init = options.init;
+    let opsmode = options.opsmode;
     let mut ep = options.ep;
     let mut inclp = options.inclp;
     let mut nodep = options.nodep;

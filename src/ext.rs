@@ -64,7 +64,7 @@ pub fn days2mdhms(year: u64, days: f64) -> MDHMS {
     let hour = temp.floor();
     temp = (temp - hour as f64) * 60.0;
     let minute = temp.floor();
-    let second = ((temp - minute as f64) * 60.0);
+    let second = (temp - minute as f64) * 60.0;
 
     MDHMS {
         month,

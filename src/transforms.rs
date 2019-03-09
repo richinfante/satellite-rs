@@ -13,7 +13,7 @@ pub fn degrees_to_radians(degrees: f64) -> f64 {
 }
 
 pub fn degrees_lat(radians: f64) -> f64 {
-    if (radians < -std::f64::consts::FRAC_PI_2 || radians > std::f64::consts::FRAC_PI_2) {
+    if radians < -std::f64::consts::FRAC_PI_2 || radians > std::f64::consts::FRAC_PI_2 {
         panic!("Range error: Latitude radians must be in range [-pi/2; pi/2].")
     }
 
@@ -21,7 +21,7 @@ pub fn degrees_lat(radians: f64) -> f64 {
 }
 
 pub fn degrees_long(radians: f64) -> f64 {
-    if (radians < -std::f64::consts::PI || radians > std::f64::consts::PI) {
+    if radians < -std::f64::consts::PI || radians > std::f64::consts::PI {
         panic!("Range error: Longitude radians must be in range [-pi; pi].")
     }
 
@@ -29,7 +29,7 @@ pub fn degrees_long(radians: f64) -> f64 {
 }
 
 pub fn radians_lat(degrees: f64) -> f64 {
-    if (degrees < -90.0 || degrees > 90.0) {
+    if degrees < -90.0 || degrees > 90.0 {
         panic!("RangeError: Latitude degrees must be in range [-90; 90].")
     }
 
@@ -37,7 +37,7 @@ pub fn radians_lat(degrees: f64) -> f64 {
 }
 
 pub fn radians_long(degrees: f64) -> f64 {
-    if (degrees < -180.0 || degrees > 180.0) {
+    if degrees < -180.0 || degrees > 180.0 {
         panic!("RangeError: Latitude degrees must be in range [-180; 180].")
     }
 
