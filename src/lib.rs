@@ -7,37 +7,37 @@ pub mod transforms;
 
 #[derive(Debug, PartialEq)]
 pub struct Vec3 {
-    x: f64,
-    y: f64,
-    z: f64,
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct TopoCentric {
     /// Positive horizontal vector S due south.
-    top_s: f64,
+    pub top_s: f64,
 
     /// Positive horizontal vector E due east.
-    top_e: f64,
+    pub top_e: f64,
 
     /// Vector Z normal to the surface of the earth (up).
-    top_z: f64,
+    pub top_z: f64,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct Geodedic {
-    longitude: f64,
-    latitude: f64,
-    height: f64,
+    pub longitude: f64,
+    pub latitude: f64,
+    pub height: f64,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct Bearing {
-    aizmuth: f64,
-    elevation: f64,
+    pub aizmuth: f64,
+    pub elevation: f64,
 
     // Range in km
-    range: f64,
+    pub range: f64,
 }
 
 impl Vec3 {
