@@ -33,7 +33,7 @@ pub struct Geodedic {
 
 #[derive(Debug, PartialEq)]
 pub struct Bearing {
-    pub aizmuth: f64,
+    pub azimuth: f64,
     pub elevation: f64,
 
     // Range in km
