@@ -25,13 +25,12 @@ pub fn gstime(jdut1: f64) -> f64 {
 //   return gstimeInternal(...args);
 // }
 
-
 #[cfg(test)]
 mod tests {
-  use crate::propogation::gstime::*;
-  #[test]
-  fn test_gst() {
-    let res = gstime(2444468.79629788);
-    assert_eq!(res, 1.265125075734467);
-  }
+    use crate::propogation::gstime::*;
+    #[test]
+    fn test_gst() {
+        let res = gstime(2444468.79629788);
+        assert_eq!(res, 1.265125075734467);
+    }
 }

@@ -154,72 +154,74 @@ pub fn ecf_to_look_angles(observer: &Geodedic, satellite_ecf: &Vec3) -> Bearing 
     topocentric_to_look_angles(&topocentric)
 }
 
-
 #[cfg(test)]
 mod test {
-  use crate::*;
-  use crate::tests::*;
-  #[test]
-  fn eci_to_ecf() {
-    let position = Vec3 {
-        x: 2328.957357263014,
-        y: -5995.219305262678,
-        z: 1720.0073114076358
-    };
+    use crate::tests::*;
+    use crate::*;
+    #[test]
+    fn eci_to_ecf() {
+        let position = Vec3 {
+            x: 2328.957357263014,
+            y: -5995.219305262678,
+            z: 1720.0073114076358,
+        };
 
-    let position_ecf = transforms::eci_to_ecf(&position, 0.0);
+        let position_ecf = transforms::eci_to_ecf(&position, 0.0);
 
-    assert_eq!(position_ecf,  Vec3 {
-        x: 2328.957357263014,
-        y: -5995.219305262678,
-        z: 1720.0073114076358
-    });
-  }
+        assert_eq!(
+            position_ecf,
+            Vec3 {
+                x: 2328.957357263014,
+                y: -5995.219305262678,
+                z: 1720.0073114076358
+            }
+        );
+    }
 
-  #[test]
-  fn ecf_to_look_angles() {
-    let observer_gd = Geodedic {
-        longitude: -122.0308 * constants::DEG_2_RAD,
-        latitude: 36.9613422 * constants::DEG_2_RAD,
-        height: 0.370
-    };
-
-    let position_ecf = Vec3 {
-        x: 2328.957357263014,
-        y: -5995.219305262678,
-        z: 1720.0073114076358
-    };
-    
-    let res = transforms::ecf_to_look_angles(&observer_gd, &position_ecf);
-
-    // assert_eq!(res, Bearing {
-    //   azimuth: 1.747132515004105,
-    //   elevation: -0.40791001471599636,
-    //   range: 5703.24291019934
-    // });
-
-    assert_diff(res.azimuth, 1.747132515004105, 1e-12);
-    assert_diff(res.elevation, -0.40791001471599636, 1e-12);
-    assert_diff(res.range, 5703.24291019934, 1e-11);
-  }
-
-  #[test]
-  fn topocentric() {
+    #[test]
+    fn ecf_to_look_angles() {
         let observer_gd = Geodedic {
-        longitude: -122.0308 * constants::DEG_2_RAD,
-        latitude: 36.9613422 * constants::DEG_2_RAD,
-        height: 0.370
-    };
+            longitude: -122.0308 * constants::DEG_2_RAD,
+            latitude: 36.9613422 * constants::DEG_2_RAD,
+            height: 0.370,
+        };
 
-    let position_ecf = Vec3 {
-        x: 2328.957357263014,
-        y: -5995.219305262678,
-        z: 1720.0073114076358
-    };
-    
-    let ts = transforms::topocentric(&observer_gd, &position_ecf);
-    assert_diff(ts.top_s, 918.3964944158424, 1e-12);
-    assert_diff(ts.top_e, 5154.118963234977, 1e-12);
-    assert_diff(ts.top_z, -2262.429067309148, 1e-12);
-  }
+        let position_ecf = Vec3 {
+            x: 2328.957357263014,
+            y: -5995.219305262678,
+            z: 1720.0073114076358,
+        };
+
+        let res = transforms::ecf_to_look_angles(&observer_gd, &position_ecf);
+
+        // assert_eq!(res, Bearing {
+        //   azimuth: 1.747132515004105,
+        //   elevation: -0.40791001471599636,
+        //   range: 5703.24291019934
+        // });
+
+        assert_diff(res.azimuth, 1.747132515004105, 1e-12);
+        assert_diff(res.elevation, -0.40791001471599636, 1e-12);
+        assert_diff(res.range, 5703.24291019934, 1e-11);
+    }
+
+    #[test]
+    fn topocentric() {
+        let observer_gd = Geodedic {
+            longitude: -122.0308 * constants::DEG_2_RAD,
+            latitude: 36.9613422 * constants::DEG_2_RAD,
+            height: 0.370,
+        };
+
+        let position_ecf = Vec3 {
+            x: 2328.957357263014,
+            y: -5995.219305262678,
+            z: 1720.0073114076358,
+        };
+
+        let ts = transforms::topocentric(&observer_gd, &position_ecf);
+        assert_diff(ts.top_s, 918.3964944158424, 1e-12);
+        assert_diff(ts.top_e, 5154.118963234977, 1e-12);
+        assert_diff(ts.top_z, -2262.429067309148, 1e-12);
+    }
 }
