@@ -54,7 +54,7 @@ fn main() {
 ### Todo List:
 - Refactor code to allow for easier testing
 - Add tests for remaining modules to ensure proper port
-  - [ ] constants.rs
+  - [x] constants.rs
   - [ ] ext.rs
   - [ ] doppler_factor.rs
   - [ ] transforms.rs _partial_
