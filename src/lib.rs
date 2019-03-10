@@ -126,19 +126,19 @@ mod tests {
         for entry in known_track {
             let result = crate::propogation::sgp4::sgp4(&mut satrec, entry.time);
 
-            println!("pos @{} {:#?}", entry.time, result.position);
-            println!("vel @{} {:#?}", entry.time, result.velocity);
+            // println!("pos @{} {:#?}", entry.time, result.position);
+            // println!("vel @{} {:#?}", entry.time, result.velocity);
             let diff_pos = result.position.subtract(&entry.known_pos);
-            println!("distance to pos: @{} {:#?}", entry.time, diff_pos);
+            // println!("distance to pos: @{} {:#?}", entry.time, diff_pos);
 
             let diff_vel = result.velocity.subtract(&entry.known_vel);
-            println!("distance to vel: @{} {:#?}", entry.time, diff_vel);
-            println!(
-                "{} < {} = {}",
-                diff_pos.x.abs(),
-                0.1,
-                diff_pos.x.abs() < 0.1
-            );
+            // println!("distance to vel: @{} {:#?}", entry.time, diff_vel);
+            // println!(
+            //     "{} < {} = {}",
+            //     diff_pos.x.abs(),
+            //     0.1,
+            //     diff_pos.x.abs() < 0.1
+            // );
             assert!(diff_pos.x.abs() < 0.1);
             assert!(diff_pos.y.abs() < 0.1);
             assert!(diff_pos.z.abs() < 0.1);
@@ -191,19 +191,19 @@ mod tests {
         for entry in known_track {
             let result = crate::propogation::sgp4::sgp4(&mut satrec, entry.time);
 
-            println!("pos @{} {:#?}", entry.time, result.position);
-            println!("vel @{} {:#?}", entry.time, result.velocity);
+            // println!("pos @{} {:#?}", entry.time, result.position);
+            // println!("vel @{} {:#?}", entry.time, result.velocity);
             let diff_pos = result.position.subtract(&entry.known_pos);
-            println!("distance to pos: @{} {:#?}", entry.time, diff_pos);
+            // println!("distance to pos: @{} {:#?}", entry.time, diff_pos);
 
             let diff_vel = result.velocity.subtract(&entry.known_vel);
-            println!("distance to vel: @{} {:#?}", entry.time, diff_vel);
-            println!(
-                "{} < {} = {}",
-                diff_pos.x.abs(),
-                0.1,
-                diff_pos.x.abs() < 0.1
-            );
+            // println!("distance to vel: @{} {:#?}", entry.time, diff_vel);
+            // println!(
+            //     "{} < {} = {}",
+            //     diff_pos.x.abs(),
+            //     0.1,
+            //     diff_pos.x.abs() < 0.1
+            // );
 
             // TODO: these seem off.
             assert!(diff_pos.x.abs() < 50.0);
