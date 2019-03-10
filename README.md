@@ -46,13 +46,13 @@ sattelite-rs = { git = "https://github.com/richinfante/satellite-rs.git", branch
   - [ ] constants.rs
   - [ ] ext.rs
   - [ ] doppler_factor.rs
-  - [ ] transforms.rs
+  - [-] transforms.rs _partial_
   - [x] io.rs
   - [x] propogation/dpper.rs
   - [x] propogation/dscom.rs
-  - [ ] propogation/dsinit.rs
+  - [x] propogation/dsinit.rs
   - [x] propogation/dspace.rs
-  - [ ] propogation/gstime.rs
+  - [x] propogation/gstime.rs
   - [x] propogation/initl.rs
   - [ ] propogation/sgp4.rs
   - [ ] propogation/sgp4init.rs
