@@ -114,10 +114,10 @@ pub fn eci_to_ecf(eci: &Vec3, gmst: f64) -> Vec3 {
     Vec3 { x, y, z }
 }
 
-pub fn topocentric(observer: &Geodedic, sattelite_ecf: &Vec3) -> TopoCentric {
+pub fn topocentric(observer: &Geodedic, satellite_ecf: &Vec3) -> TopoCentric {
     let observer_ecf = geodedic_to_ecf(&observer);
 
-    let r = sattelite_ecf.subtract(&observer_ecf);
+    let r = satellite_ecf.subtract(&observer_ecf);
 
     let top_s = (observer.latitude.sin() * observer.longitude.cos() * r.x)
         + (observer.latitude.sin() * observer.longitude.sin() * r.y)
@@ -148,8 +148,8 @@ pub fn topocentric_to_look_angles(tc: &TopoCentric) -> Bearing {
     }
 }
 
-pub fn ecf_to_look_angles(observer: &Geodedic, sattelite_ecf: &Vec3) -> Bearing {
-    let topocentric = topocentric(observer, sattelite_ecf);
+pub fn ecf_to_look_angles(observer: &Geodedic, satellite_ecf: &Vec3) -> Bearing {
+    let topocentric = topocentric(observer, satellite_ecf);
 
     topocentric_to_look_angles(&topocentric)
 }

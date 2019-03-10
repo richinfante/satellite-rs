@@ -539,7 +539,7 @@ mod test {
             nodep: 4.021856443150141,
             argpp: 0.8285461931652521,
             mp: 0.18171844572989393,
-            opsmode: DpperOpsMode::UNDEFINED, // TODO: sattelite-js has undefined here.
+            opsmode: DpperOpsMode::UNDEFINED, // TODO: satellite-js has undefined here.
         };
 
         let res = dpper(&satrec, opts);

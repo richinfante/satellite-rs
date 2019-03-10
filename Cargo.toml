@@ -1,5 +1,5 @@
 [package]
-name = "sattelite"
+name = "satellite"
 version = "0.1.0"
 authors = ["Rich Infante <rich@richinfante.com>"]
 license = "MIT"
