@@ -178,7 +178,7 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
     // sgp4fix divisor for divide by zero check on inclination
     // the old check used 1.0 + Math.cos(pi-1.0e-9), but then compared it to
     // 1.5 e-12, so the threshold was changed to 1.5e-12 for consistency
-    const temp4: f64 = 1.5e-12;
+    const TEMP4: f64 = 1.5e-12;
 
     // ----------- set all near earth variables to zero ------------
     satrec.isimp = 0;
@@ -294,7 +294,7 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
     satrec.init = DpperInit::Y;
     satrec.t = 0.0;
 
-    let initlOptions = InitlOptions {
+    let initl_options = InitlOptions {
         satn,
         ecco: satrec.ecco,
 
@@ -306,7 +306,7 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
         opsmode: satrec.operationmode.clone(),
     };
 
-    let initlResult = initl(initlOptions);
+    let initl_result = initl(initl_options);
 
     let InitlReturn {
         ao,
@@ -320,11 +320,11 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
         rteosq,
         sinio,
         ..
-    } = initlResult;
+    } = initl_result;
 
-    satrec.no = initlResult.no;
-    satrec.con41 = initlResult.con41;
-    satrec.gsto = initlResult.gsto;
+    satrec.no = initl_result.no;
+    satrec.con41 = initl_result.con41;
+    satrec.gsto = initl_result.gsto;
     satrec.error = 0;
 
     // sgp4fix remove this check as it is unnecessary
@@ -421,7 +421,7 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
         if (cosio + 1.0).abs() > 1.5e-12 {
             satrec.xlcof = (-0.25 * J3OJ2 * sinio * (3.0 + (5.0 * cosio))) / (1.0 + cosio);
         } else {
-            satrec.xlcof = (-0.25 * J3OJ2 * sinio * (3.0 + (5.0 * cosio))) / temp4;
+            satrec.xlcof = (-0.25 * J3OJ2 * sinio * (3.0 + (5.0 * cosio))) / TEMP4;
         }
         satrec.aycof = -0.5 * J3OJ2 * sinio;
 
@@ -438,7 +438,7 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
             tc = 0.0;
             inclm = satrec.inclo;
 
-            let dscomOptions = DscomOptions {
+            let dscom_options = DscomOptions {
                 epoch,
                 ep: satrec.ecco,
                 argpp: satrec.argpo,
@@ -489,31 +489,31 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
                 // zmos: satrec.zmos,
             };
 
-            let dscomResult = dscom(dscomOptions);
+            let dscom_result = dscom(dscom_options);
 
-            satrec.e3 = dscomResult.e3;
-            satrec.ee2 = dscomResult.ee2;
+            satrec.e3 = dscom_result.e3;
+            satrec.ee2 = dscom_result.ee2;
 
-            satrec.peo = dscomResult.peo;
-            satrec.pgho = dscomResult.pgho;
-            satrec.pho = dscomResult.pho;
+            satrec.peo = dscom_result.peo;
+            satrec.pgho = dscom_result.pgho;
+            satrec.pho = dscom_result.pho;
 
-            satrec.pinco = dscomResult.pinco;
-            satrec.plo = dscomResult.plo;
-            satrec.se2 = dscomResult.se2;
-            satrec.se3 = dscomResult.se3;
+            satrec.pinco = dscom_result.pinco;
+            satrec.plo = dscom_result.plo;
+            satrec.se2 = dscom_result.se2;
+            satrec.se3 = dscom_result.se3;
 
-            satrec.sgh2 = dscomResult.sgh2;
-            satrec.sgh3 = dscomResult.sgh3;
-            satrec.sgh4 = dscomResult.sgh4;
-            satrec.sh2 = dscomResult.sh2;
-            satrec.sh3 = dscomResult.sh3;
+            satrec.sgh2 = dscom_result.sgh2;
+            satrec.sgh3 = dscom_result.sgh3;
+            satrec.sgh4 = dscom_result.sgh4;
+            satrec.sh2 = dscom_result.sh2;
+            satrec.sh3 = dscom_result.sh3;
 
-            satrec.si2 = dscomResult.si2;
-            satrec.si3 = dscomResult.si3;
-            satrec.sl2 = dscomResult.sl2;
-            satrec.sl3 = dscomResult.sl3;
-            satrec.sl4 = dscomResult.sl4;
+            satrec.si2 = dscom_result.si2;
+            satrec.si3 = dscom_result.si3;
+            satrec.sl2 = dscom_result.sl2;
+            satrec.sl3 = dscom_result.sl3;
+            satrec.sl4 = dscom_result.sl4;
 
             let DscomResult {
                 sinim,
@@ -539,20 +539,20 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
                 sz31,
                 sz33,
                 ..
-            } = dscomResult;
+            } = dscom_result;
 
-            satrec.xgh2 = dscomResult.xgh2;
-            satrec.xgh3 = dscomResult.xgh3;
-            satrec.xgh4 = dscomResult.xgh4;
-            satrec.xh2 = dscomResult.xh2;
-            satrec.xh3 = dscomResult.xh3;
-            satrec.xi2 = dscomResult.xi2;
-            satrec.xi3 = dscomResult.xi3;
-            satrec.xl2 = dscomResult.xl2;
-            satrec.xl3 = dscomResult.xl3;
-            satrec.xl4 = dscomResult.xl4;
-            satrec.zmol = dscomResult.zmol;
-            satrec.zmos = dscomResult.zmos;
+            satrec.xgh2 = dscom_result.xgh2;
+            satrec.xgh3 = dscom_result.xgh3;
+            satrec.xgh4 = dscom_result.xgh4;
+            satrec.xh2 = dscom_result.xh2;
+            satrec.xh3 = dscom_result.xh3;
+            satrec.xi2 = dscom_result.xi2;
+            satrec.xi3 = dscom_result.xi3;
+            satrec.xl2 = dscom_result.xl2;
+            satrec.xl3 = dscom_result.xl3;
+            satrec.xl4 = dscom_result.xl4;
+            satrec.zmol = dscom_result.zmol;
+            satrec.zmos = dscom_result.zmos;
 
             let DscomResult {
                 nm,
@@ -565,9 +565,9 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
                 z31,
                 z33,
                 ..
-            } = dscomResult;
+            } = dscom_result;
 
-            let dpperOptions = DpperOptions {
+            let dpper_options = DpperOptions {
                 inclo: inclm,
                 init: satrec.init.clone(),
                 ep: satrec.ecco,
@@ -578,19 +578,19 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
                 opsmode: satrec.operationmode.clone(),
             };
 
-            let dpperResult = dpper(&satrec, dpperOptions);
+            let dpper_result = dpper(&satrec, dpper_options);
 
-            satrec.ecco = dpperResult.ep;
-            satrec.inclo = dpperResult.inclp;
-            satrec.nodeo = dpperResult.nodep;
-            satrec.argpo = dpperResult.argpp;
-            satrec.mo = dpperResult.mp;
+            satrec.ecco = dpper_result.ep;
+            satrec.inclo = dpper_result.inclp;
+            satrec.nodeo = dpper_result.nodep;
+            satrec.argpo = dpper_result.argpp;
+            satrec.mo = dpper_result.mp;
 
             argpm = 0.0;
             nodem = 0.0;
             mm = 0.0;
 
-            let dsinitOptions = DsinitOptions {
+            let dsinit_options = DsinitOptions {
                 cosim,
                 emsq,
                 argpo: satrec.argpo,
@@ -664,37 +664,37 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
                 xni: satrec.xni,
             };
 
-            let dsinitResult = dsinit(dsinitOptions);
+            let dsinit_result = dsinit(dsinit_options);
 
-            satrec.irez = dsinitResult.irez;
-            satrec.atime = dsinitResult.atime;
-            satrec.d2201 = dsinitResult.d2201;
-            satrec.d2211 = dsinitResult.d2211;
+            satrec.irez = dsinit_result.irez;
+            satrec.atime = dsinit_result.atime;
+            satrec.d2201 = dsinit_result.d2201;
+            satrec.d2211 = dsinit_result.d2211;
 
-            satrec.d3210 = dsinitResult.d3210;
-            satrec.d3222 = dsinitResult.d3222;
-            satrec.d4410 = dsinitResult.d4410;
-            satrec.d4422 = dsinitResult.d4422;
-            satrec.d5220 = dsinitResult.d5220;
+            satrec.d3210 = dsinit_result.d3210;
+            satrec.d3222 = dsinit_result.d3222;
+            satrec.d4410 = dsinit_result.d4410;
+            satrec.d4422 = dsinit_result.d4422;
+            satrec.d5220 = dsinit_result.d5220;
 
-            satrec.d5232 = dsinitResult.d5232;
-            satrec.d5421 = dsinitResult.d5421;
-            satrec.d5433 = dsinitResult.d5433;
-            satrec.dedt = dsinitResult.dedt;
-            satrec.didt = dsinitResult.didt;
+            satrec.d5232 = dsinit_result.d5232;
+            satrec.d5421 = dsinit_result.d5421;
+            satrec.d5433 = dsinit_result.d5433;
+            satrec.dedt = dsinit_result.dedt;
+            satrec.didt = dsinit_result.didt;
 
-            satrec.dmdt = dsinitResult.dmdt;
-            satrec.dnodt = dsinitResult.dnodt;
-            satrec.domdt = dsinitResult.domdt;
-            satrec.del1 = dsinitResult.del1;
+            satrec.dmdt = dsinit_result.dmdt;
+            satrec.dnodt = dsinit_result.dnodt;
+            satrec.domdt = dsinit_result.domdt;
+            satrec.del1 = dsinit_result.del1;
 
-            satrec.del2 = dsinitResult.del2;
-            satrec.del3 = dsinitResult.del3;
-            satrec.xfact = dsinitResult.xfact;
-            satrec.xlamo = dsinitResult.xlamo;
-            satrec.xli = dsinitResult.xli;
+            satrec.del2 = dsinit_result.del2;
+            satrec.del3 = dsinit_result.del3;
+            satrec.xfact = dsinit_result.xfact;
+            satrec.xlamo = dsinit_result.xlamo;
+            satrec.xli = dsinit_result.xli;
 
-            satrec.xni = dsinitResult.xni;
+            satrec.xni = dsinit_result.xni;
         }
 
         // ----------- set variables if not deep space -----------

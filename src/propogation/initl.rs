@@ -120,13 +120,13 @@ pub fn initl(options: InitlOptions) -> InitlReturn {
     // ------------------ un-kozai the mean motion -----------------
     let ak = (xke() / no).powf(X2O3);
     let d1 = (0.75 * J2 * ((3.0 * cosio2) - 1.0)) / (rteosq * omeosq);
-    let mut delPrime = d1 / (ak * ak);
+    let mut del_prime = d1 / (ak * ak);
     let adel = ak
         * (1.0
-            - (delPrime * delPrime)
-            - (delPrime * ((1.0 / 3.0) + ((134.0 * delPrime * delPrime) / 81.0))));
-    delPrime = d1 / (adel * adel);
-    no /= 1.0 + delPrime;
+            - (del_prime * del_prime)
+            - (del_prime * ((1.0 / 3.0) + ((134.0 * del_prime * del_prime) / 81.0))));
+    del_prime = d1 / (adel * adel);
+    no /= 1.0 + del_prime;
 
     let ao = (xke() / no).powf(X2O3);
     let sinio = inclo.sin();

@@ -227,14 +227,14 @@ pub fn dscom(options: DscomOptions) -> DscomResult {
     let mut z33 = 0.0;
 
     // -------------------------- constants -------------------------
-    const zes: f64 = 0.01675;
-    const zel: f64 = 0.05490;
-    const c1ss: f64 = 2.9864797e-6;
-    const c1l: f64 = 4.7968065e-7;
-    const zsinis: f64 = 0.39785416;
-    const zcosis: f64 = 0.91744867;
-    const zcosgs: f64 = 0.1945905;
-    const zsings: f64 = -0.98088458;
+    const ZES: f64 = 0.01675;
+    const ZEL: f64 = 0.05490;
+    const C1SS: f64 = 2.9864797e-6;
+    const C1L: f64 = 4.7968065e-7;
+    const ZSINIS: f64 = 0.39785416;
+    const ZCOSIS: f64 = 0.91744867;
+    const ZCOSGS: f64 = 0.1945905;
+    const ZSINGS: f64 = -0.98088458;
 
     //  --------------------- local variables ------------------------
     let nm = options.np;
@@ -272,13 +272,13 @@ pub fn dscom(options: DscomOptions) -> DscomResult {
     let zsingl = zx.sin();
 
     //  ------------------------- do solar terms ---------------------
-    zcosg = zcosgs;
-    zsing = zsings;
-    zcosi = zcosis;
-    zsini = zsinis;
+    zcosg = ZCOSGS;
+    zsing = ZSINGS;
+    zcosi = ZCOSIS;
+    zsini = ZSINIS;
     zcosh = cnodm;
     zsinh = snodm;
-    cc = c1ss;
+    cc = C1SS;
     let xnoi = 1.0 / nm;
 
     let mut lsflg = 0;
@@ -361,7 +361,7 @@ pub fn dscom(options: DscomOptions) -> DscomResult {
             zsini = zsinil;
             zcosh = (zcoshl * cnodm) + (zsinhl * snodm);
             zsinh = (snodm * zcoshl) - (cnodm * zsinhl);
-            cc = c1l;
+            cc = C1L;
         }
     }
 
@@ -375,10 +375,10 @@ pub fn dscom(options: DscomOptions) -> DscomResult {
     let si3 = 2.0 * ss2 * (sz13 - sz11);
     let sl2 = -2.0 * ss3 * sz2;
     let sl3 = -2.0 * ss3 * (sz3 - sz1);
-    let sl4 = -2.0 * ss3 * (-21.0 - (9.0 * emsq)) * zes;
+    let sl4 = -2.0 * ss3 * (-21.0 - (9.0 * emsq)) * ZES;
     let sgh2 = 2.0 * ss4 * sz32;
     let sgh3 = 2.0 * ss4 * (sz33 - sz31);
-    let sgh4 = -18.0 * ss4 * zes;
+    let sgh4 = -18.0 * ss4 * ZES;
     let sh2 = -2.0 * ss2 * sz22;
     let sh3 = -2.0 * ss2 * (sz23 - sz21);
 
@@ -389,10 +389,10 @@ pub fn dscom(options: DscomOptions) -> DscomResult {
     let xi3 = 2.0 * s2 * (z13 - z11);
     let xl2 = -2.0 * s3 * z2;
     let xl3 = -2.0 * s3 * (z3 - z1);
-    let xl4 = -2.0 * s3 * (-21.0 - (9.0 * emsq)) * zel;
+    let xl4 = -2.0 * s3 * (-21.0 - (9.0 * emsq)) * ZEL;
     let xgh2 = 2.0 * s4 * z32;
     let xgh3 = 2.0 * s4 * (z33 - z31);
-    let xgh4 = -18.0 * s4 * zel;
+    let xgh4 = -18.0 * s4 * ZEL;
     let xh2 = -2.0 * s2 * z22;
     let xh3 = -2.0 * s2 * (z23 - z21);
 

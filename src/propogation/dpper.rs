@@ -170,20 +170,20 @@ pub fn dpper(satrec: &Satrec, options: DpperOptions) -> DpperResult {
     let mut mp = options.mp;
 
     //  ---------------------- constants -----------------------------
-    const zns: f64 = 1.19459e-5;
-    const zes: f64 = 0.01675;
-    const znl: f64 = 1.5835218e-4;
-    const zel: f64 = 0.05490;
+    const ZNS: f64 = 1.19459e-5;
+    const ZES: f64 = 0.01675;
+    const ZNL: f64 = 1.5835218e-4;
+    const ZEL: f64 = 0.05490;
 
     //  --------------- calculate time varying periodics -----------
-    zm = zmos + (zns * t);
+    zm = zmos + (ZNS * t);
 
     // be sure that the initial call has time set to zero
     if init == DpperInit::Y {
         zm = zmos;
     }
 
-    zf = zm + (2.0 * zes * zm.sin());
+    zf = zm + (2.0 * ZES * zm.sin());
     sinzf = zf.sin();
     f2 = (0.5 * sinzf * sinzf) - 0.25;
     f3 = -0.5 * sinzf * zf.cos();
@@ -194,13 +194,13 @@ pub fn dpper(satrec: &Satrec, options: DpperOptions) -> DpperResult {
     let sghs = (sgh2 * f2) + (sgh3 * f3) + (sgh4 * sinzf);
     let shs = (sh2 * f2) + (sh3 * f3);
 
-    zm = zmol + (znl * t);
+    zm = zmol + (ZNL * t);
 
     if init == DpperInit::Y {
         zm = zmol;
     }
 
-    zf = zm + (2.0 * zel * zm.sin());
+    zf = zm + (2.0 * ZEL * zm.sin());
     sinzf = zf.sin();
     f2 = (0.5 * sinzf * sinzf) - 0.25;
     f3 = -0.5 * sinzf * zf.cos();
@@ -298,6 +298,8 @@ mod test {
     use crate::propogation::dpper::*;
     use crate::propogation::initl::*;
     use crate::tests::assert_similar;
+
+    #[test]
     fn test_ds() {
         let satrec = Satrec {
             error: 0,

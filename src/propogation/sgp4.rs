@@ -1,10 +1,6 @@
 use crate::constants::*;
 use crate::io::Satrec;
-use crate::propogation::dpper::dpper;
-use crate::propogation::dpper::DpperInit;
-use crate::propogation::dpper::DpperOpsMode;
-use crate::propogation::dpper::DpperOptions;
-use crate::propogation::dpper::DpperResult;
+use crate::propogation::dpper::*;
 use crate::propogation::initl::InitlMethod;
 use crate::Vec3;
 /*----------------------------------------------------------------------------
@@ -134,7 +130,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
     // the old check used 1.0 + cos(pi-1.0e-9), but then compared it to
     // 1.5 e-12, so the threshold was changed to 1.5e-12 for consistency
 
-    const temp4: f64 = 1.5e-12;
+    const TEMP4: f64 = 1.5e-12;
 
     let vkmpersec: f64 = (EARTH_RADIUS * xke()) / 60.0;
 
@@ -174,7 +170,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
     if satrec.method == InitlMethod::D {
         tc = satrec.t;
 
-        let dspaceOptions = crate::propogation::dspace::DspaceOptions {
+        let dspace_options = crate::propogation::dspace::DspaceOptions {
             irez: satrec.irez,
             d2201: satrec.d2201,
             d2211: satrec.d2211,
@@ -213,7 +209,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
             nm,
         };
 
-        let dspaceResult = crate::propogation::dspace::dspace(dspaceOptions);
+        let dspace_result = crate::propogation::dspace::dspace(dspace_options);
 
         let crate::propogation::dspace::DspaceResult {
             argpm: _,
@@ -222,8 +218,8 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
             nodem: _,
             nm: _,
             ..
-        } = dspaceResult;
-        em = dspaceResult.em;
+        } = dspace_result;
+        em = dspace_result.em;
     }
 
     if nm <= 0.0 {
@@ -274,7 +270,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
     sinip = sinim;
     cosip = cosim;
     if satrec.method == InitlMethod::D {
-        let dpperParameters = DpperOptions {
+        let dpper_parameters = DpperOptions {
             inclo: satrec.inclo,
             init: DpperInit::N,
             ep,
@@ -285,16 +281,16 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
             opsmode: satrec.operationmode.clone(),
         };
 
-        let dpperResult = dpper(&satrec, dpperParameters);
+        let dpper_result = dpper(&satrec, dpper_parameters);
         let DpperResult {
             ep,
             mut nodep,
             mut argpp,
             mp: _,
             ..
-        } = dpperResult;
+        } = dpper_result;
 
-        xincp = dpperResult.inclp;
+        xincp = dpper_result.inclp;
 
         if xincp < 0.0 {
             xincp = -xincp;
@@ -320,7 +316,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
         if (cosip + 1.0).abs() > 1.5e-12 {
             satrec.xlcof = (-0.25 * J3OJ2 * sinip * (3.0 + (5.0 * cosip))) / (1.0 + cosip);
         } else {
-            satrec.xlcof = (-0.25 * J3OJ2 * sinip * (3.0 + (5.0 * cosip))) / temp4;
+            satrec.xlcof = (-0.25 * J3OJ2 * sinip * (3.0 + (5.0 * cosip))) / TEMP4;
         }
     }
 

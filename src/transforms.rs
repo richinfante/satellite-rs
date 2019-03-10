@@ -45,26 +45,26 @@ pub fn radians_long(degrees: f64) -> f64 {
 }
 
 pub fn geodedic_to_ecf(geodetic: &Geodedic) -> Vec3 {
-    const a: f64 = 6378.137;
-    const b: f64 = 6356.7523142;
-    const f: f64 = (a - b) / a;
-    const e2: f64 = ((2.0 * f) - (f * f));
+    const A: f64 = 6378.137;
+    const B: f64 = 6356.7523142;
+    const F: f64 = (A - B) / A;
+    const E2: f64 = ((2.0 * F) - (F * F));
 
-    let normal = a / (1.0 - (e2 * geodetic.latitude.sin().powf(2.0))).sqrt();
+    let normal = A / (1.0 - (E2 * geodetic.latitude.sin().powf(2.0))).sqrt();
 
     let x = (normal + geodetic.height) * geodetic.latitude.cos() * geodetic.longitude.cos();
     let y = (normal + geodetic.height) * geodetic.latitude.cos() * geodetic.longitude.sin();
-    let z = ((normal * (1.0 - e2)) + geodetic.height) * geodetic.latitude.sin();
+    let z = ((normal * (1.0 - E2)) + geodetic.height) * geodetic.latitude.sin();
 
     Vec3 { x, y, z }
 }
 
 pub fn eci_to_geodedic(eci: &Vec3, gmst: f64) -> Geodedic {
-    const a: f64 = 6378.137;
-    const b: f64 = 6356.7523142;
-    let R: f64 = ((eci.x * eci.x) + (eci.y * eci.y)).sqrt();
-    const f: f64 = (a - b) / a;
-    const e2: f64 = ((2.0 * f) - (f * f));
+    const A: f64 = 6378.137;
+    const B: f64 = 6356.7523142;
+    let r: f64 = ((eci.x * eci.x) + (eci.y * eci.y)).sqrt();
+    const F: f64 = (A - B) / A;
+    const E2: f64 = ((2.0 * F) - (F * F));
 
     let mut longitude = eci.y.atan2(eci.x) - gmst;
 
@@ -76,20 +76,20 @@ pub fn eci_to_geodedic(eci: &Vec3, gmst: f64) -> Geodedic {
         longitude -= TWO_PI;
     }
 
-    const kmax: i32 = 20;
+    const KMAX: i32 = 20;
 
     let mut latitude = eci.z.atan2((eci.x.powi(2) + eci.y.powi(2)).sqrt());
 
     let mut k: i32 = 0;
     let mut c: f64 = 0.0;
 
-    while k < kmax {
-        c = 1.0 / (1.0 - (e2 * latitude.sin().powi(2)));
-        latitude = (eci.z + (a * c * e2 * latitude.sin())).atan2(R);
+    while k < KMAX {
+        c = 1.0 / (1.0 - (E2 * latitude.sin().powi(2)));
+        latitude = (eci.z + (A * c * E2 * latitude.sin())).atan2(r);
         k += 1;
     }
 
-    let height = (R / latitude.cos()) - (a * c);
+    let height = (r / latitude.cos()) - (A * c);
 
     Geodedic {
         latitude,
@@ -99,11 +99,11 @@ pub fn eci_to_geodedic(eci: &Vec3, gmst: f64) -> Geodedic {
 }
 
 pub fn ecf_to_eci(ecf: &Vec3, gmst: f64) -> Vec3 {
-    let X = (ecf.x * gmst.cos()) - (ecf.y * gmst.sin());
-    let Y = (ecf.x * gmst.sin()) + (ecf.y * gmst.cos());
-    let Z = ecf.z;
+    let x = (ecf.x * gmst.cos()) - (ecf.y * gmst.sin());
+    let y = (ecf.x * gmst.sin()) + (ecf.y * gmst.cos());
+    let z = ecf.z;
 
-    Vec3 { x: X, y: Y, z: Z }
+    Vec3 { x, y, z }
 }
 
 pub fn eci_to_ecf(eci: &Vec3, gmst: f64) -> Vec3 {

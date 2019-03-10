@@ -169,18 +169,18 @@ pub fn dspace(options: DspaceOptions) -> DspaceResult {
         ..
     } = options;
 
-    const fasx2: f64 = 0.13130908;
-    const fasx4: f64 = 2.8843198;
-    const fasx6: f64 = 0.37448087;
-    const g22: f64 = 5.7686396;
-    const g32: f64 = 0.95240898;
-    const g44: f64 = 1.8014998;
-    const g52: f64 = 1.0508330;
-    const g54: f64 = 4.4108898;
-    const rptim: f64 = 4.37526908801129966e-3; // equates to 7.29211514668855e-5 rad/sec
-    const stepp: f64 = 720.0;
-    const stepn: f64 = -720.0;
-    const step2: f64 = 259200.0;
+    const FASX2: f64 = 0.13130908;
+    const FASX4: f64 = 2.8843198;
+    const FASX6: f64 = 0.37448087;
+    const G22: f64 = 5.7686396;
+    const G32: f64 = 0.95240898;
+    const G44: f64 = 1.8014998;
+    const G52: f64 = 1.0508330;
+    const G54: f64 = 4.4108898;
+    const RPTIM: f64 = 4.37526908801129966e-3; // equates to 7.29211514668855e-5 rad/sec
+    const STEPP: f64 = 720.0;
+    const STEPN: f64 = -720.0;
+    const STEP2: f64 = 259200.0;
 
     let delt;
     let mut x2li;
@@ -194,7 +194,7 @@ pub fn dspace(options: DspaceOptions) -> DspaceResult {
     let mut ft = 0.0;
 
     //  ----------- calculate deep space resonance effects -----------
-    let theta = (gsto + (tc * rptim)) % TWO_PI;
+    let theta = (gsto + (tc * RPTIM)) % TWO_PI;
     em += dedt * t;
 
     inclm += didt * t;
@@ -229,9 +229,9 @@ pub fn dspace(options: DspaceOptions) -> DspaceResult {
 
         // sgp4fix move check outside loop
         if t > 0.0 {
-            delt = stepp;
+            delt = STEPP;
         } else {
-            delt = stepn;
+            delt = STEPN;
         }
 
         let mut iretn = 381; // added for do loop
@@ -239,46 +239,46 @@ pub fn dspace(options: DspaceOptions) -> DspaceResult {
             //  ------------------- dot terms calculated -------------
             //  ----------- near - synchronous resonance terms -------
             if irez != 2.0 {
-                xndt = (del1 * (xli - fasx2).sin())
-                    + (del2 * (2.0 * (xli - fasx4)).sin())
-                    + (del3 * (3.0 * (xli - fasx6)).sin());
+                xndt = (del1 * (xli - FASX2).sin())
+                    + (del2 * (2.0 * (xli - FASX4)).sin())
+                    + (del3 * (3.0 * (xli - FASX6)).sin());
                 xldot = xni + xfact;
-                xnddt = (del1 * (xli - fasx2).cos())
-                    + (2.0 * del2 * (2.0 * (xli - fasx4)).cos())
-                    + (3.0 * del3 * (3.0 * (xli - fasx6)).cos());
+                xnddt = (del1 * (xli - FASX2).cos())
+                    + (2.0 * del2 * (2.0 * (xli - FASX4)).cos())
+                    + (3.0 * del3 * (3.0 * (xli - FASX6)).cos());
                 xnddt *= xldot;
             } else {
                 // --------- near - half-day resonance terms --------
                 xomi = argpo + (argpdot * atime);
                 x2omi = xomi + xomi;
                 x2li = xli + xli;
-                xndt = (d2201 * ((x2omi + xli) - g22).sin())
-                    + (d2211 * (xli - g22).sin())
-                    + (d3210 * ((xomi + xli) - g32).sin())
-                    + (d3222 * ((-xomi + xli) - g32).sin())
-                    + (d4410 * ((x2omi + x2li) - g44).sin())
-                    + (d4422 * (x2li - g44).sin())
-                    + (d5220 * ((xomi + xli) - g52).sin())
-                    + (d5232 * ((-xomi + xli) - g52).sin())
-                    + (d5421 * ((xomi + x2li) - g54).sin())
-                    + (d5433 * ((-xomi + x2li) - g54).sin());
+                xndt = (d2201 * ((x2omi + xli) - G22).sin())
+                    + (d2211 * (xli - G22).sin())
+                    + (d3210 * ((xomi + xli) - G32).sin())
+                    + (d3222 * ((-xomi + xli) - G32).sin())
+                    + (d4410 * ((x2omi + x2li) - G44).sin())
+                    + (d4422 * (x2li - G44).sin())
+                    + (d5220 * ((xomi + xli) - G52).sin())
+                    + (d5232 * ((-xomi + xli) - G52).sin())
+                    + (d5421 * ((xomi + x2li) - G54).sin())
+                    + (d5433 * ((-xomi + x2li) - G54).sin());
                 xldot = xni + xfact;
-                xnddt = (d2201 * ((x2omi + xli) - g22).cos())
-                    + (d2211 * (xli - g22).cos())
-                    + (d3210 * ((xomi + xli) - g32).cos())
-                    + (d3222 * ((-xomi + xli) - g32).cos())
-                    + (d5220 * ((xomi + xli) - g52).cos())
-                    + (d5232 * ((-xomi + xli) - g52).cos())
-                    + (2.0 * d4410 * ((x2omi + x2li) - g44).cos())
-                    + (d4422 * (x2li - g44).cos())
-                    + (d5421 * ((xomi + x2li) - g54).cos())
-                    + (d5433 * ((-xomi + x2li) - g54).cos());
+                xnddt = (d2201 * ((x2omi + xli) - G22).cos())
+                    + (d2211 * (xli - G22).cos())
+                    + (d3210 * ((xomi + xli) - G32).cos())
+                    + (d3222 * ((-xomi + xli) - G32).cos())
+                    + (d5220 * ((xomi + xli) - G52).cos())
+                    + (d5232 * ((-xomi + xli) - G52).cos())
+                    + (2.0 * d4410 * ((x2omi + x2li) - G44).cos())
+                    + (d4422 * (x2li - G44).cos())
+                    + (d5421 * ((xomi + x2li) - G54).cos())
+                    + (d5433 * ((-xomi + x2li) - G54).cos());
                 xnddt *= xldot;
             }
 
             //  ----------------------- integrator -------------------
             //  sgp4fix move end checks to end of routine
-            if (t - atime).abs() >= stepp {
+            if (t - atime).abs() >= STEPP {
                 iretn = 381;
             } else {
                 ft = t - atime;
@@ -286,8 +286,8 @@ pub fn dspace(options: DspaceOptions) -> DspaceResult {
             }
 
             if iretn == 381 {
-                xli += (xldot * delt) + (xndt * step2);
-                xni += (xndt * delt) + (xnddt * step2);
+                xli += (xldot * delt) + (xndt * STEP2);
+                xni += (xndt * delt) + (xnddt * STEP2);
                 atime += delt;
             }
         }
@@ -321,7 +321,6 @@ pub fn dspace(options: DspaceOptions) -> DspaceResult {
 #[cfg(test)]
 mod tests {
     use crate::propogation::dspace::*;
-    use crate::tests::assert_similar;
 
     #[test]
     fn test_dspace() {
