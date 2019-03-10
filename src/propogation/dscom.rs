@@ -496,3 +496,105 @@ pub fn dscom(options: DscomOptions) -> DscomResult {
         zmos,
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::propogation::dscom::*;
+    use crate::tests::{assert_diff, assert_similar};
+    #[test]
+    fn test() {
+        let opts = DscomOptions {
+            epoch: 11187.29629787989,
+            ep: 0.7318036,
+            argpp: 0.8285461931652521,
+            tc: 0.0,
+            inclp: 0.8166674822761788,
+            nodep: 4.021856443150141,
+            np: 0.009971131594572634,
+        };
+
+        let res = dscom(opts);
+
+        assert_similar(res.snodm, -0.7709069259013173);
+        assert_similar(res.cnodm, -0.6369478091628709);
+        assert_similar(res.sinim, 0.7288682597401953);
+        assert_similar(res.cosim, 0.6846539709541596);
+        assert_similar(res.sinomm, 0.7369494526341018);
+        assert_similar(res.cosomm, 0.6759478561710938);
+        assert_similar(res.day, 29448.79629787989);
+        assert_similar(res.e3, -0.00007499513323066247);
+        assert_similar(res.ee2, 0.0003984687913511968);
+        assert_similar(res.em, 0.7318036);
+        assert_similar(res.emsq, 0.53553650897296);
+        assert_similar(res.gam, 63.09444856011612);
+        assert_similar(res.peo, 0.0);
+        assert_similar(res.pgho, 0.0);
+        assert_similar(res.pho, 0.0);
+        assert_similar(res.pinco, 0.0);
+        assert_similar(res.plo, 0.0);
+        assert_similar(res.rtemsq, 0.6815155838475302);
+        assert_similar(res.se2, -0.0023592253136306925);
+        assert_similar(res.se3, -0.00007047176334622737);
+        assert_similar(res.sgh2, -0.00018225669552040974);
+        assert_similar(res.sgh3, -0.0022130294594592042);
+        assert_similar(res.sgh4, -0.00006154293820943018);
+        assert_similar(res.sh2, -0.0011394073362677001);
+        assert_similar(res.sh3, 0.002509518064658255);
+        assert_similar(res.si2, -0.00005208303756792119);
+        assert_similar(res.si3, 0.0032873534354906702);
+        assert_similar(res.sl2, 0.0027816840121748848);
+        assert_similar(res.sl3, 0.0033383632815548628);
+        assert_similar(res.sl4, 0.00025906770677081676);
+        assert_similar(res.s1, -0.0003598896387548552);
+        assert_similar(res.s2, -0.000035294088067045225);
+        assert_similar(res.s3, 0.00004810694207075695);
+        assert_similar(res.s4, 0.000032785630712471235);
+        assert_similar(res.s5, -0.32951417210709383);
+        assert_similar(res.s6, -0.5535985875139634);
+        assert_similar(res.s7, 0.10419184821509497);
+        assert_similar(res.ss1, -0.0022406638674745552);
+        assert_similar(res.ss2, -0.00021974010738653476);
+        assert_similar(res.ss3, 0.00029951261516050645);
+        assert_similar(res.ss4, 0.0002041225147908132);
+        assert_similar(res.ss5, -0.2842063666667719);
+        assert_similar(res.ss6, 0.5264567675404539);
+        assert_similar(res.ss7, 0.015725643718630555);
+        assert_diff(res.sz1, 7.241600464426519, 1e-14);
+        assert_similar(res.sz2, -4.643684224593015);
+        assert_similar(res.sz3, 1.6686076878687435);
+        assert_diff(res.sz11, 5.923151674966536, 1e-14);
+        assert_diff(res.sz12, 0.11851053999055416, 1e-14);
+        assert_diff(res.sz13, -1.5569425931864267, 1e-14);
+        assert_diff(res.sz21, -5.5489812856673435, 1e-14);
+        assert_diff(res.sz22, -2.592624873581728, 1e-14);
+        assert_diff(res.sz23, 0.16121448720509934, 1e-14);
+        assert_diff(res.sz31, 3.273877043602411, 1e-14);
+        assert_diff(res.sz32, -0.4464394721650089, 1e-14);
+        assert_diff(res.sz33, -2.1469592167364815, 1e-14);
+        assert_diff(res.xgh2, 0.0001510256023997251, 1e-14);
+        assert_diff(res.xgh3, 0.0003555337415001366, 1e-14);
+        assert_diff(res.xgh4, -0.00003239876027006408, 1e-14);
+        assert_similar(res.xh2, 0.00011285895673523819);
+        assert_similar(res.xh3, -0.0004733943404491607);
+        assert_similar(res.xi2, -0.00006414087517640146);
+        assert_similar(res.xi3, -0.0005695169725370441);
+        assert_similar(res.xl2, -0.0007034864707310533);
+        assert_similar(res.xl3, -0.0005240671434151523);
+        assert_similar(res.xl4, 0.00013638400715968452);
+        assert_similar(res.nm, 0.009971131594572634);
+        assert_similar(res.z1, 2.5573881535383824);
+        assert_diff(res.z2, 7.311693909959471, 1e-14);
+        assert_diff(res.z3, 8.004285429240719, 1e-14);
+        assert_similar(res.z11, -1.949045345610987);
+        assert_diff(res.z12, 0.9086631598832984, 1e-14);
+        assert_diff(res.z13, 6.119118527261723, 1e-14);
+        assert_diff(res.z21, 0.6841370517901615, 1e-14);
+        assert_diff(res.z22, 1.5988365604014116, 1e-14);
+        assert_diff(res.z23, -6.022288391897364, 1e-14);
+        assert_diff(res.z31, -1.633514023053113, 1e-14);
+        assert_diff(res.z32, 2.3032285656514286, 1e-14);
+        assert_diff(res.z33, 3.7885830019843842, 1e-14);
+        assert_diff(res.zmol, 3.5674683899705713, 1e-14);
+        assert_diff(res.zmos, 3.896090412268542, 1e-14);
+    }
+}

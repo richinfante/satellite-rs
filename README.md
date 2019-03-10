@@ -36,12 +36,12 @@ println!("vel @{} {:#?}", 0.0, result.velocity);
   - [ ] doppler_factor.rs
   - [ ] transforms.rs
   - [x] io.rs
-  - [ ] propogation/dpper.rs
-  - [ ] propogation/dscom.rs
+  - [x] propogation/dpper.rs
+  - [x] propogation/dscom.rs
   - [ ] propogation/dsinit.rs
-  - [ ] propogation/dspace.rs
+  - [x] propogation/dspace.rs
   - [ ] propogation/gstime.rs
-  - [x] propogation/initl.rs (needs deep-space test vectors)
+  - [x] propogation/initl.rs
   - [ ] propogation/sgp4.rs
   - [ ] propogation/sgp4init.rs
 

@@ -62,6 +62,19 @@ impl Vec3 {
 
 #[cfg(test)]
 mod tests {
+    pub fn assert_similar(lhs: f64, rhs: f64) {
+        assert_diff(lhs, rhs, 1e-15);
+    }
+
+    pub fn assert_diff(lhs: f64, rhs: f64, epsilon: f64) {
+        if (lhs - rhs).abs() > epsilon {
+            panic!(
+                "Assertion failed: diff between {} - {} > {}",
+                lhs, rhs, epsilon
+            );
+        }
+    }
+
     use crate::Vec3;
     struct TrackEntry {
         time: f64,

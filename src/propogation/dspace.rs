@@ -317,3 +317,64 @@ pub fn dspace(options: DspaceOptions) -> DspaceResult {
         nm,
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::propogation::dspace::*;
+    use crate::tests::assert_similar;
+
+    #[test]
+    fn test_dspace() {
+        let opts = DspaceOptions {
+            irez: 0.0,
+            d2201: 0.0,
+            d2211: 0.0,
+            d3210: 0.0,
+            d3222: 0.0,
+            d4410: 0.0,
+            d4422: 0.0,
+            d5220: 0.0,
+            d5232: 0.0,
+            d5421: 0.0,
+            d5433: 0.0,
+            dedt: 2.63860646954029e-8,
+            del1: 0.0,
+            del2: 0.0,
+            del3: 0.0,
+            didt: -3.4767374233712414e-8,
+            dmdt: 8.037814266648781e-8,
+            dnodt: -6.033631312091549e-8,
+            domdt: 9.465204025716937e-9,
+            argpo: 0.8285461931652521,
+            argpdot: 0.0000034607723715772176,
+            t: 0.0,
+            tc: 0.0,
+            gsto: 1.265125075734467,
+            xfact: 0.0,
+            xlamo: 0.0,
+            no: 0.009971131594572634,
+            atime: 0.0,
+            em: 0.7318036,
+            argpm: 0.8285461931652521,
+            inclm: 0.8166674822761788,
+            xli: 0.0,
+            mm: 0.1817184457298936,
+            xni: 0.0,
+            nodem: 4.021856443150141,
+            nm: 0.009971131594572634,
+        };
+
+        let res = dspace(opts);
+
+        assert_eq!(res.atime, 0.0);
+        assert_eq!(res.em, 0.7318036);
+        assert_eq!(res.argpm, 0.8285461931652521);
+        assert_eq!(res.inclm, 0.8166674822761788);
+        assert_eq!(res.xli, 0.0);
+        assert_eq!(res.mm, 0.1817184457298936);
+        assert_eq!(res.xni, 0.0);
+        assert_eq!(res.nodem, 4.021856443150141);
+        assert_eq!(res.dndt, 0.0);
+        assert_eq!(res.nm, 0.009971131594572634);
+    }
+}

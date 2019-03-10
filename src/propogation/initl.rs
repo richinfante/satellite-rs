@@ -187,6 +187,7 @@ pub fn initl(options: InitlOptions) -> InitlReturn {
 mod test {
     use crate::propogation::dpper::*;
     use crate::propogation::initl::*;
+    use crate::tests::assert_similar;
 
     #[test]
     fn test_initl() {
@@ -217,5 +218,35 @@ mod test {
         assert_eq!(result.rteosq, 0.9999623879608622);
         assert_eq!(result.sinio, 0.9555025937244435);
         assert_eq!(result.gsto, 0.1082901416688955);
+    }
+
+    #[test]
+    fn test_initl_ds() {
+        let opts = InitlOptions {
+            satn: "11801".to_string(),
+            ecco: 0.7318036,
+            epoch: 11187.29629787989,
+            inclo: 0.8166674822761788,
+            no: 0.009971844782555844,
+            method: InitlMethod::N,
+            opsmode: DpperOpsMode::I,
+        };
+
+        let res = initl(opts);
+        assert_eq!(res.no, 0.009971131594572634);
+        assert_eq!(res.method, InitlMethod::N);
+        assert_eq!(res.ainv, 0.2619650549686258);
+        assert_eq!(res.ao, 3.8173030373068833);
+        assert_similar(res.con41, 0.40625317982989756);
+        assert_similar(res.con42, -1.3437552997164959);
+        assert_similar(res.cosio, 0.6846539709541596);
+        assert_similar(res.cosio2, 0.4687510599432992);
+        assert_similar(res.eccsq, 0.53553650897296);
+        assert_eq!(res.omeosq, 0.46446349102704);
+        assert_eq!(res.posq, 3.143521535730025);
+        assert_eq!(res.rp, 1.0237869323147717);
+        assert_eq!(res.rteosq, 0.6815155838475302);
+        assert_similar(res.sinio, 0.7288682597401953);
+        assert_eq!(res.gsto, 1.265125075734467);
     }
 }
