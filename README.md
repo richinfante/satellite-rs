@@ -4,6 +4,13 @@ A port of [sattelite-js](https://github.com/shashwatak/satellite-js) to rust.
 
 Currently unstable, and unsuitable for production use. Zero dependencies.
 
+
+### Cargo.toml
+Since this library is currently unstable, you may want to simply grab the latest version from `master`.
+```bash
+sattelite-rs = { git = "https://github.com/richinfante/satellite-rs.git", branch = "master" }
+```
+
 ### Example:
 ```rust
 let tle1 = "1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8";
