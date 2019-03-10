@@ -179,6 +179,19 @@ mod test {
     }
 
     #[test]
+    fn ecf_to_eci() {
+        let position = Vec3 {
+            x: 2328.957357263014,
+            y: -5995.219305262678,
+            z: 1720.0073114076358,
+        };
+
+        let position_ecf = transforms::eci_to_ecf(&position, 0.0);
+        let orig_ecf = transforms::ecf_to_eci(&position_ecf, 0.0);
+        assert_eq!(position, orig_ecf);
+    }
+
+    #[test]
     fn ecf_to_look_angles() {
         let observer_gd = Geodedic {
             longitude: -122.0308 * constants::DEG_2_RAD,
