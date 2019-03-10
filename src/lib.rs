@@ -12,6 +12,7 @@ pub struct Vec3 {
     z: f64,
 }
 
+#[derive(Debug, PartialEq)]
 pub struct TopoCentric {
     /// Positive horizontal vector S due south.
     top_s: f64,
@@ -23,12 +24,14 @@ pub struct TopoCentric {
     top_z: f64,
 }
 
+#[derive(Debug, PartialEq)]
 pub struct Geodedic {
     longitude: f64,
     latitude: f64,
     height: f64,
 }
 
+#[derive(Debug, PartialEq)]
 pub struct Bearing {
     aizmuth: f64,
     elevation: f64,
