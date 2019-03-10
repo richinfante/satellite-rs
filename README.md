@@ -4,11 +4,24 @@ A port of [sattelite-js](https://github.com/shashwatak/satellite-js) to rust.
 
 Currently unstable, and unsuitable for production use. Zero dependencies.
 
-Known Issues:
+### Example:
+```rust
+let tle1 = "1 11801U          80230.29629788  .01431103  00000-0  14311-1        ";
+let tle2 = "2 11801  46.7916 230.4354 7318036  47.4722  10.4117  2.28537848      ";
+
+let mut satrec = sattelite_rs::io::twoline2satrec(tle1, tle2);
+
+let result = sattelite_rs::propogation::sgp4::sgp4(&mut satrec, entry.time);
+
+println!("pos @{} {:#?}", entry.time, result.position);
+println!("vel @{} {:#?}", entry.time, result.velocity);
+```
+
+### Known Issues:
 - Deep-space calculations appear to be slightly off. Cause is currently unknown
 - Many portions are currently untested.
 
-Todo List:
+### Todo List:
 - Refactor code to allow for easier testing
 - Add tests for remaining modules to ensure proper port
   - [ ] constants.rs
