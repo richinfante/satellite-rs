@@ -3,6 +3,8 @@ use crate::ext;
 use crate::propogation::dpper::*;
 use crate::propogation::initl::*;
 use crate::propogation::sgp4init;
+
+#[derive(Clone)]
 pub struct Satrec {
     pub init: DpperInit,
     pub operationmode: DpperOpsMode,

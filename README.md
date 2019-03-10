@@ -2,7 +2,7 @@
 
 A port of [satellite-js](https://github.com/shashwatak/satellite-js) to rust.
 
-Currently unstable, and unsuitable for production use. Zero dependencies.
+Currently unstable, and unsuitable for production use.
 
 
 ### Cargo.toml

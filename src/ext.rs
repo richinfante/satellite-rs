@@ -1,3 +1,6 @@
+use chrono::prelude::*;
+use chrono::DateTime;
+
 pub struct MDHMS {
     pub month: f64,
     pub day: f64,
@@ -81,4 +84,16 @@ pub fn jday(year: f64, mon: f64, day: f64, hr: f64, minute: f64, sec: f64, msec:
         + day
         + 1721013.5
         + (((((msec / 60000.0) + (sec / 60.0) + minute) / 60.0) + hr) / 24.0) // ut in days
+}
+
+pub fn jday_datetime(time: DateTime<Utc>) -> f64 {
+    jday(
+        time.year() as f64,
+        time.month() as f64,
+        time.day() as f64,
+        time.hour() as f64,
+        time.minute() as f64,
+        time.second() as f64,
+        0 as f64
+    )
 }

@@ -8,3 +8,4 @@ readme = "README.md"
 edition = "2018"
 
 [dependencies]
+chrono = { version = "0.4" }
