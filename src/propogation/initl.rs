@@ -118,7 +118,7 @@ pub fn initl(options: InitlOptions) -> InitlReturn {
     // assert_eq!(X2O3, 0.6666666666666666);
 
     // ------------------ un-kozai the mean motion -----------------
-    let ak = (xke() / no).powf(X2O3);
+    let ak = (XKE / no).powf(X2O3);
     let d1 = (0.75 * J2 * ((3.0 * cosio2) - 1.0)) / (rteosq * omeosq);
     let mut del_prime = d1 / (ak * ak);
     let adel = ak
@@ -128,7 +128,7 @@ pub fn initl(options: InitlOptions) -> InitlReturn {
     del_prime = d1 / (adel * adel);
     no /= 1.0 + del_prime;
 
-    let ao = (xke() / no).powf(X2O3);
+    let ao = (XKE / no).powf(X2O3);
     let sinio = inclo.sin();
     let po = ao * omeosq;
     let con42 = 1.0 - (5.0 * cosio2);

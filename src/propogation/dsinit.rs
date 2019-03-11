@@ -369,7 +369,7 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
 
     // -------------- initialize the resonance terms -------------
     if irez != 0.0 {
-        aonv = (nm / xke()).powf(X2O3);
+        aonv = (nm / XKE).powf(X2O3);
 
         // ---------- geopotential resonance for 12 hour orbits ------
         if irez == 2.0 {

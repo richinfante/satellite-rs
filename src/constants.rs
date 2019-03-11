@@ -11,20 +11,24 @@ pub static J4: f64 = -0.00000161098761;
 pub static J3OJ2: f64 = J3 / J2;
 pub static X2O3: f64 = 2.0 / 3.0;
 pub static C: f64 = 299792.458; // Speed of light in km/s
-
-// TODO: precalculate these.
-pub fn xke() -> f64 {
-    60.0 / ((EARTH_RADIUS * EARTH_RADIUS * EARTH_RADIUS) / MU).sqrt()
-}
-
-pub fn tumin() -> f64 {
-    1.0 / xke()
-}
-
+pub static KM_TO_MI: f64 = 0.62137; // Km to mi conversion
+pub static MI_TO_KM: f64 = 1.0 / 0.62137; // Mi to Km conversion
+pub static XKE : f64 = 0.07436685316871385;
+pub static TUMIN : f64 = 13.446851082044981;
+pub static XPDOTP: f64 = 1440.0 / (2.0 * std::f64::consts::PI);
 
 #[cfg(test)]
 mod test {
   use crate::constants::*;
+
+  pub fn xke() -> f64 {
+    60.0 / ((EARTH_RADIUS * EARTH_RADIUS * EARTH_RADIUS) / MU).sqrt()
+  }
+
+  pub fn tumin() -> f64 {
+      1.0 / xke()
+  }
+
   #[test]
   fn test() {
     assert_eq!(PI, 3.141592653589793);
@@ -34,6 +38,8 @@ mod test {
     assert_eq!(MINUTES_PER_DAY, 1440.0);
     assert_eq!(MU, 398600.5);
     assert_eq!(EARTH_RADIUS, 6378.137);
+    assert_eq!(XKE, xke());
+    assert_eq!(TUMIN, tumin());
     assert_eq!(xke(), 0.07436685316871385);
     assert_eq!(tumin(), 13.446851082044981);
     assert_eq!(J2, 0.00108262998905);

@@ -153,7 +153,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> Result<SGP4Result, SGP4Error> {
 
     const TEMP4: f64 = 1.5e-12;
 
-    let vkmpersec: f64 = (EARTH_RADIUS * xke()) / 60.0;
+    let vkmpersec: f64 = (EARTH_RADIUS * XKE) / 60.0;
 
     // --------------------- clear sgp4 error flag -----------------
     satrec.t = tsince;
@@ -252,8 +252,8 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> Result<SGP4Result, SGP4Error> {
         return Err(SGP4Error::Nm);
     }
 
-    let am = ((xke() / nm).powf(X2O3)) * tempa * tempa;
-    nm = xke() / (am.powf(1.5));
+    let am = ((XKE / nm).powf(X2O3)) * tempa * tempa;
+    nm = XKE / (am.powf(1.5));
     em -= tempe;
 
     // fix tolerance for error recognition
@@ -414,8 +414,8 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> Result<SGP4Result, SGP4Error> {
     su -= 0.25 * temp2 * satrec.x7thm1 * sin2u;
     let xnode = nodep + (1.5 * temp2 * cosip * sin2u);
     let xinc = xincp + (1.5 * temp2 * cosip * sinip * cos2u);
-    let mvt = rdotl - ((nm * temp1 * satrec.x1mth2 * sin2u) / xke());
-    let rvdot = rvdotl + ((nm * temp1 * ((satrec.x1mth2 * cos2u) + (1.5 * satrec.con41))) / xke());
+    let mvt = rdotl - ((nm * temp1 * satrec.x1mth2 * sin2u) / XKE);
+    let rvdot = rvdotl + ((nm * temp1 * ((satrec.x1mth2 * cos2u) + (1.5 * satrec.con41))) / XKE);
 
     // --------------------- orientation vectors -------------------
     let sinsu = su.sin();

@@ -272,10 +272,6 @@ fn parse_int(line: &str, name: &'static str, low: usize, high: usize) -> Result<
 }
 
 pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> {
-    let tumin = tumin();
-
-    const XPDOTP: f64 = 1440.0 / (2.0 * std::f64::consts::PI);
-
     // Parse sat num
     let satnum = str1[2..7].trim();
 
@@ -321,7 +317,7 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
     let mo = parse_float(str2, "mo", 43, 51)? * DEG_2_RAD;
     let no = parse_float(str2, "no", 52, 63)? / XPDOTP;
 
-    let a = (no * tumin).powf(-2.0 / 3.0);
+    let a = (no * TUMIN).powf(-2.0 / 3.0);
 
     let alta = (a * (1.0 + ecco)) - 1.0;
     let altp = (a * (1.0 - ecco)) - 1.0;
