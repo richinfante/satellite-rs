@@ -284,7 +284,6 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
     let epochdays = parse_float(str1, "epochdays", 20, 32)?;
 
     // Parse ndot
-    println!("PARSE: `{}`", str1[33..43].to_string());
     let ndot = parse_float(str1, "ndot", 33, 43)?  / (XPDOTP * 1440.0);;
 
     // Parse nndot

@@ -26,9 +26,9 @@ fn main() {
     let tle1 = "1 25544U 98067A   19069.56476704  .00000755  00000-0  19456-4 0  9990";
     let tle2 = "2 25544  51.6421 131.5511 0004047  93.2744  48.5994 15.52797828159932";
 
-    let mut satrec = satellite::io::twoline2satrec(tle1, tle2);
+    let mut satrec = satellite::io::twoline2satrec(tle1, tle2).unwrap();
 
-    let result = satellite::propogation::propogate_datetime(&mut satrec, Utc::now());
+    let result = satellite::propogation::propogate_datetime(&mut satrec, Utc::now()).unwrap();
 
     println!("Position {:#?}", result.position);
     println!("Velocity {:#?}", result.velocity);
