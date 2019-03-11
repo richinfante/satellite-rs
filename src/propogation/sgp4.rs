@@ -2,7 +2,7 @@ use crate::constants::*;
 use crate::io::Satrec;
 use crate::propogation::dpper::*;
 use crate::propogation::initl::InitlMethod;
-use crate::Vec3;
+use crate::{Vec3, Eci};
 /*----------------------------------------------------------------------------
 *
 *                             procedure sgp4
@@ -92,7 +92,7 @@ use crate::Vec3;
 
 #[derive(Debug, PartialEq)]
 pub struct SGP4Result {
-    pub position: Vec3,
+    pub position: Eci,
     pub velocity: Vec3,
 }
 
@@ -434,7 +434,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> Result<SGP4Result, SGP4Error> {
     let vz = sini * cossu;
 
     // --------- position and velocity (in km and km/sec) ----------
-    let r = Vec3 {
+    let r = Eci {
         x: (mrt * ux) * EARTH_RADIUS,
         y: (mrt * uy) * EARTH_RADIUS,
         z: (mrt * uz) * EARTH_RADIUS,
