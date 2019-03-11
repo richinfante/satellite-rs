@@ -1,4 +1,5 @@
 # satellite-rs
+![build status](https://api.travis-ci.org/richinfante/satellite-rs.svg?branch=master)
 
 A port of [satellite-js](https://github.com/shashwatak/satellite-js) to rust.
 
