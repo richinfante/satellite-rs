@@ -79,7 +79,7 @@ impl Vec3 {
 #[cfg(test)]
 mod tests {
     pub fn assert_similar(lhs: f64, rhs: f64) {
-        assert_diff(lhs, rhs, 1e-15);
+        assert_diff(lhs, rhs, 1e-13);
     }
 
     pub fn assert_diff(lhs: f64, rhs: f64, epsilon: f64) {
