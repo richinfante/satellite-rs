@@ -23,16 +23,17 @@ use chrono::prelude::*;
 
 fn main() {
     // ISS TLE's
-    let tle1 = "1 25544U 98067A   19069.56476704  .00000755  00000-0  19456-4 0  9990";
-    let tle2 = "2 25544  51.6421 131.5511 0004047  93.2744  48.5994 15.52797828159932";
+    let tle1 = "1 25544U 98067A   19070.20068744  .00000619  00000-0  17310-4 0  9990";
+    let tle2 = "2 25544  51.6414 128.3903 0004102  93.2843   5.7821 15.52799004160030";
 
     let mut satrec = satellite::io::twoline2satrec(tle1, tle2).unwrap();
 
-    let result = satellite::propogation::propogate_datetime(&mut satrec, Utc::now()).unwrap();
+    let time = Utc::now();
+    let result = satellite::propogation::propogate_datetime(&mut satrec, time).unwrap();
 
     println!("Position {:#?}", result.position);
     println!("Velocity {:#?}", result.velocity);
-
+    
     // Set the Observer at 122.03 West by 36.96 North, in RADIANS
     let observer = satellite::Geodedic {
         longitude: -122.0308 * satellite::constants::DEG_2_RAD,
@@ -40,10 +41,17 @@ fn main() {
         height: 0.370
     };
 
+    let gmst = satellite::propogation::gstime::gstime_datetime(time);
+    let sat_pos = satellite::transforms::eci_to_geodedic(&result.position, gmst);
     let position_ecf = satellite::transforms::eci_to_ecf(&result.position, 0.0);
     let look_angles = satellite::transforms::ecf_to_look_angles(&observer, &position_ecf);
 
-    println!("{:#?}", look_angles);
+    println!("longitude = {}", sat_pos.latitude * satellite::constants::RAD_TO_DEG);
+    println!("latitude = {}", sat_pos.longitude * satellite::constants::RAD_TO_DEG);
+    println!("alt = {}", sat_pos.height * satellite::constants::KM_TO_MI);
+    println!("aizmuth = {}", look_angles.azimuth * satellite::constants::RAD_TO_DEG);
+    println!("elevation = {}", look_angles.elevation * satellite::constants::RAD_TO_DEG);
+    println!("range = {}", look_angles.range * satellite::constants::KM_TO_MI);
 }
 ```
 
