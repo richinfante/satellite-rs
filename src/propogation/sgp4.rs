@@ -89,14 +89,35 @@ use crate::Vec3;
 *    hoots, schumacher and glover 2004
 *    vallado, crawford, hujsak, kelso  2006
 ----------------------------------------------------------------------------*/
+
+#[derive(Debug, PartialEq)]
 pub struct SGP4Result {
     pub position: Vec3,
     pub velocity: Vec3,
 }
 
-pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
-    /* eslint-disable no-param-reassign */
+#[derive(Debug, PartialEq)]
+pub enum SGP4Error {
+    Eccentricty,
+    Ep,
+    Nm,
+    Pl,
+    DecayCondition
+}
 
+impl SGP4Error {
+    pub fn code(&self) -> u8 {
+        match self {
+            SGP4Error::Eccentricty => 1,
+            SGP4Error::Nm => 2,
+            SGP4Error::Ep => 3,
+            SGP4Error::Pl => 4,
+            SGP4Error::DecayCondition => 6
+        }
+    }
+}
+
+pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> Result<SGP4Result, SGP4Error> {
     let mut coseo1 = 0.0;
     let mut sineo1 = 0.0;
     let mut cosip;
@@ -227,7 +248,8 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
         satrec.error = 2;
         // sgp4fix add return
         // return [false, false];
-        panic!("error 2")
+        // panic!("error 2")
+        return Err(SGP4Error::Nm);
     }
 
     let am = ((xke() / nm).powf(X2O3)) * tempa * tempa;
@@ -242,7 +264,8 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
         satrec.error = 1;
         // sgp4fix to return if there is an error in eccentricity
         // return [false, false];
-        panic!("error 1");
+        // panic!("error 1");
+        return Err(SGP4Error::Eccentricty);
     }
 
     //  sgp4fix fix tolerance to avoid a divide by zero
@@ -302,7 +325,8 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
             satrec.error = 3;
             //  sgp4fix add return
             // return [false, false];
-            panic!("error 3");
+            // panic!("error 3");
+            return Err(SGP4Error::Ep);
         }
     }
 
@@ -359,7 +383,8 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
         satrec.error = 4;
         //  sgp4fix add return
         // return [false, false];
-        panic!("Error 4: pl: {}", pl);
+        // panic!("Error 4: pl: {}", pl);
+        return Err(SGP4Error::Pl);
     }
 
     let rl = am * (1.0 - ecose);
@@ -429,13 +454,13 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> SGP4Result {
         //   velocity: false,
         // };
 
-        panic!("decay condition: mrt={}, (err 6)", mrt);
+        // panic!("decay condition: mrt={}, (err 6)", mrt);
+
+        return Err(SGP4Error::DecayCondition);
     }
 
-    SGP4Result {
+    Ok(SGP4Result {
         position: r,
         velocity: v,
-    }
-
-    /* eslint-enable no-param-reassign */
+    })
 }

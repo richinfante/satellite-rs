@@ -227,8 +227,8 @@ impl Satrec {
     }
 }
 
-pub fn twoline2satrec(str1: &str, str2: &str) -> Satrec {
-    let mut satrec = parse_satrec(str1, str2);
+pub fn twoline2satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> {
+    let mut satrec = parse_satrec(str1, str2)?;
 
     let opsmode = crate::propogation::dpper::DpperOpsMode::I;
     let opts = crate::propogation::sgp4init::SGP4InitOptions {
@@ -246,38 +246,81 @@ pub fn twoline2satrec(str1: &str, str2: &str) -> Satrec {
 
     sgp4init::sgp4init(&mut satrec, opts);
 
-    return satrec;
+    return Ok(satrec);
 }
 
-pub fn parse_satrec(str1: &str, str2: &str) -> Satrec {
+#[derive(Debug)]
+pub enum SatrecParseError {
+    FloatParseError(&'static str, usize, usize, String),
+    IntParseError(&'static str, usize, usize, String),
+    CompoundError(&'static str, String)
+}
+
+
+fn parse_float(line: &str, name: &'static str, low: usize, high: usize) -> Result<f64, SatrecParseError> {
+    match line[low..high].trim().parse::<f64>() {
+        Ok(res) => Ok(res),
+        Err(num) => return Err(SatrecParseError::IntParseError(name, low, high, line[low..high].to_string()))
+    }
+}
+
+fn parse_int(line: &str, name: &'static str, low: usize, high: usize) -> Result<i64, SatrecParseError> {
+    match line[low..high].trim().parse::<i64>() {
+        Ok(res) => Ok(res),
+        Err(num) => return Err(SatrecParseError::IntParseError(name, low, high, line[low..high].to_string()))
+    }
+}
+
+pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> {
     let tumin = tumin();
 
     const XPDOTP: f64 = 1440.0 / (2.0 * std::f64::consts::PI);
 
+    // Parse sat num
     let satnum = str1[2..7].trim();
-    let epochyr = str1[18..20].trim().parse::<i64>().unwrap();
-    let epochdays = str1[20..32].trim().parse::<f64>().unwrap();
-    let ndot = str1[33..43].trim().parse::<f64>().unwrap() / (XPDOTP * 1440.0);
-    let nddot_0 = str1[44..50].trim().parse::<i64>().unwrap();
+
+    // Parse epoch
+    let epochyr = parse_int(str1, "epochyr", 18, 20)?;
+    let epochdays = parse_float(str1, "epochdays", 20, 32)?;
+
+    // Parse ndot
+    println!("PARSE: `{}`", str1[33..43].to_string());
+    let ndot = parse_float(str1, "ndot", 33, 43)?  / (XPDOTP * 1440.0);;
+
+    // Parse nndot
+    let nddot_0 = parse_int(str1, "nndot frac", 44, 50)?;
     let nddot_1 = str1[50..52].to_string();
-    let nddot =
-        format!(".{}E{}", nddot_0, nddot_1).parse::<f64>().unwrap() / (XPDOTP * 1440.0 * 1440.0);
+    let nndot_str = format!(".{}E{}", nddot_0, nddot_1);
+
+    let nddot = match nndot_str.parse::<f64>() {
+            Ok(res) => res / (XPDOTP * 1440.0 * 1440.0),
+            Err(_) => return Err(SatrecParseError::CompoundError("nndot", nndot_str))
+    };
+
+    // Parse bstar
     let bstar_0 = str1[53..54].to_string();
-    let bstar_1 = str1[54..59].trim().parse::<i64>().unwrap();
+    let bstar_1 = parse_int(str1, "bstar frac", 54, 59)?;
     let bstar_2 = str1[59..61].to_string();
-    let bstar = format!("{}.{}E{}", bstar_0, bstar_1, bstar_2)
-        .trim()
-        .parse::<f64>()
-        .unwrap();
-  ;
-    let inclo = str2[8..16].trim().parse::<f64>().unwrap() * DEG_2_RAD;
-    let nodeo = str2[17..25].trim().parse::<f64>().unwrap() * DEG_2_RAD;
-    let ecco = format!(".{}", str2[26..33].trim().to_string())
-        .parse::<f64>()
-        .unwrap();
-    let argpo = str2[34..42].trim().parse::<f64>().unwrap() * DEG_2_RAD;
-    let mo = str2[43..51].trim().parse::<f64>().unwrap() * DEG_2_RAD;
-    let no = str2[52..63].trim().parse::<f64>().unwrap() / XPDOTP;
+    let bstar_str = format!("{}.{}E{}", bstar_0, bstar_1, bstar_2);
+
+    let bstar = match bstar_str.trim().parse::<f64>() {
+        Ok(res) => res,
+        Err(_) => return Err(SatrecParseError::CompoundError("bstr", bstar_str))
+    };
+
+    let inclo = parse_float(str2, "inclo", 8, 16)? * DEG_2_RAD;
+    let nodeo = parse_float(str2, "nodeo", 17, 25)? * DEG_2_RAD;
+
+    // Parse ecco
+    let ecco_str = format!(".{}", str2[26..33].trim().to_string());
+    let ecco = match ecco_str.trim().parse::<f64>() {
+        Ok(res) => res,
+        Err(_) => return Err(SatrecParseError::CompoundError("ecco", ecco_str))
+    };
+
+    let argpo = parse_float(str2, "argpo", 34, 42)? * DEG_2_RAD;
+    let mo = parse_float(str2, "mo", 43, 51)? * DEG_2_RAD;
+    let no = parse_float(str2, "no", 52, 63)? / XPDOTP;
 
     let a = (no * tumin).powf(-2.0 / 3.0);
 
@@ -323,7 +366,7 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Satrec {
     satrec.altp = altp;
     satrec.jdsatepoch = jdsatepoch;
 
-    return satrec;
+    return Ok(satrec);
 }
 
 #[cfg(test)]
@@ -333,7 +376,7 @@ mod tests {
         let satrec = crate::io::parse_satrec(
             "1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8",
             "2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105",
-        );
+        ).unwrap();
 
         assert_eq!(satrec.error, 0);
         assert_eq!(satrec.satnum, "88888");
@@ -359,7 +402,7 @@ mod tests {
         let satrec = crate::io::twoline2satrec(
             "1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8",
             "2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105",
-        );
+        ).unwrap();
 
         assert_eq!(satrec.error, 0);
         assert_eq!(satrec.satnum, "88888");
@@ -462,112 +505,5 @@ mod tests {
         assert_eq!(satrec.atime, 0.0);
         assert_eq!(satrec.xli, 0.0);
         assert_eq!(satrec.xni, 0.0);
-
-        /*
-
-
-          { error: 0,
-        satnum: '88888',
-        epochyr: 80,
-        epochdays: 275.98708465,
-        ndot: 2.2148107004387767e-9,
-        nddot: 2.913090538750181e-13,
-        bstar: 0.000066816,
-        inclo: 1.2713589136764896,
-        nodeo: 2.0240391349160523,
-        ecco: 0.0086731,
-        argpo: 0.9197675718499877,
-        mo: 1.929834988539658,
-        no: 0.07010615621239219,
-        a: 1.0405013051291292,
-        alta: 0.04952567699864474,
-        altp: 0.03147693325961365,
-        jdsatepoch: 2444514.48708465,
-        isimp: 1,
-        method: 'n',
-        aycof: 0.001117407997657797,
-        con41: -0.7389556198424165,
-        cc1: 2.3340379369349495e-8,
-        cc4: 0.00037724513079719584,
-        cc5: 0.01233625966048993,
-        d2: 0,
-        d3: 0,
-        d4: 0,
-        delmo: 0.6963031736886937,
-        eta: 0.32347784078169217,
-        argpdot: -0.000029718644394179532,
-        omgcof: 1.6306928260750368e-7,
-        sinmao: 0.9362350458581234,
-        t: 0,
-        t2cof: 3.5010569054024244e-8,
-        t3cof: 0,
-        t4cof: 0,
-        t5cof: 0,
-        x1mth2: 0.9129852066141388,
-        x7thm1: -0.3908964462989719,
-        mdot: 0.07006729343154267,
-        nodedot: -0.00003096533062994484,
-        xlcof: 0.0019306451483792333,
-        xmcof: -0.0000493564796620572,
-        nodecf: -2.5361112971222384e-12,
-        irez: 0,
-        d2201: 0,
-        d2211: 0,
-        d3210: 0,
-        d3222: 0,
-        d4410: 0,
-        d4422: 0,
-        d5220: 0,
-        d5232: 0,
-        d5421: 0,
-        d5433: 0,
-        dedt: 0,
-        del1: 0,
-        del2: 0,
-        del3: 0,
-        didt: 0,
-        dmdt: 0,
-        dnodt: 0,
-        domdt: 0,
-        e3: 0,
-        ee2: 0,
-        peo: 0,
-        pgho: 0,
-        pho: 0,
-        pinco: 0,
-        plo: 0,
-        se2: 0,
-        se3: 0,
-        sgh2: 0,
-        sgh3: 0,
-        sgh4: 0,
-        sh2: 0,
-        sh3: 0,
-        si2: 0,
-        si3: 0,
-        sl2: 0,
-        sl3: 0,
-        sl4: 0,
-        gsto: 0.1082901416688955,
-        xfact: 0,
-        xgh2: 0,
-        xgh3: 0,
-        xgh4: 0,
-        xh2: 0,
-        xh3: 0,
-        xi2: 0,
-        xi3: 0,
-        xl2: 0,
-        xl3: 0,
-        xl4: 0,
-        xlamo: 0,
-        zmol: 0,
-        zmos: 0,
-        atime: 0,
-        xli: 0,
-        xni: 0,
-        operationmode: 'i',
-        init: 'n' }
-        */
     }
 }

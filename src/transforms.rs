@@ -207,12 +207,6 @@ mod test {
 
         let res = transforms::ecf_to_look_angles(&observer_gd, &position_ecf);
 
-        // assert_eq!(res, Bearing {
-        //   azimuth: 1.747132515004105,
-        //   elevation: -0.40791001471599636,
-        //   range: 5703.24291019934
-        // });
-
         assert_diff(res.azimuth, 1.747132515004105, 1e-12);
         assert_diff(res.elevation, -0.40791001471599636, 1e-12);
         assert_diff(res.range, 5703.24291019934, 1e-11);

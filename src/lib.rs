@@ -92,7 +92,7 @@ mod tests {
         let tle1 = "1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8";
         let tle2 = "2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105";
 
-        let mut satrec = crate::io::twoline2satrec(tle1, tle2);
+        let mut satrec = crate::io::twoline2satrec(tle1, tle2).unwrap();
 
         let known_track: Vec<TrackEntry> = vec![
             TrackEntry {
@@ -124,7 +124,10 @@ mod tests {
         ];
 
         for entry in known_track {
-            let result = crate::propogation::sgp4::sgp4(&mut satrec, entry.time);
+            let result = match crate::propogation::sgp4::sgp4(&mut satrec, entry.time) {
+                Ok(res) => res,
+                Err(err) => panic!("Propogation Error: {:#?} (code {})", err, err.code())
+            };
 
             // println!("pos @{} {:#?}", entry.time, result.position);
             // println!("vel @{} {:#?}", entry.time, result.velocity);
@@ -157,7 +160,7 @@ mod tests {
         let tle1 = "1 11801U          80230.29629788  .01431103  00000-0  14311-1        ";
         let tle2 = "2 11801  46.7916 230.4354 7318036  47.4722  10.4117  2.28537848      ";
 
-        let mut satrec = crate::io::twoline2satrec(tle1, tle2);
+        let mut satrec = crate::io::twoline2satrec(tle1, tle2).unwrap();
 
         let known_track: Vec<TrackEntry> = vec![
             TrackEntry {
@@ -189,7 +192,10 @@ mod tests {
         ];
 
         for entry in known_track {
-            let result = crate::propogation::sgp4::sgp4(&mut satrec, entry.time);
+            let result = match crate::propogation::sgp4::sgp4(&mut satrec, entry.time) {
+                Ok(res) => res,
+                Err(err) => panic!("Propogation Error: {:#?} (code {})", err, err.code())
+            };
 
             // println!("pos @{} {:#?}", entry.time, result.position);
             // println!("vel @{} {:#?}", entry.time, result.velocity);

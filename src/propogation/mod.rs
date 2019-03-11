@@ -16,7 +16,7 @@ use crate::propogation::sgp4::*;
 use chrono::prelude::*;
 use chrono::DateTime;
 
-pub fn propogate_datetime(satrec: &Satrec, time: DateTime<Utc>) -> SGP4Result {
+pub fn propogate_datetime(satrec: &Satrec, time: DateTime<Utc>) -> Result<SGP4Result, SGP4Error> {
   let j = jday(
     time.year() as f64,
     time.month() as f64,
