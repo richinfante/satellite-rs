@@ -3,6 +3,7 @@ use crate::ext;
 use crate::propogation::dpper::*;
 use crate::propogation::initl::*;
 use crate::propogation::sgp4init;
+use crate::propogation::sgp4::*;
 
 #[derive(Clone)]
 pub struct Satrec {
@@ -244,7 +245,10 @@ pub fn twoline2satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError
         xnodeo: satrec.nodeo,
     };
 
-    sgp4init::sgp4init(&mut satrec, opts);
+    match sgp4init::sgp4init(&mut satrec, opts) {
+        Ok(_) => {}, // Ignore initial sgp4 positioning.
+        Err(err) => return Err(SatrecParseError::Sgp4InitError(err))
+    };
 
     return Ok(satrec);
 }
@@ -253,7 +257,8 @@ pub fn twoline2satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError
 pub enum SatrecParseError {
     FloatParseError(&'static str, usize, usize, String),
     IntParseError(&'static str, usize, usize, String),
-    CompoundError(&'static str, String)
+    CompoundError(&'static str, String),
+    Sgp4InitError(SGP4Error)
 }
 
 

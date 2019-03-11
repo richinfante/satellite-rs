@@ -101,9 +101,7 @@ pub struct SGP4InitOptions {
     pub xno: f64,
     pub xnodeo: f64,
 }
-pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
-    /* eslint-disable no-param-reassign */
-
+pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) -> Result<SGP4Result, SGP4Error> {
     let SGP4InitOptions {
         opsmode,
         satn,
@@ -719,9 +717,11 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) {
         // if(satrec.error == 0)
     }
 
-    sgp4(satrec, 0.0); // TODO: found extra param:, 0);
+    let result = sgp4(satrec, 0.0)?; // TODO: found extra param:, 0);
 
     satrec.init = DpperInit::N;
+
+    return Ok(result)
 
     /* eslint-enable no-param-reassign */
 }
