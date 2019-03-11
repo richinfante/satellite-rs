@@ -1,4 +1,6 @@
+use crate::ext;
 use crate::constants::*;
+use chrono::prelude::*;
 
 pub fn gstime(jdut1: f64) -> f64 {
     let tut1 = (jdut1 - 2451545.0) / 36525.0;
@@ -15,6 +17,11 @@ pub fn gstime(jdut1: f64) -> f64 {
     }
 
     return temp;
+}
+
+pub fn gstime_datetime(datetime: DateTime<Utc>) -> f64 {
+    let jday = ext::jday_datetime(datetime);
+    return gstime(jday)
 }
 
 // TODO: does this mean anything?
