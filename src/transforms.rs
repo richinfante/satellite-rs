@@ -1,4 +1,5 @@
 use crate::constants::*;
+use crate::*;
 use crate::Bearing;
 use crate::Geodedic;
 use crate::TopoCentric;
@@ -44,7 +45,7 @@ pub fn radians_long(degrees: f64) -> f64 {
     degrees_to_radians(degrees)
 }
 
-pub fn geodedic_to_ecf(geodetic: &Geodedic) -> Vec3 {
+pub fn geodedic_to_ecf(geodetic: &Geodedic) -> Ecf {
     const A: f64 = 6378.137;
     const B: f64 = 6356.7523142;
     const F: f64 = (A - B) / A;
@@ -59,7 +60,7 @@ pub fn geodedic_to_ecf(geodetic: &Geodedic) -> Vec3 {
     Vec3 { x, y, z }
 }
 
-pub fn eci_to_geodedic(eci: &Vec3, gmst: f64) -> Geodedic {
+pub fn eci_to_geodedic(eci: &Eci, gmst: f64) -> Geodedic {
     const A: f64 = 6378.137;
     const B: f64 = 6356.7523142;
     let r: f64 = ((eci.x * eci.x) + (eci.y * eci.y)).sqrt();
@@ -98,7 +99,7 @@ pub fn eci_to_geodedic(eci: &Vec3, gmst: f64) -> Geodedic {
     }
 }
 
-pub fn ecf_to_eci(ecf: &Vec3, gmst: f64) -> Vec3 {
+pub fn ecf_to_eci(ecf: &Ecf, gmst: f64) -> Eci {
     let x = (ecf.x * gmst.cos()) - (ecf.y * gmst.sin());
     let y = (ecf.x * gmst.sin()) + (ecf.y * gmst.cos());
     let z = ecf.z;
@@ -106,7 +107,7 @@ pub fn ecf_to_eci(ecf: &Vec3, gmst: f64) -> Vec3 {
     Vec3 { x, y, z }
 }
 
-pub fn eci_to_ecf(eci: &Vec3, gmst: f64) -> Vec3 {
+pub fn eci_to_ecf(eci: &Eci, gmst: f64) -> Ecf {
     let x = (eci.x * gmst.cos()) - (eci.y * gmst.sin());
     let y = (eci.x * -gmst.sin()) + (eci.y * gmst.cos());
     let z = eci.z;
@@ -114,10 +115,10 @@ pub fn eci_to_ecf(eci: &Vec3, gmst: f64) -> Vec3 {
     Vec3 { x, y, z }
 }
 
-pub fn topocentric(observer: &Geodedic, satellite_ecf: &Vec3) -> TopoCentric {
+pub fn topocentric(observer: &Geodedic, satellite: &Ecf) -> TopoCentric {
     let observer_ecf = geodedic_to_ecf(&observer);
 
-    let r = satellite_ecf.subtract(&observer_ecf);
+    let r = satellite.subtract(&observer_ecf);
 
     let top_s = (observer.latitude.sin() * observer.longitude.cos() * r.x)
         + (observer.latitude.sin() * observer.longitude.sin() * r.y)
@@ -148,8 +149,8 @@ pub fn topocentric_to_look_angles(tc: &TopoCentric) -> Bearing {
     }
 }
 
-pub fn ecf_to_look_angles(observer: &Geodedic, satellite_ecf: &Vec3) -> Bearing {
-    let topocentric = topocentric(observer, satellite_ecf);
+pub fn ecf_to_look_angles(observer: &Geodedic, satellite: &Ecf) -> Bearing {
+    let topocentric = topocentric(observer, satellite);
 
     topocentric_to_look_angles(&topocentric)
 }
@@ -160,7 +161,7 @@ mod test {
     use crate::*;
     #[test]
     fn eci_to_ecf() {
-        let position = Vec3 {
+        let position = Eci {
             x: 2328.957357263014,
             y: -5995.219305262678,
             z: 1720.0073114076358,
@@ -170,7 +171,7 @@ mod test {
 
         assert_eq!(
             position_ecf,
-            Vec3 {
+            Ecf {
                 x: 2328.957357263014,
                 y: -5995.219305262678,
                 z: 1720.0073114076358
@@ -180,15 +181,15 @@ mod test {
 
     #[test]
     fn ecf_to_eci() {
-        let position = Vec3 {
+        let position = Eci {
             x: 2328.957357263014,
             y: -5995.219305262678,
             z: 1720.0073114076358,
         };
 
         let position_ecf = transforms::eci_to_ecf(&position, 0.0);
-        let orig_ecf = transforms::ecf_to_eci(&position_ecf, 0.0);
-        assert_eq!(position, orig_ecf);
+        let orig_eci = transforms::ecf_to_eci(&position_ecf, 0.0);
+        assert_eq!(position, orig_eci);
     }
 
     #[test]
@@ -199,7 +200,7 @@ mod test {
             height: 0.370,
         };
 
-        let position_ecf = Vec3 {
+        let position_ecf = Ecf {
             x: 2328.957357263014,
             y: -5995.219305262678,
             z: 1720.0073114076358,
@@ -220,7 +221,7 @@ mod test {
             height: 0.370,
         };
 
-        let position_ecf = Vec3 {
+        let position_ecf = Ecf {
             x: 2328.957357263014,
             y: -5995.219305262678,
             z: 1720.0073114076358,

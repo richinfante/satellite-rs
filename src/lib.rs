@@ -14,6 +14,9 @@ pub struct Vec3 {
     pub z: f64,
 }
 
+type Ecf = Vec3;
+type Eci = Vec3;
+
 #[derive(Debug, PartialEq)]
 pub struct TopoCentric {
     /// Positive horizontal vector S due south.
@@ -28,14 +31,22 @@ pub struct TopoCentric {
 
 #[derive(Debug, PartialEq)]
 pub struct Geodedic {
+    /// Longitude, in radians.
     pub longitude: f64,
+
+    /// Longitude, in radians.
     pub latitude: f64,
+
+    /// Altitude, in Km.
     pub height: f64,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct Bearing {
+    // Aizmuth in radians
     pub azimuth: f64,
+
+    // Elevation in radians
     pub elevation: f64,
 
     // Range in km
