@@ -722,6 +722,4 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) -> Result<SGP4Res
     satrec.init = DpperInit::N;
 
     return Ok(result)
-
-    /* eslint-enable no-param-reassign */
 }

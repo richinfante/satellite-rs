@@ -1,18 +1,38 @@
 pub use std::f64::consts::PI;
+
+/// 2 * π
 pub static TWO_PI: f64 = PI * 2.0;
+
+/// Conversion factor for Degrees -> Radians
 pub static DEG_2_RAD: f64 = PI / 180.0;
+
+/// Conversion factorfor Radians -> Degrees
 pub static RAD_TO_DEG: f64 = 180.0 / PI;
+
+/// Minutes per day constant.
 pub static MINUTES_PER_DAY: f64 = 1440.0;
+
 pub static MU: f64 = 398600.5; // in km3 / s2
-pub static EARTH_RADIUS: f64 = 6378.137; // in km
+
+/// Earth's Radiys (km)
+pub static EARTH_RADIUS: f64 = 6378.137;
+
+// Two-thirds precomputed constant.
+pub static X2O3: f64 = 2.0 / 3.0;
+
+/// Speed of light in km/s
+pub static C: f64 = 299792.458;
+
+/// Km to mi conversion
+pub static KM_TO_MI: f64 = 0.62137;
+
+ // Mi to Km conversion
+pub static MI_TO_KM: f64 = 1.0 / 0.62137;
+
 pub static J2: f64 = 0.00108262998905;
 pub static J3: f64 = -0.00000253215306;
 pub static J4: f64 = -0.00000161098761;
 pub static J3OJ2: f64 = J3 / J2;
-pub static X2O3: f64 = 2.0 / 3.0;
-pub static C: f64 = 299792.458; // Speed of light in km/s
-pub static KM_TO_MI: f64 = 0.62137; // Km to mi conversion
-pub static MI_TO_KM: f64 = 1.0 / 0.62137; // Mi to Km conversion
 pub static XKE : f64 = 0.07436685316871385;
 pub static TUMIN : f64 = 13.446851082044981;
 pub static XPDOTP: f64 = 1440.0 / (2.0 * std::f64::consts::PI);

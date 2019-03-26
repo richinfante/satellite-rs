@@ -110,13 +110,6 @@ pub fn initl(options: InitlOptions) -> InitlReturn {
     let cosio = inclo.cos();
     let cosio2 = cosio * cosio;
 
-    // assert_eq!(eccsq, 0.00007522266360999999);
-    // assert_eq!(omeosq, 0.99992477733639);
-    // assert_eq!(rteosq, 0.9999623879608622);
-    // assert_eq!(cosio, 0.2949827001467394);
-    // assert_eq!(cosio2, 0.08701479338586116);
-    // assert_eq!(X2O3, 0.6666666666666666);
-
     // ------------------ un-kozai the mean motion -----------------
     let ak = (XKE / no).powf(X2O3);
     let d1 = (0.75 * J2 * ((3.0 * cosio2) - 1.0)) / (rteosq * omeosq);

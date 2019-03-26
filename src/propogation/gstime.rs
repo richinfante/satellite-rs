@@ -2,6 +2,7 @@ use crate::ext;
 use crate::constants::*;
 use chrono::prelude::*;
 
+/// Convert a julian date to GMST (Greenwich Mean Sidereal Time)
 pub fn gstime(jdut1: f64) -> f64 {
     let tut1 = (jdut1 - 2451545.0) / 36525.0;
 
@@ -19,18 +20,11 @@ pub fn gstime(jdut1: f64) -> f64 {
     return temp;
 }
 
+/// Convert a datetime to GMST (Greenwich Mean Sidereal Time)
 pub fn gstime_datetime(datetime: DateTime<Utc>) -> f64 {
     let jday = ext::jday_datetime(datetime);
     return gstime(jday)
 }
-
-// TODO: does this mean anything?
-// export default function gstime(...args) {
-//   if (args[0] instanceof Date || args.length > 1) {
-//     return gstimeInternal(jday(...args));
-//   }
-//   return gstimeInternal(...args);
-// }
 
 #[cfg(test)]
 mod tests {

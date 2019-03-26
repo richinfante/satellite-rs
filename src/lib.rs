@@ -8,6 +8,7 @@ pub mod propogation;
 pub mod transforms;
 
 #[derive(Debug, PartialEq)]
+/// Standard three-component vector (x,y,z)
 pub struct Vec3 {
     pub x: f64,
     pub y: f64,
@@ -30,6 +31,7 @@ pub struct TopoCentric {
 }
 
 #[derive(Debug, PartialEq)]
+/// Latitude/Longitude/Height based position
 pub struct Geodedic {
     /// Longitude, in radians.
     pub longitude: f64,
@@ -42,14 +44,15 @@ pub struct Geodedic {
 }
 
 #[derive(Debug, PartialEq)]
+/// Relative position vector
 pub struct Bearing {
-    // Aizmuth in radians
+    /// Aizmuth in radians
     pub azimuth: f64,
 
-    // Elevation in radians
+    /// Elevation in radians
     pub elevation: f64,
 
-    // Range in km
+    /// Range in km
     pub range: f64,
 }
 
