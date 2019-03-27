@@ -231,7 +231,7 @@ impl Satrec {
 }
 
 pub fn parse(string: &str) -> Result<Satrec, SatrecParseError> {
-    let lines = string.split("\n").into_iter().collect::<Vec<&str>>();
+    let lines = string.split("\n").into_iter().filter(|el| { return el.trim() != "" }).collect::<Vec<&str>>();
     
     // If there are three lines, parse as 3LE.
     if lines.len() == 3 {
@@ -410,9 +410,11 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
 mod tests {
     #[test]
     fn test_parse_full() {
-        let element = r###"0 ISS (ZARYA)
+        let element = r###"
+0 ISS (ZARYA)
 1 25544U 98067A   19085.83761025  .00001292  00000-0  28282-4 0  9995
-2 25544  51.6446  50.5941 0002332 117.0184 328.1109 15.52438493162461"###;
+2 25544  51.6446  50.5941 0002332 117.0184 328.1109 15.52438493162461
+"###;
         let sat = crate::io::parse(element).unwrap();
         assert_eq!(sat.name, Some("ISS (ZARYA)".to_string()));
     }
