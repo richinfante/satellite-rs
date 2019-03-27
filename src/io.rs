@@ -7,6 +7,7 @@ use crate::propogation::sgp4::*;
 
 #[derive(Clone)]
 pub struct Satrec {
+    pub name: Option<String>,
     pub init: DpperInit,
     pub operationmode: DpperOpsMode,
     pub error: u32,
@@ -118,6 +119,7 @@ pub struct Satrec {
 impl Satrec {
     pub fn zero() -> Satrec {
         Satrec {
+            name: None,
             init: DpperInit::Y,
             operationmode: DpperOpsMode::I,
             error: 0,
@@ -228,6 +230,39 @@ impl Satrec {
     }
 }
 
+pub fn parse(string: &str) -> Result<Satrec, SatrecParseError> {
+    let lines = string.split("\n").into_iter().collect::<Vec<&str>>();
+    
+    // If there are three lines, parse as 3LE.
+    if lines.len() == 3 {
+        // First, perform check on the first character of each line. should be line numbers.
+        if lines[0].bytes().collect::<Vec<u8>>()[0] != '0' as u8 || lines[1].bytes().collect::<Vec<u8>>()[0] != '1' as u8 || lines[2].bytes().collect::<Vec<u8>>()[0] != '2' as u8 {
+            return Err(SatrecParseError::InvalidTLELineCheckFailed)
+        }
+
+        // Now, parse the satrec.
+        let satrec = twoline2satrec(lines[1], lines[2]);
+
+        // Because this is a 3le, we have a name. Extract/save it.
+        match satrec {
+            Ok(mut satrec) => {
+                satrec.name = Some(lines[0][2..].to_string());
+                return Ok(satrec)
+            },
+            Err(err) => { return Err(err) }
+        }
+    } else if lines.len() == 2 {
+        // First, perform check on the first character of each line. should be line numbers. 
+        if lines[0].bytes().collect::<Vec<u8>>()[0] != '1' as u8 || lines[1].bytes().collect::<Vec<u8>>()[0] != '2' as u8  {
+            return Err(SatrecParseError::InvalidTLELineCheckFailed)
+        }
+
+        return twoline2satrec(lines[0], lines[1]);
+    } else {
+        return Err(SatrecParseError::InvalidTLEBadLineCount)
+    }
+}
+
 pub fn twoline2satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> {
     let mut satrec = parse_satrec(str1, str2)?;
 
@@ -258,7 +293,9 @@ pub enum SatrecParseError {
     FloatParseError(&'static str, usize, usize, String),
     IntParseError(&'static str, usize, usize, String),
     CompoundError(&'static str, String),
-    Sgp4InitError(SGP4Error)
+    Sgp4InitError(SGP4Error),
+    InvalidTLELineCheckFailed,
+    InvalidTLEBadLineCount
 }
 
 
@@ -371,6 +408,23 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn test_parse_full() {
+        let element = r###"0 ISS (ZARYA)
+1 25544U 98067A   19085.83761025  .00001292  00000-0  28282-4 0  9995
+2 25544  51.6446  50.5941 0002332 117.0184 328.1109 15.52438493162461"###;
+        let sat = crate::io::parse(element).unwrap();
+        assert_eq!(sat.name, Some("ISS (ZARYA)".to_string()));
+    }
+
+        #[test]
+    fn test_parse_part() {
+        let element = r###"1 25544U 98067A   19085.83761025  .00001292  00000-0  28282-4 0  9995
+2 25544  51.6446  50.5941 0002332 117.0184 328.1109 15.52438493162461"###;
+        let sat = crate::io::parse(element).unwrap();
+        assert_eq!(sat.name, None);
+    }
+
     #[test]
     fn test_parse() {
         let satrec = crate::io::parse_satrec(

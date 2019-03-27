@@ -302,6 +302,7 @@ mod test {
     #[test]
     fn test_ds() {
         let satrec = Satrec {
+            name: None,
             error: 0,
             satnum: "11801".to_string(),
             epochyr: 80,
@@ -429,6 +430,7 @@ mod test {
     #[test]
     fn test_no_init() {
         let satrec = Satrec {
+            name: None,
             error: 0,
             satnum: "11801".to_string(),
             epochyr: 80,
