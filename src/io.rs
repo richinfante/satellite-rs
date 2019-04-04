@@ -233,28 +233,29 @@ impl Satrec {
 pub fn parse_multiple(string: &str) -> Result<Vec<Satrec>, SatrecParseError> {
     let lines = string.split("\n").into_iter().filter(|el| { return el.trim() != "" }).collect::<Vec<&str>>();
     let mut recs : Vec<Satrec> = vec![];
-    for mut i in 0..lines.len() {
+    let mut i = 0;
+    while i < lines.len() {
         // If line 1 is not equal to a line operator, try next.
-        if lines[i].bytes().collect::<Vec<u8>>()[0] != '1' as u8 && i + 2 < lines.len() {
-            match parse_satrec(lines[i+1], lines[i+2]) {
+        if lines[i].trim().len() != 25 && i + 2 < lines.len() {
+            match twoline2satrec(lines[i+1], lines[i+2]) {
                 Ok(mut rec) => {
-
                     if (lines[i].bytes().collect::<Vec<u8>>()[0] == '0' as u8) {
-                        rec.name = Some(lines[0][2..].to_string());
+                        rec.name = Some(lines[i][2..].trim().to_string());
                     } else {
-                        rec.name = Some(lines[0].to_string());
+                        rec.name = Some(lines[i].trim().to_string());
                     }
 
                     recs.push(rec);
                 },
                 Err(err) => panic!("failed to parse: {:?}", err)
             }
+            i += 3;
         } else if i + 1 < lines.len() {
-            match parse_satrec(lines[i], lines[i+1]) {
+            match twoline2satrec(lines[i], lines[i+1]) {
                 Ok(rec) => recs.push(rec),
                 Err(err) => panic!("failed to parse: {:?}", err)
             }
-            i += 1;
+            i += 2;
         } else {
             panic!("can't parse. line {} is malformed.", i);
         }
@@ -490,6 +491,33 @@ mod tests {
         assert_eq!(satrec.altp, 0.03147693325961365);
         assert_eq!(satrec.jdsatepoch, 2444514.48708465);
     }
+
+
+//     #[test]
+//     fn test_parse_multi() {
+//         let satrec = &crate::io::parse_multiple(
+// r###"1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8
+// 2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105"###
+//         ).unwrap()[0];
+
+//         assert_eq!(satrec.error, 0);
+//         assert_eq!(satrec.satnum, "88888");
+//         assert_eq!(satrec.epochyr, 80);
+//         assert_eq!(satrec.epochdays, 275.98708465);
+//         assert_eq!(satrec.ndot, 2.2148107004387767e-9);
+//         assert_eq!(satrec.nddot, 2.913090538750181e-13);
+//         assert_eq!(satrec.bstar, 0.000066816);
+//         assert_eq!(satrec.inclo, 1.2713589136764896);
+//         assert_eq!(satrec.nodeo, 2.0240391349160523);
+//         assert_eq!(satrec.ecco, 0.0086731);
+//         assert_eq!(satrec.argpo, 0.9197675718499877);
+//         assert_eq!(satrec.mo, 1.929834988539658);
+//         assert_eq!(satrec.no, 0.07006731262087737);
+//         assert_eq!(satrec.a, 1.0405013051291292);
+//         assert_eq!(satrec.alta, 0.04952567699864474);
+//         assert_eq!(satrec.altp, 0.03147693325961365);
+//         assert_eq!(satrec.jdsatepoch, 2444514.48708465);
+//     }
 
     #[test]
     fn test_init_tle() {
