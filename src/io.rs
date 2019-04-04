@@ -230,13 +230,46 @@ impl Satrec {
     }
 }
 
+pub fn parse_multiple(string: &str) -> Result<Vec<Satrec>, SatrecParseError> {
+    let lines = string.split("\n").into_iter().filter(|el| { return el.trim() != "" }).collect::<Vec<&str>>();
+    let mut recs : Vec<Satrec> = vec![];
+    for mut i in 0..lines.len() {
+        // If line 1 is not equal to a line operator, try next.
+        if lines[i].bytes().collect::<Vec<u8>>()[0] != '1' as u8 && i + 2 < lines.len() {
+            match parse_satrec(lines[i+1], lines[i+2]) {
+                Ok(mut rec) => {
+
+                    if (lines[i].bytes().collect::<Vec<u8>>()[0] == '0' as u8) {
+                        rec.name = Some(lines[0][2..].to_string());
+                    } else {
+                        rec.name = Some(lines[0].to_string());
+                    }
+
+                    recs.push(rec);
+                },
+                Err(err) => panic!("failed to parse: {:?}", err)
+            }
+        } else if i + 1 < lines.len() {
+            match parse_satrec(lines[i], lines[i+1]) {
+                Ok(rec) => recs.push(rec),
+                Err(err) => panic!("failed to parse: {:?}", err)
+            }
+            i += 1;
+        } else {
+            panic!("can't parse. line {} is malformed.", i);
+        }
+    }
+
+    Ok(recs)
+}
+
 pub fn parse(string: &str) -> Result<Satrec, SatrecParseError> {
     let lines = string.split("\n").into_iter().filter(|el| { return el.trim() != "" }).collect::<Vec<&str>>();
     
     // If there are three lines, parse as 3LE.
     if lines.len() == 3 {
         // First, perform check on the first character of each line. should be line numbers.
-        if lines[0].bytes().collect::<Vec<u8>>()[0] != '0' as u8 || lines[1].bytes().collect::<Vec<u8>>()[0] != '1' as u8 || lines[2].bytes().collect::<Vec<u8>>()[0] != '2' as u8 {
+        if lines[1].bytes().collect::<Vec<u8>>()[0] != '1' as u8 || lines[2].bytes().collect::<Vec<u8>>()[0] != '2' as u8 {
             return Err(SatrecParseError::InvalidTLELineCheckFailed)
         }
 
@@ -246,7 +279,12 @@ pub fn parse(string: &str) -> Result<Satrec, SatrecParseError> {
         // Because this is a 3le, we have a name. Extract/save it.
         match satrec {
             Ok(mut satrec) => {
-                satrec.name = Some(lines[0][2..].to_string());
+                if (lines[0].bytes().collect::<Vec<u8>>()[0] == '0' as u8) {
+                    satrec.name = Some(lines[0][2..].to_string());
+                } else {
+                    satrec.name = Some(lines[0].to_string());
+                }
+
                 return Ok(satrec)
             },
             Err(err) => { return Err(err) }
