@@ -230,9 +230,10 @@ impl Satrec {
     }
 }
 
-pub fn parse_multiple(string: &str) -> Result<Vec<Satrec>, SatrecParseError> {
+pub fn parse_multiple(string: &str) -> (Vec<Satrec>, Vec<SatrecParseError>) {
     let lines = string.split("\n").into_iter().filter(|el| { return el.trim() != "" }).collect::<Vec<&str>>();
     let mut recs : Vec<Satrec> = vec![];
+    let mut errors: Vec<SatrecParseError> = vec![];
     let mut i = 0;
     while i < lines.len() {
         // If line 1 is not equal to a line operator, try next.
@@ -247,21 +248,25 @@ pub fn parse_multiple(string: &str) -> Result<Vec<Satrec>, SatrecParseError> {
 
                     recs.push(rec);
                 },
-                Err(err) => panic!("failed to parse: {:?}", err)
+                Err(err) => {
+                    errors.push(SatrecParseError::SatrecMultiError(i, Box::new(err)))
+                }
             }
             i += 3;
         } else if i + 1 < lines.len() {
             match twoline2satrec(lines[i], lines[i+1]) {
                 Ok(rec) => recs.push(rec),
-                Err(err) => panic!("failed to parse: {:?}", err)
+                Err(err) => {
+                    errors.push(SatrecParseError::SatrecMultiError(i, Box::new(err)))
+                }
             }
             i += 2;
         } else {
-            panic!("can't parse. line {} is malformed.", i);
+            errors.push(SatrecParseError::SatrecMultiError(i, Box::new(SatrecParseError::InvalidTLEBadLineCount)))
         }
     }
 
-    Ok(recs)
+    (recs, errors)
 }
 
 pub fn parse(string: &str) -> Result<Satrec, SatrecParseError> {
@@ -334,7 +339,8 @@ pub enum SatrecParseError {
     CompoundError(&'static str, String),
     Sgp4InitError(SGP4Error),
     InvalidTLELineCheckFailed,
-    InvalidTLEBadLineCount
+    InvalidTLEBadLineCount,
+    SatrecMultiError(usize, Box<SatrecParseError>)
 }
 
 
