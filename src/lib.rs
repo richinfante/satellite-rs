@@ -236,56 +236,10 @@ mod tests {
         }
     }
 
-    const TEST_TLE: &str =
-        "NOAA 15 \
-        1 25338U 98030A   20028.53684332  .00000010  00000-0  22730-4 0  9996 \
-        2 25338  98.7308  54.2052 0009655 316.5487  43.4931 14.25949056128892 \
-        NOAA 18 \
-        1 28654U 05018A   20028.55430359  .00000064  00000-0  59410-4 0  9998 \
-        2 28654  99.0657  83.5290 0013366 267.3059  92.6583 14.12484618757024 \
-        NOAA 19 \
-        1 33591U 09005A   20028.54874297  .00000001  00000-0  25623-4 0  9996 \
-        2 33591  99.1936  30.2411 0014855 109.6767 250.6008 14.12393428565240";
-
-
-    /// Load a NOAA test Satrec object from test tle
-    fn load_test_sat(name: &str) -> crate::io::Satrec {
-        let (sats, _errors) = crate::io::parse_multiple(TEST_TLE);
-        sats.iter().find(|&sat| sat.name == Some(name.to_string()))
-            .expect(&format!("{} not found in test TLE file", name)).clone()
-    }
-
     #[test]
     fn test_memory() {
         use chrono::prelude::*;
 
-        // Known results, we test against each one of these.
-        // Everything in degrees. Fields:
-        // (satellite, timestamp, latitude, longitude, tolerance)
-        let test_values = [
-            ("NOAA 15", 1577836800, -22.135, 103.093, 0.005), // 2020-01-01
-            ("NOAA 18", 1580257671, -23.131, 125.410, 0.005), // 2020-01-28
-            ("NOAA 19", 1580000000, -16.414,  66.815, 0.005), // 2020-01-26
-            ("NOAA 15", 1590000000, -53.152,  19.884, 0.036), // 2020-05-20
-            ("NOAA 18", 1565395200,  68.577, 287.984, 0.05 ), // 2019-08-10
-            ("NOAA 15", 1672531200, -79.203,  64.941, 1.   ), // 2023-01-01
-            ("NOAA 19", 1514764800, -36.389,  46.125, 1.   ), // 2018-01-01
-        ];
-
-        for test in test_values.iter() {
-            let tolerance = test.4; // Degrees
-            let mut sat = load_test_sat(test.0);
-            let time = chrono::Utc.timestamp(test.1, 0); // 0 milliseconds
-            let result = crate::propogation::propogate_datetime(&mut sat, time).unwrap();
-            let gmst = crate::propogation::gstime::gstime_datetime(time);
-            let sat_pos = crate::transforms::eci_to_geodedic(&result.position, gmst);
-
-            let lat = sat_pos.latitude * crate::constants::RAD_TO_DEG;
-            let lon = sat_pos.longitude * crate::constants::RAD_TO_DEG;
-
-            // assert_abs_diff_eq!(lat, test.2, epsilon = tolerance);
-            // Predict gives longitudes from 0:360, satellite-rs from -180:180
-            // assert_abs_diff_eq!((lon + 360.) % 360., test.3, epsilon = tolerance);
-        }
+        let (sats, errors) = crate::io::parse_multiple("Test");
     }
 }
