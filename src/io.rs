@@ -262,7 +262,8 @@ pub fn parse_multiple(string: &str) -> (Vec<Satrec>, Vec<SatrecParseError>) {
             }
             i += 2;
         } else {
-            errors.push(SatrecParseError::SatrecMultiError(i, Box::new(SatrecParseError::InvalidTLEBadLineCount)))
+            errors.push(SatrecParseError::SatrecMultiError(i, Box::new(SatrecParseError::InvalidTLEBadLineCount)));
+            i += 1;
         }
     }
 
