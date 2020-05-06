@@ -237,9 +237,14 @@ mod tests {
     }
 
     #[test]
-    fn test_memory() {
+    fn test_parse_invalid_tle() {
+        use crate::io::SatrecParseError;
         use chrono::prelude::*;
 
         let (sats, errors) = crate::io::parse_multiple("Test");
+        assert_eq!(errors, vec![
+            SatrecParseError::SatrecMultiError(0, Box::new(SatrecParseError::InvalidTLEBadLineCount))
+        ]);
     }
 }
+

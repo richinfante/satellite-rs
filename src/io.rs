@@ -333,7 +333,7 @@ pub fn twoline2satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError
     return Ok(satrec);
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum SatrecParseError {
     FloatParseError(&'static str, usize, usize, String),
     IntParseError(&'static str, usize, usize, String),
