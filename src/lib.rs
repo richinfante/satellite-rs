@@ -235,4 +235,11 @@ mod tests {
             assert!(diff_vel.z.abs() < 0.1);
         }
     }
+
+    #[test]
+    fn test_memory() {
+        use chrono::prelude::*;
+
+        let (sats, errors) = crate::io::parse_multiple("Test");
+    }
 }
