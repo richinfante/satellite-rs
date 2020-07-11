@@ -44,7 +44,7 @@ fn main() {
 
     let gmst = satellite::propogation::gstime::gstime_datetime(time);
     let sat_pos = satellite::transforms::eci_to_geodedic(&result.position, gmst);
-    let position_ecf = satellite::transforms::eci_to_ecf(&result.position, 0.0);
+    let position_ecf = satellite::transforms::eci_to_ecf(&result.position, gmst);
     let look_angles = satellite::transforms::ecf_to_look_angles(&observer, &position_ecf);
 
     println!("longitude = {}", sat_pos.latitude * satellite::constants::RAD_TO_DEG);
