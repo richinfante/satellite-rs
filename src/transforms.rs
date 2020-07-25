@@ -108,7 +108,7 @@ pub fn ecf_to_eci(ecf: &Ecf, gmst: f64) -> Eci {
 }
 
 pub fn eci_to_ecf(eci: &Eci, gmst: f64) -> Ecf {
-    let x = (eci.x * gmst.cos()) - (eci.y * gmst.sin());
+    let x = (eci.x * gmst.cos()) + (eci.y * gmst.sin());
     let y = (eci.x * -gmst.sin()) + (eci.y * gmst.cos());
     let z = eci.z;
 
