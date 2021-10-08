@@ -1,9 +1,11 @@
+use thiserror::Error;
+
 use crate::constants::*;
 use crate::ext;
 use crate::propogation::dpper::*;
 use crate::propogation::initl::*;
-use crate::propogation::sgp4init;
 use crate::propogation::sgp4::*;
+use crate::propogation::sgp4init;
 
 #[derive(Clone)]
 pub struct Satrec {
@@ -231,14 +233,18 @@ impl Satrec {
 }
 
 pub fn parse_multiple(string: &str) -> (Vec<Satrec>, Vec<SatrecParseError>) {
-    let lines = string.split("\n").into_iter().filter(|el| { return el.trim() != "" }).collect::<Vec<&str>>();
-    let mut recs : Vec<Satrec> = vec![];
+    let lines = string
+        .split("\n")
+        .into_iter()
+        .filter(|el| return el.trim() != "")
+        .collect::<Vec<&str>>();
+    let mut recs: Vec<Satrec> = vec![];
     let mut errors: Vec<SatrecParseError> = vec![];
     let mut i = 0;
     while i < lines.len() {
         // If line 1 is not equal to a line operator, try next.
         if lines[i].trim().len() != 25 && i + 2 < lines.len() {
-            match twoline2satrec(lines[i+1], lines[i+2]) {
+            match twoline2satrec(lines[i + 1], lines[i + 2]) {
                 Ok(mut rec) => {
                     if (lines[i].bytes().collect::<Vec<u8>>()[0] == '0' as u8) {
                         rec.name = Some(lines[i][2..].trim().to_string());
@@ -247,22 +253,21 @@ pub fn parse_multiple(string: &str) -> (Vec<Satrec>, Vec<SatrecParseError>) {
                     }
 
                     recs.push(rec);
-                },
-                Err(err) => {
-                    errors.push(SatrecParseError::SatrecMultiError(i, Box::new(err)))
                 }
+                Err(err) => errors.push(SatrecParseError::SatrecMultiError(i, Box::new(err))),
             }
             i += 3;
         } else if i + 1 < lines.len() {
-            match twoline2satrec(lines[i], lines[i+1]) {
+            match twoline2satrec(lines[i], lines[i + 1]) {
                 Ok(rec) => recs.push(rec),
-                Err(err) => {
-                    errors.push(SatrecParseError::SatrecMultiError(i, Box::new(err)))
-                }
+                Err(err) => errors.push(SatrecParseError::SatrecMultiError(i, Box::new(err))),
             }
             i += 2;
         } else {
-            errors.push(SatrecParseError::SatrecMultiError(i, Box::new(SatrecParseError::InvalidTLEBadLineCount)));
+            errors.push(SatrecParseError::SatrecMultiError(
+                i,
+                Box::new(SatrecParseError::InvalidTLEBadLineCount),
+            ));
             i += 1;
         }
     }
@@ -271,13 +276,19 @@ pub fn parse_multiple(string: &str) -> (Vec<Satrec>, Vec<SatrecParseError>) {
 }
 
 pub fn parse(string: &str) -> Result<Satrec, SatrecParseError> {
-    let lines = string.split("\n").into_iter().filter(|el| { return el.trim() != "" }).collect::<Vec<&str>>();
-    
+    let lines = string
+        .split("\n")
+        .into_iter()
+        .filter(|el| return el.trim() != "")
+        .collect::<Vec<&str>>();
+
     // If there are three lines, parse as 3LE.
     if lines.len() == 3 {
         // First, perform check on the first character of each line. should be line numbers.
-        if lines[1].bytes().collect::<Vec<u8>>()[0] != '1' as u8 || lines[2].bytes().collect::<Vec<u8>>()[0] != '2' as u8 {
-            return Err(SatrecParseError::InvalidTLELineCheckFailed)
+        if lines[1].bytes().collect::<Vec<u8>>()[0] != '1' as u8
+            || lines[2].bytes().collect::<Vec<u8>>()[0] != '2' as u8
+        {
+            return Err(SatrecParseError::InvalidTLELineCheckFailed);
         }
 
         // Now, parse the satrec.
@@ -292,19 +303,21 @@ pub fn parse(string: &str) -> Result<Satrec, SatrecParseError> {
                     satrec.name = Some(lines[0].to_string());
                 }
 
-                return Ok(satrec)
-            },
-            Err(err) => { return Err(err) }
+                return Ok(satrec);
+            }
+            Err(err) => return Err(err),
         }
     } else if lines.len() == 2 {
-        // First, perform check on the first character of each line. should be line numbers. 
-        if lines[0].bytes().collect::<Vec<u8>>()[0] != '1' as u8 || lines[1].bytes().collect::<Vec<u8>>()[0] != '2' as u8  {
-            return Err(SatrecParseError::InvalidTLELineCheckFailed)
+        // First, perform check on the first character of each line. should be line numbers.
+        if lines[0].bytes().collect::<Vec<u8>>()[0] != '1' as u8
+            || lines[1].bytes().collect::<Vec<u8>>()[0] != '2' as u8
+        {
+            return Err(SatrecParseError::InvalidTLELineCheckFailed);
         }
 
         return twoline2satrec(lines[0], lines[1]);
     } else {
-        return Err(SatrecParseError::InvalidTLEBadLineCount)
+        return Err(SatrecParseError::InvalidTLEBadLineCount);
     }
 }
 
@@ -326,36 +339,66 @@ pub fn twoline2satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError
     };
 
     match sgp4init::sgp4init(&mut satrec, opts) {
-        Ok(_) => {}, // Ignore initial sgp4 positioning.
-        Err(err) => return Err(SatrecParseError::Sgp4InitError(err))
+        Ok(_) => {} // Ignore initial sgp4 positioning.
+        Err(err) => return Err(SatrecParseError::Sgp4InitError(err)),
     };
 
     return Ok(satrec);
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, thiserror::Error)]
 pub enum SatrecParseError {
+    #[error("floating point parse error; name: {0}, low: {1}, high: {2}, line: {3}")]
     FloatParseError(&'static str, usize, usize, String),
+    #[error("integer parse error; name: {0}, low: {1}, high: {2}, line: {3}")]
     IntParseError(&'static str, usize, usize, String),
+    #[error("compound error; {0}: {1}")]
     CompoundError(&'static str, String),
+    #[error("sgp 4 init error: {0}")]
     Sgp4InitError(SGP4Error),
+    #[error("tle line check failed")]
     InvalidTLELineCheckFailed,
+    #[error("bad tle line count")]
     InvalidTLEBadLineCount,
-    SatrecMultiError(usize, Box<SatrecParseError>)
+    #[error("satrec multi error")]
+    SatrecMultiError(usize, Box<SatrecParseError>),
 }
 
-
-fn parse_float(line: &str, name: &'static str, low: usize, high: usize) -> Result<f64, SatrecParseError> {
+fn parse_float(
+    line: &str,
+    name: &'static str,
+    low: usize,
+    high: usize,
+) -> Result<f64, SatrecParseError> {
     match line[low..high].trim().parse::<f64>() {
         Ok(res) => Ok(res),
-        Err(num) => return Err(SatrecParseError::IntParseError(name, low, high, line[low..high].to_string()))
+        Err(num) => {
+            return Err(SatrecParseError::IntParseError(
+                name,
+                low,
+                high,
+                line[low..high].to_string(),
+            ))
+        }
     }
 }
 
-fn parse_int(line: &str, name: &'static str, low: usize, high: usize) -> Result<i64, SatrecParseError> {
+fn parse_int(
+    line: &str,
+    name: &'static str,
+    low: usize,
+    high: usize,
+) -> Result<i64, SatrecParseError> {
     match line[low..high].trim().parse::<i64>() {
         Ok(res) => Ok(res),
-        Err(num) => return Err(SatrecParseError::IntParseError(name, low, high, line[low..high].to_string()))
+        Err(num) => {
+            return Err(SatrecParseError::IntParseError(
+                name,
+                low,
+                high,
+                line[low..high].to_string(),
+            ))
+        }
     }
 }
 
@@ -368,7 +411,7 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
     let epochdays = parse_float(str1, "epochdays", 20, 32)?;
 
     // Parse ndot
-    let ndot = parse_float(str1, "ndot", 33, 43)?  / (XPDOTP * 1440.0);;
+    let ndot = parse_float(str1, "ndot", 33, 43)? / (XPDOTP * 1440.0);
 
     // Parse nndot
     let nddot_0 = parse_int(str1, "nndot frac", 44, 50)?;
@@ -376,8 +419,8 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
     let nndot_str = format!(".{}E{}", nddot_0, nddot_1);
 
     let nddot = match nndot_str.parse::<f64>() {
-            Ok(res) => res / (XPDOTP * 1440.0 * 1440.0),
-            Err(_) => return Err(SatrecParseError::CompoundError("nndot", nndot_str))
+        Ok(res) => res / (XPDOTP * 1440.0 * 1440.0),
+        Err(_) => return Err(SatrecParseError::CompoundError("nndot", nndot_str)),
     };
 
     // Parse bstar
@@ -388,7 +431,7 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
 
     let bstar = match bstar_str.trim().parse::<f64>() {
         Ok(res) => res,
-        Err(_) => return Err(SatrecParseError::CompoundError("bstr", bstar_str))
+        Err(_) => return Err(SatrecParseError::CompoundError("bstr", bstar_str)),
     };
 
     let inclo = parse_float(str2, "inclo", 8, 16)? * DEG_2_RAD;
@@ -398,7 +441,7 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
     let ecco_str = format!(".{}", str2[26..33].trim().to_string());
     let ecco = match ecco_str.trim().parse::<f64>() {
         Ok(res) => res,
-        Err(_) => return Err(SatrecParseError::CompoundError("ecco", ecco_str))
+        Err(_) => return Err(SatrecParseError::CompoundError("ecco", ecco_str)),
     };
 
     let argpo = parse_float(str2, "argpo", 34, 42)? * DEG_2_RAD;
@@ -465,7 +508,7 @@ mod tests {
         assert_eq!(sat.name, Some("ISS (ZARYA)".to_string()));
     }
 
-        #[test]
+    #[test]
     fn test_parse_part() {
         let element = r###"1 25544U 98067A   19085.83761025  .00001292  00000-0  28282-4 0  9995
 2 25544  51.6446  50.5941 0002332 117.0184 328.1109 15.52438493162461"###;
@@ -478,7 +521,8 @@ mod tests {
         let satrec = crate::io::parse_satrec(
             "1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8",
             "2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105",
-        ).unwrap();
+        )
+        .unwrap();
 
         assert_eq!(satrec.error, 0);
         assert_eq!(satrec.satnum, "88888");
@@ -499,39 +543,39 @@ mod tests {
         assert_eq!(satrec.jdsatepoch, 2444514.48708465);
     }
 
+    //     #[test]
+    //     fn test_parse_multi() {
+    //         let satrec = &crate::io::parse_multiple(
+    // r###"1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8
+    // 2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105"###
+    //         ).unwrap()[0];
 
-//     #[test]
-//     fn test_parse_multi() {
-//         let satrec = &crate::io::parse_multiple(
-// r###"1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8
-// 2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105"###
-//         ).unwrap()[0];
-
-//         assert_eq!(satrec.error, 0);
-//         assert_eq!(satrec.satnum, "88888");
-//         assert_eq!(satrec.epochyr, 80);
-//         assert_eq!(satrec.epochdays, 275.98708465);
-//         assert_eq!(satrec.ndot, 2.2148107004387767e-9);
-//         assert_eq!(satrec.nddot, 2.913090538750181e-13);
-//         assert_eq!(satrec.bstar, 0.000066816);
-//         assert_eq!(satrec.inclo, 1.2713589136764896);
-//         assert_eq!(satrec.nodeo, 2.0240391349160523);
-//         assert_eq!(satrec.ecco, 0.0086731);
-//         assert_eq!(satrec.argpo, 0.9197675718499877);
-//         assert_eq!(satrec.mo, 1.929834988539658);
-//         assert_eq!(satrec.no, 0.07006731262087737);
-//         assert_eq!(satrec.a, 1.0405013051291292);
-//         assert_eq!(satrec.alta, 0.04952567699864474);
-//         assert_eq!(satrec.altp, 0.03147693325961365);
-//         assert_eq!(satrec.jdsatepoch, 2444514.48708465);
-//     }
+    //         assert_eq!(satrec.error, 0);
+    //         assert_eq!(satrec.satnum, "88888");
+    //         assert_eq!(satrec.epochyr, 80);
+    //         assert_eq!(satrec.epochdays, 275.98708465);
+    //         assert_eq!(satrec.ndot, 2.2148107004387767e-9);
+    //         assert_eq!(satrec.nddot, 2.913090538750181e-13);
+    //         assert_eq!(satrec.bstar, 0.000066816);
+    //         assert_eq!(satrec.inclo, 1.2713589136764896);
+    //         assert_eq!(satrec.nodeo, 2.0240391349160523);
+    //         assert_eq!(satrec.ecco, 0.0086731);
+    //         assert_eq!(satrec.argpo, 0.9197675718499877);
+    //         assert_eq!(satrec.mo, 1.929834988539658);
+    //         assert_eq!(satrec.no, 0.07006731262087737);
+    //         assert_eq!(satrec.a, 1.0405013051291292);
+    //         assert_eq!(satrec.alta, 0.04952567699864474);
+    //         assert_eq!(satrec.altp, 0.03147693325961365);
+    //         assert_eq!(satrec.jdsatepoch, 2444514.48708465);
+    //     }
 
     #[test]
     fn test_init_tle() {
         let satrec = crate::io::twoline2satrec(
             "1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8",
             "2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105",
-        ).unwrap();
+        )
+        .unwrap();
 
         assert_eq!(satrec.error, 0);
         assert_eq!(satrec.satnum, "88888");
