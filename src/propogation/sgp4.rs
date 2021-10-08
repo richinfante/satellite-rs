@@ -1,8 +1,10 @@
+use thiserror::Error;
+
 use crate::constants::*;
 use crate::io::Satrec;
 use crate::propogation::dpper::*;
 use crate::propogation::initl::InitlMethod;
-use crate::{Vec3, Eci};
+use crate::{Eci, Vec3};
 /*----------------------------------------------------------------------------
 *
 *                             procedure sgp4
@@ -96,13 +98,18 @@ pub struct SGP4Result {
     pub velocity: Vec3,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, thiserror::Error)]
 pub enum SGP4Error {
+    #[error("eccentricity")]
     Eccentricty,
+    #[error("ep")]
     Ep,
+    #[error("nm")]
     Nm,
+    #[error("pl")]
     Pl,
-    DecayCondition
+    #[error("decay condition")]
+    DecayCondition,
 }
 
 impl SGP4Error {
@@ -112,7 +119,7 @@ impl SGP4Error {
             SGP4Error::Nm => 2,
             SGP4Error::Ep => 3,
             SGP4Error::Pl => 4,
-            SGP4Error::DecayCondition => 6
+            SGP4Error::DecayCondition => 6,
         }
     }
 }

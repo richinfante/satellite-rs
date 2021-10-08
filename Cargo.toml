@@ -9,3 +9,4 @@ edition = "2018"
 
 [dependencies]
 chrono = { version = "0.4" }
+thiserror = "1.0.29"
