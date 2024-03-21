@@ -2,7 +2,8 @@ use crate::constants::*;
 use crate::io::Satrec;
 use crate::propogation::dpper::*;
 use crate::propogation::initl::InitlMethod;
-use crate::{Vec3, Eci};
+use crate::*;
+use crate::{Eci, Vec3};
 /*----------------------------------------------------------------------------
 *
 *                             procedure sgp4
@@ -102,7 +103,7 @@ pub enum SGP4Error {
     Ep,
     Nm,
     Pl,
-    DecayCondition
+    DecayCondition,
 }
 
 impl SGP4Error {
@@ -112,12 +113,12 @@ impl SGP4Error {
             SGP4Error::Nm => 2,
             SGP4Error::Ep => 3,
             SGP4Error::Pl => 4,
-            SGP4Error::DecayCondition => 6
+            SGP4Error::DecayCondition => 6,
         }
     }
 }
 
-pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> Result<SGP4Result, SGP4Error> {
+pub fn sgp4(satrec: &mut Satrec, tsince: Float) -> Result<SGP4Result, SGP4Error> {
     let mut coseo1 = 0.0;
     let mut sineo1 = 0.0;
     let mut cosip;
@@ -132,7 +133,7 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> Result<SGP4Result, SGP4Error> {
     let t3;
     let t4;
     let tc;
-    let mut tem5: f64;
+    let mut tem5: Float;
     let mut temp;
     let mut tempa;
     let mut tempe;
@@ -151,9 +152,9 @@ pub fn sgp4(satrec: &mut Satrec, tsince: f64) -> Result<SGP4Result, SGP4Error> {
     // the old check used 1.0 + cos(pi-1.0e-9), but then compared it to
     // 1.5 e-12, so the threshold was changed to 1.5e-12 for consistency
 
-    const TEMP4: f64 = 1.5e-12;
+    const TEMP4: Float = 1.5e-12;
 
-    let vkmpersec: f64 = (EARTH_RADIUS * XKE) / 60.0;
+    let vkmpersec: Float = (EARTH_RADIUS * XKE) / 60.0;
 
     // --------------------- clear sgp4 error flag -----------------
     satrec.t = tsince;

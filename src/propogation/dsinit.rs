@@ -1,111 +1,111 @@
 use crate::constants::*;
-
+use crate::*;
 pub struct DsinitOptions {
-    pub cosim: f64,
-    pub argpo: f64,
-    pub s1: f64,
-    pub s2: f64,
-    pub s3: f64,
-    pub s4: f64,
-    pub s5: f64,
-    pub sinim: f64,
-    pub ss1: f64,
-    pub ss2: f64,
-    pub ss3: f64,
-    pub ss4: f64,
-    pub ss5: f64,
-    pub sz1: f64,
-    pub sz3: f64,
-    pub sz11: f64,
-    pub sz13: f64,
-    pub sz21: f64,
-    pub sz23: f64,
-    pub sz31: f64,
-    pub sz33: f64,
-    pub t: f64,
-    pub tc: f64,
-    pub gsto: f64,
-    pub mo: f64,
-    pub mdot: f64,
-    pub no: f64,
-    pub nodeo: f64,
-    pub nodedot: f64,
-    pub xpidot: f64,
-    pub z1: f64,
-    pub z3: f64,
-    pub z11: f64,
-    pub z13: f64,
-    pub z21: f64,
-    pub z23: f64,
-    pub z31: f64,
-    pub z33: f64,
-    pub ecco: f64,
-    pub eccsq: f64,
-    pub emsq: f64,
-    pub em: f64,
-    pub argpm: f64,
-    pub inclm: f64,
-    pub mm: f64,
-    pub nm: f64,
-    pub nodem: f64,
-    pub irez: f64,
-    pub atime: f64,
-    pub d2201: f64,
-    pub d2211: f64,
-    pub d3210: f64,
-    pub d3222: f64,
-    pub d4410: f64,
-    pub d4422: f64,
-    pub d5220: f64,
-    pub d5232: f64,
-    pub d5421: f64,
-    pub d5433: f64,
-    pub dedt: f64,
-    pub didt: f64,
-    pub dmdt: f64,
-    pub dnodt: f64,
-    pub domdt: f64,
-    pub del1: f64,
-    pub del2: f64,
-    pub del3: f64,
-    pub xfact: f64,
-    pub xlamo: f64,
-    pub xli: f64,
-    pub xni: f64,
+    pub cosim: Float,
+    pub argpo: Float,
+    pub s1: Float,
+    pub s2: Float,
+    pub s3: Float,
+    pub s4: Float,
+    pub s5: Float,
+    pub sinim: Float,
+    pub ss1: Float,
+    pub ss2: Float,
+    pub ss3: Float,
+    pub ss4: Float,
+    pub ss5: Float,
+    pub sz1: Float,
+    pub sz3: Float,
+    pub sz11: Float,
+    pub sz13: Float,
+    pub sz21: Float,
+    pub sz23: Float,
+    pub sz31: Float,
+    pub sz33: Float,
+    pub t: Float,
+    pub tc: Float,
+    pub gsto: Float,
+    pub mo: Float,
+    pub mdot: Float,
+    pub no: Float,
+    pub nodeo: Float,
+    pub nodedot: Float,
+    pub xpidot: Float,
+    pub z1: Float,
+    pub z3: Float,
+    pub z11: Float,
+    pub z13: Float,
+    pub z21: Float,
+    pub z23: Float,
+    pub z31: Float,
+    pub z33: Float,
+    pub ecco: Float,
+    pub eccsq: Float,
+    pub emsq: Float,
+    pub em: Float,
+    pub argpm: Float,
+    pub inclm: Float,
+    pub mm: Float,
+    pub nm: Float,
+    pub nodem: Float,
+    pub irez: Float,
+    pub atime: Float,
+    pub d2201: Float,
+    pub d2211: Float,
+    pub d3210: Float,
+    pub d3222: Float,
+    pub d4410: Float,
+    pub d4422: Float,
+    pub d5220: Float,
+    pub d5232: Float,
+    pub d5421: Float,
+    pub d5433: Float,
+    pub dedt: Float,
+    pub didt: Float,
+    pub dmdt: Float,
+    pub dnodt: Float,
+    pub domdt: Float,
+    pub del1: Float,
+    pub del2: Float,
+    pub del3: Float,
+    pub xfact: Float,
+    pub xlamo: Float,
+    pub xli: Float,
+    pub xni: Float,
 }
 
 pub struct DinitResult {
-    pub em: f64,
-    pub argpm: f64,
-    pub inclm: f64,
-    pub mm: f64,
-    pub nm: f64,
-    pub nodem: f64,
-    pub irez: f64,
-    pub atime: f64,
-    pub d2201: f64,
-    pub d2211: f64,
-    pub d3210: f64,
-    pub d3222: f64,
-    pub d4410: f64,
-    pub d4422: f64,
-    pub d5220: f64,
-    pub d5232: f64,
-    pub d5421: f64,
-    pub d5433: f64,
-    pub dedt: f64,
-    pub didt: f64,
-    pub dmdt: f64,
-    pub dndt: f64,
-    pub dnodt: f64,
-    pub domdt: f64,
-    pub del1: f64,
-    pub del2: f64,
-    pub del3: f64,
-    pub xfact: f64,
-    pub xlamo: f64,
-    pub xli: f64,
-    pub xni: f64,
+    pub em: Float,
+    pub argpm: Float,
+    pub inclm: Float,
+    pub mm: Float,
+    pub nm: Float,
+    pub nodem: Float,
+    pub irez: Float,
+    pub atime: Float,
+    pub d2201: Float,
+    pub d2211: Float,
+    pub d3210: Float,
+    pub d3222: Float,
+    pub d4410: Float,
+    pub d4422: Float,
+    pub d5220: Float,
+    pub d5232: Float,
+    pub d5421: Float,
+    pub d5433: Float,
+    pub dedt: Float,
+    pub didt: Float,
+    pub dmdt: Float,
+    pub dndt: Float,
+    pub dnodt: Float,
+    pub domdt: Float,
+    pub del1: Float,
+    pub del2: Float,
+    pub del3: Float,
+    pub xfact: Float,
+    pub xlamo: Float,
+    pub xli: Float,
+    pub xni: Float,
 }
 
 /*-----------------------------------------------------------------------------
@@ -261,50 +261,50 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     let mut xfact = options.xfact;
     let mut xli = options.xli;
 
-    let mut f220: f64;
-    let f221: f64;
-    let f311: f64;
-    let f321: f64;
-    let f322: f64;
-    let mut f330: f64;
-    let f441: f64;
-    let f442: f64;
-    let f522: f64;
-    let f523: f64;
-    let f542: f64;
-    let f543: f64;
-    let g200: f64;
-    let g201: f64;
-    let g211: f64;
-    let g300: f64;
-    let mut g310: f64;
-    let g322: f64;
-    let g410: f64;
-    let g422: f64;
-    let g520: f64;
-    let g521: f64;
-    let g532: f64;
-    let g533: f64;
-    let sini2: f64;
-    let mut temp: f64;
-    let mut temp1: f64;
-    let xno2: f64;
-    let ainv2: f64;
-    let aonv: f64;
-    let cosisq: f64;
-    let eoc: f64;
+    let mut f220: Float;
+    let f221: Float;
+    let f311: Float;
+    let f321: Float;
+    let f322: Float;
+    let mut f330: Float;
+    let f441: Float;
+    let f442: Float;
+    let f522: Float;
+    let f523: Float;
+    let f542: Float;
+    let f543: Float;
+    let g200: Float;
+    let g201: Float;
+    let g211: Float;
+    let g300: Float;
+    let mut g310: Float;
+    let g322: Float;
+    let g410: Float;
+    let g422: Float;
+    let g520: Float;
+    let g521: Float;
+    let g532: Float;
+    let g533: Float;
+    let sini2: Float;
+    let mut temp: Float;
+    let mut temp1: Float;
+    let xno2: Float;
+    let ainv2: Float;
+    let aonv: Float;
+    let cosisq: Float;
+    let eoc: Float;
 
-    const Q22: f64 = 1.7891679e-6;
-    const Q31: f64 = 2.1460748e-6;
-    const Q33: f64 = 2.2123015e-7;
-    const ROOT22: f64 = 1.7891679e-6;
-    const ROOT44: f64 = 7.3636953e-9;
-    const ROOT54: f64 = 2.1765803e-9;
-    const RPTIM: f64 = 4.37526908801129966e-3; // equates to 7.29211514668855e-5 rad/sec
-    const ROOT32: f64 = 3.7393792e-7;
-    const ROOT52: f64 = 1.1428639e-7;
-    const ZNL: f64 = 1.5835218e-4;
-    const ZNS: f64 = 1.19459e-5;
+    const Q22: Float = 1.7891679e-6;
+    const Q31: Float = 2.1460748e-6;
+    const Q33: Float = 2.2123015e-7;
+    const ROOT22: Float = 1.7891679e-6;
+    const ROOT44: Float = 7.3636953e-9;
+    const ROOT54: Float = 2.1765803e-9;
+    const RPTIM: Float = 4.37526908801129966e-3; // equates to 7.29211514668855e-5 rad/sec
+    const ROOT32: Float = 3.7393792e-7;
+    const ROOT52: Float = 1.1428639e-7;
+    const ZNL: Float = 1.5835218e-4;
+    const ZNS: Float = 1.19459e-5;
 
     // -------------------- deep space initialization ------------
     irez = 0.0;

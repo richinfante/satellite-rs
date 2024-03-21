@@ -1,6 +1,7 @@
 use crate::constants::*;
 use crate::propogation::dpper::DpperOpsMode;
 use crate::propogation::gstime;
+use crate::*;
 /*-----------------------------------------------------------------------------
 *
 *                           procedure initl
@@ -57,29 +58,29 @@ pub struct InitlOptions {
     pub method: InitlMethod,
 
     pub satn: String,
-    pub ecco: f64,
-    pub epoch: f64,
-    pub inclo: f64,
-    pub no: f64,
+    pub ecco: Float,
+    pub epoch: Float,
+    pub inclo: Float,
+    pub no: Float,
 }
 
 #[derive(PartialEq, Debug)]
 pub struct InitlReturn {
-    pub no: f64,
+    pub no: Float,
     pub method: InitlMethod,
-    pub ainv: f64,
-    pub ao: f64,
-    pub con41: f64,
-    pub con42: f64,
-    pub cosio: f64,
-    pub cosio2: f64,
-    pub eccsq: f64,
-    pub omeosq: f64,
-    pub posq: f64,
-    pub rp: f64,
-    pub rteosq: f64,
-    pub sinio: f64,
-    pub gsto: f64,
+    pub ainv: Float,
+    pub ao: Float,
+    pub con41: Float,
+    pub con42: Float,
+    pub cosio: Float,
+    pub cosio2: Float,
+    pub eccsq: Float,
+    pub omeosq: Float,
+    pub posq: Float,
+    pub rp: Float,
+    pub rteosq: Float,
+    pub sinio: Float,
+    pub gsto: Float,
 }
 
 #[derive(PartialEq, Clone, Debug)]

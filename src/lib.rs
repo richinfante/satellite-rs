@@ -1,3 +1,22 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+use cfg_if::cfg_if;
+cfg_if! {
+    if #[cfg(feature = "std")]
+    {
+        extern crate std;
+        use std::f64::consts::PI;
+        use std::f64::consts::FRAC_PI_2;
+        pub type Float = f64;
+    }else{
+        extern crate core as std;
+        extern crate alloc;
+        use alloc::{string::{String,ToString},format,vec,vec::Vec,boxed::Box};
+        use micromath::F32Ext;
+        use std::f32::consts::PI;
+        use std::f32::consts::FRAC_PI_2;
+        pub type Float = f32;
+    }
+}
 extern crate chrono;
 
 pub mod constants;
@@ -10,9 +29,9 @@ pub mod transforms;
 #[derive(Debug, PartialEq)]
 /// Standard three-component vector (x,y,z)
 pub struct Vec3 {
-    pub x: f64,
-    pub y: f64,
-    pub z: f64,
+    pub x: Float,
+    pub y: Float,
+    pub z: Float,
 }
 
 type Ecf = Vec3;
@@ -21,43 +40,43 @@ type Eci = Vec3;
 #[derive(Debug, PartialEq)]
 pub struct TopoCentric {
     /// Positive horizontal vector S due south.
-    pub top_s: f64,
+    pub top_s: Float,
 
     /// Positive horizontal vector E due east.
-    pub top_e: f64,
+    pub top_e: Float,
 
     /// Vector Z normal to the surface of the earth (up).
-    pub top_z: f64,
+    pub top_z: Float,
 }
 
 #[derive(Debug, PartialEq)]
 /// Latitude/Longitude/Height based position
 pub struct Geodedic {
     /// Longitude, in radians.
-    pub longitude: f64,
+    pub longitude: Float,
 
     /// Longitude, in radians.
-    pub latitude: f64,
+    pub latitude: Float,
 
     /// Altitude, in Km.
-    pub height: f64,
+    pub height: Float,
 }
 
 #[derive(Debug, PartialEq)]
 /// Relative position vector
 pub struct Bearing {
     /// Aizmuth in radians
-    pub azimuth: f64,
+    pub azimuth: Float,
 
     /// Elevation in radians
-    pub elevation: f64,
+    pub elevation: Float,
 
     /// Range in km
-    pub range: f64,
+    pub range: Float,
 }
 
 impl Vec3 {
-    pub fn range(&self, to: &Vec3) -> f64 {
+    pub fn range(&self, to: &Vec3) -> Float {
         (((self.x - to.x).powf(2.0)) + ((self.y - to.y).powf(2.0)) + ((self.z - to.z).powf(2.0)))
             .sqrt()
     }
@@ -81,11 +100,11 @@ impl Vec3 {
 
 #[cfg(test)]
 mod tests {
-    pub fn assert_similar(lhs: f64, rhs: f64) {
+    pub fn assert_similar(lhs: Float, rhs: Float) {
         assert_diff(lhs, rhs, 1e-13);
     }
 
-    pub fn assert_diff(lhs: f64, rhs: f64, epsilon: f64) {
+    pub fn assert_diff(lhs: Float, rhs: Float, epsilon: Float) {
         if (lhs - rhs).abs() > epsilon {
             panic!(
                 "Assertion failed: diff between {} - {} > {}",
@@ -96,7 +115,7 @@ mod tests {
 
     use crate::Vec3;
     struct TrackEntry {
-        time: f64,
+        time: Float,
         known_pos: Vec3,
         known_vel: Vec3,
     }
@@ -140,7 +159,7 @@ mod tests {
         for entry in known_track {
             let result = match crate::propogation::sgp4::sgp4(&mut satrec, entry.time) {
                 Ok(res) => res,
-                Err(err) => panic!("Propogation Error: {:#?} (code {})", err, err.code())
+                Err(err) => panic!("Propogation Error: {:#?} (code {})", err, err.code()),
             };
 
             // println!("pos @{} {:#?}", entry.time, result.position);
@@ -208,7 +227,7 @@ mod tests {
         for entry in known_track {
             let result = match crate::propogation::sgp4::sgp4(&mut satrec, entry.time) {
                 Ok(res) => res,
-                Err(err) => panic!("Propogation Error: {:#?} (code {})", err, err.code())
+                Err(err) => panic!("Propogation Error: {:#?} (code {})", err, err.code()),
             };
 
             // println!("pos @{} {:#?}", entry.time, result.position);
@@ -242,9 +261,12 @@ mod tests {
         use chrono::prelude::*;
 
         let (sats, errors) = crate::io::parse_multiple("Test");
-        assert_eq!(errors, vec![
-            SatrecParseError::SatrecMultiError(0, Box::new(SatrecParseError::InvalidTLEBadLineCount))
-        ]);
+        assert_eq!(
+            errors,
+            vec![SatrecParseError::SatrecMultiError(
+                0,
+                Box::new(SatrecParseError::InvalidTLEBadLineCount)
+            )]
+        );
     }
 }
-

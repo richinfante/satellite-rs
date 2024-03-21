@@ -88,18 +88,19 @@ use crate::propogation::dscom::*;
 use crate::propogation::dsinit::*;
 use crate::propogation::initl::*;
 use crate::propogation::sgp4::*;
+use crate::*;
 
 pub struct SGP4InitOptions {
     pub opsmode: DpperOpsMode,
     pub satn: String,
-    pub epoch: f64,
-    pub xbstar: f64,
-    pub xecco: f64,
-    pub xargpo: f64,
-    pub xinclo: f64,
-    pub xmo: f64,
-    pub xno: f64,
-    pub xnodeo: f64,
+    pub epoch: Float,
+    pub xbstar: Float,
+    pub xecco: Float,
+    pub xargpo: Float,
+    pub xinclo: Float,
+    pub xmo: Float,
+    pub xno: Float,
+    pub xnodeo: Float,
 }
 pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) -> Result<SGP4Result, SGP4Error> {
     let SGP4InitOptions {
@@ -115,46 +116,46 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) -> Result<SGP4Res
         xnodeo,
     } = options;
 
-    let mut _cosim: f64;
-    let mut _sinim: f64;
+    let mut _cosim: Float;
+    let mut _sinim: Float;
     let cc1sq;
     let cc2;
     let mut cc3;
     let coef;
     let coef1;
     let cosio4;
-    let mut _em: f64;
-    let mut _emsq: f64;
+    let mut _em: Float;
+    let mut _emsq: Float;
     let eeta;
     let etasq;
     let argpm;
     let nodem;
     let inclm;
     let mm;
-    let mut _nm: f64;
+    let mut _nm: Float;
     let perige;
     let pinvsq;
     let psisq;
     let mut qzms24;
-    let mut _s1: f64;
-    let mut _s2: f64;
-    let mut _s3: f64;
-    let mut _s4: f64;
-    let mut _s5: f64;
+    let mut _s1: Float;
+    let mut _s2: Float;
+    let mut _s3: Float;
+    let mut _s4: Float;
+    let mut _s5: Float;
     let mut sfour;
-    let mut _ss1: f64;
-    let mut _ss2: f64;
-    let mut _ss3: f64;
-    let mut _ss4: f64;
-    let mut _ss5: f64;
-    let mut _sz1: f64;
-    let mut _sz3: f64;
-    let mut _sz11: f64;
-    let mut _sz13: f64;
-    let mut _sz21: f64;
-    let mut _sz23: f64;
-    let mut _sz31: f64;
-    let mut _sz33: f64;
+    let mut _ss1: Float;
+    let mut _ss2: Float;
+    let mut _ss3: Float;
+    let mut _ss4: Float;
+    let mut _ss5: Float;
+    let mut _sz1: Float;
+    let mut _sz3: Float;
+    let mut _sz11: Float;
+    let mut _sz13: Float;
+    let mut _sz21: Float;
+    let mut _sz23: Float;
+    let mut _sz31: Float;
+    let mut _sz33: Float;
     let tc;
     let temp;
     let temp1;
@@ -163,20 +164,20 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) -> Result<SGP4Res
     let tsi;
     let xpidot;
     let xhdot1;
-    let mut _z1: f64;
-    let mut _z3: f64;
-    let mut _z11: f64;
-    let mut _z13: f64;
-    let mut _z21: f64;
-    let mut _z23: f64;
-    let mut _z31: f64;
-    let mut _z33: f64;
+    let mut _z1: Float;
+    let mut _z3: Float;
+    let mut _z11: Float;
+    let mut _z13: Float;
+    let mut _z21: Float;
+    let mut _z23: Float;
+    let mut _z31: Float;
+    let mut _z33: Float;
 
     /* ------------------------ initialization --------------------- */
     // sgp4fix divisor for divide by zero check on inclination
     // the old check used 1.0 + Math.cos(pi-1.0e-9), but then compared it to
     // 1.5 e-12, so the threshold was changed to 1.5e-12 for consistency
-    const TEMP4: f64 = 1.5e-12;
+    const TEMP4: Float = 1.5e-12;
 
     // ----------- set all near earth variables to zero ------------
     satrec.isimp = 0;
@@ -721,5 +722,5 @@ pub fn sgp4init(satrec: &mut Satrec, options: SGP4InitOptions) -> Result<SGP4Res
 
     satrec.init = DpperInit::N;
 
-    return Ok(result)
+    return Ok(result);
 }

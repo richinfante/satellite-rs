@@ -1,14 +1,13 @@
 use crate::io::Satrec;
-use std::f64::consts::PI;
-
-const TWO_PI: f64 = 2.0 * PI;
+use crate::*;
+const TWO_PI: Float = 2.0 * PI;
 
 pub struct DpperResult {
-    pub ep: f64,
-    pub inclp: f64,
-    pub nodep: f64,
-    pub argpp: f64,
-    pub mp: f64,
+    pub ep: Float,
+    pub inclp: Float,
+    pub nodep: Float,
+    pub argpp: Float,
+    pub mp: Float,
 }
 
 #[derive(PartialEq, Clone)]
@@ -28,12 +27,12 @@ pub struct DpperOptions {
     pub init: DpperInit,
     pub opsmode: DpperOpsMode,
 
-    pub inclo: f64,
-    pub ep: f64,
-    pub inclp: f64,
-    pub nodep: f64,
-    pub argpp: f64,
-    pub mp: f64,
+    pub inclo: Float,
+    pub ep: Float,
+    pub inclp: Float,
+    pub nodep: Float,
+    pub argpp: Float,
+    pub mp: Float,
 }
 
 /* -----------------------------------------------------------------------------
@@ -170,10 +169,10 @@ pub fn dpper(satrec: &Satrec, options: DpperOptions) -> DpperResult {
     let mut mp = options.mp;
 
     //  ---------------------- constants -----------------------------
-    const ZNS: f64 = 1.19459e-5;
-    const ZES: f64 = 0.01675;
-    const ZNL: f64 = 1.5835218e-4;
-    const ZEL: f64 = 0.05490;
+    const ZNS: Float = 1.19459e-5;
+    const ZES: Float = 0.01675;
+    const ZNL: Float = 1.5835218e-4;
+    const ZEL: Float = 0.05490;
 
     //  --------------- calculate time varying periodics -----------
     zm = zmos + (ZNS * t);
@@ -271,7 +270,7 @@ pub fn dpper(satrec: &Satrec, options: DpperOptions) -> DpperResult {
             if nodep < 0.0 && opsmode == DpperOpsMode::A {
                 nodep += TWO_PI;
             }
-            if (xnoh - nodep).abs() > std::f64::consts::PI {
+            if (xnoh - nodep).abs() > PI {
                 if nodep < xnoh {
                     nodep += TWO_PI;
                 } else {

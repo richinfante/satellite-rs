@@ -1,35 +1,35 @@
 use crate::constants::*;
-use crate::*;
 use crate::Bearing;
 use crate::Geodedic;
 use crate::TopoCentric;
 use crate::Vec3;
+use crate::*;
 
-pub fn radians_to_degrees(radians: f64) -> f64 {
+pub fn radians_to_degrees(radians: Float) -> Float {
     return radians * RAD_TO_DEG;
 }
 
-pub fn degrees_to_radians(degrees: f64) -> f64 {
+pub fn degrees_to_radians(degrees: Float) -> Float {
     return degrees * DEG_2_RAD;
 }
 
-pub fn degrees_lat(radians: f64) -> f64 {
-    if radians < -std::f64::consts::FRAC_PI_2 || radians > std::f64::consts::FRAC_PI_2 {
+pub fn degrees_lat(radians: Float) -> Float {
+    if radians < -FRAC_PI_2 || radians > FRAC_PI_2 {
         panic!("Range error: Latitude radians must be in range [-pi/2; pi/2].")
     }
 
     radians_to_degrees(radians)
 }
 
-pub fn degrees_long(radians: f64) -> f64 {
-    if radians < -std::f64::consts::PI || radians > std::f64::consts::PI {
+pub fn degrees_long(radians: Float) -> Float {
+    if radians < -PI || radians > PI {
         panic!("Range error: Longitude radians must be in range [-pi; pi].")
     }
 
     radians_to_degrees(radians)
 }
 
-pub fn radians_lat(degrees: f64) -> f64 {
+pub fn radians_lat(degrees: Float) -> Float {
     if degrees < -90.0 || degrees > 90.0 {
         panic!("RangeError: Latitude degrees must be in range [-90; 90].")
     }
@@ -37,7 +37,7 @@ pub fn radians_lat(degrees: f64) -> f64 {
     degrees_to_radians(degrees)
 }
 
-pub fn radians_long(degrees: f64) -> f64 {
+pub fn radians_long(degrees: Float) -> Float {
     if degrees < -180.0 || degrees > 180.0 {
         panic!("RangeError: Latitude degrees must be in range [-180; 180].")
     }
@@ -46,10 +46,10 @@ pub fn radians_long(degrees: f64) -> f64 {
 }
 
 pub fn geodedic_to_ecf(geodetic: &Geodedic) -> Ecf {
-    const A: f64 = 6378.137;
-    const B: f64 = 6356.7523142;
-    const F: f64 = (A - B) / A;
-    const E2: f64 = ((2.0 * F) - (F * F));
+    const A: Float = 6378.137;
+    const B: Float = 6356.7523142;
+    const F: Float = (A - B) / A;
+    const E2: Float = ((2.0 * F) - (F * F));
 
     let normal = A / (1.0 - (E2 * geodetic.latitude.sin().powf(2.0))).sqrt();
 
@@ -60,12 +60,12 @@ pub fn geodedic_to_ecf(geodetic: &Geodedic) -> Ecf {
     Vec3 { x, y, z }
 }
 
-pub fn eci_to_geodedic(eci: &Eci, gmst: f64) -> Geodedic {
-    const A: f64 = 6378.137;
-    const B: f64 = 6356.7523142;
-    let r: f64 = ((eci.x * eci.x) + (eci.y * eci.y)).sqrt();
-    const F: f64 = (A - B) / A;
-    const E2: f64 = ((2.0 * F) - (F * F));
+pub fn eci_to_geodedic(eci: &Eci, gmst: Float) -> Geodedic {
+    const A: Float = 6378.137;
+    const B: Float = 6356.7523142;
+    let r: Float = ((eci.x * eci.x) + (eci.y * eci.y)).sqrt();
+    const F: Float = (A - B) / A;
+    const E2: Float = ((2.0 * F) - (F * F));
 
     let mut longitude = eci.y.atan2(eci.x) - gmst;
 
@@ -82,7 +82,7 @@ pub fn eci_to_geodedic(eci: &Eci, gmst: f64) -> Geodedic {
     let mut latitude = eci.z.atan2((eci.x.powi(2) + eci.y.powi(2)).sqrt());
 
     let mut k: i32 = 0;
-    let mut c: f64 = 0.0;
+    let mut c: Float = 0.0;
 
     while k < KMAX {
         c = 1.0 / (1.0 - (E2 * latitude.sin().powi(2)));
@@ -99,7 +99,7 @@ pub fn eci_to_geodedic(eci: &Eci, gmst: f64) -> Geodedic {
     }
 }
 
-pub fn ecf_to_eci(ecf: &Ecf, gmst: f64) -> Eci {
+pub fn ecf_to_eci(ecf: &Ecf, gmst: Float) -> Eci {
     let x = (ecf.x * gmst.cos()) - (ecf.y * gmst.sin());
     let y = (ecf.x * gmst.sin()) + (ecf.y * gmst.cos());
     let z = ecf.z;
@@ -107,7 +107,7 @@ pub fn ecf_to_eci(ecf: &Ecf, gmst: f64) -> Eci {
     Vec3 { x, y, z }
 }
 
-pub fn eci_to_ecf(eci: &Eci, gmst: f64) -> Ecf {
+pub fn eci_to_ecf(eci: &Eci, gmst: Float) -> Ecf {
     let x = (eci.x * gmst.cos()) + (eci.y * gmst.sin());
     let y = (eci.x * -gmst.sin()) + (eci.y * gmst.cos());
     let z = eci.z;
@@ -140,7 +140,7 @@ pub fn topocentric(observer: &Geodedic, satellite: &Ecf) -> TopoCentric {
 pub fn topocentric_to_look_angles(tc: &TopoCentric) -> Bearing {
     let range_sat = (tc.top_s.powi(2) + tc.top_e.powi(2) + tc.top_z.powi(2)).sqrt();
     let el = (tc.top_z / range_sat).asin();
-    let az = (-tc.top_e).atan2(tc.top_s) + std::f64::consts::PI;
+    let az = (-tc.top_e).atan2(tc.top_s) + PI;
 
     Bearing {
         range: range_sat,
