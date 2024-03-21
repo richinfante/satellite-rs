@@ -12,10 +12,9 @@ Since this library is currently unstable, you may want to simply grab the latest
 satellite = { git = "https://github.com/richinfante/satellite-rs.git", branch = "master" }
 ```
 This crate can be used without the standard library (`#![no_std]`) by disabling
-the default `std` feature. Use this in `Cargo.toml`:
+the default `std`.
 
 ```toml
-[dependencies]
 satellite = { git = "https://github.com/richinfante/satellite-rs.git", branch = "master" , default-features = false} 
 ```
 
