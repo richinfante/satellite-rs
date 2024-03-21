@@ -236,7 +236,7 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     let mut mm = options.mm;
     let mut nm = options.nm;
     let mut nodem = options.nodem;
-    let mut irez = options.irez;
+    let mut _irez = options.irez;
     let mut atime = options.atime;
     let mut d3222 = options.d3222;
     let mut d2201 = options.d2201;
@@ -246,16 +246,16 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     let mut d3210 = options.d3210;
     let mut d5433 = options.d5433;
     let mut d4410 = options.d4410;
-    let mut didt = options.didt;
+    let mut _didt = options.didt;
     let mut d5220 = options.d5220;
-    let mut dnodt = options.dnodt;
+    let mut _dnodt = options.dnodt;
     let mut d5421 = options.d5421;
     let mut del1 = options.del1;
-    let mut dedt = options.dedt;
+    let mut _dedt = options.dedt;
     let mut del3 = options.del3;
-    let mut dmdt = options.dmdt;
+    let mut _dmdt = options.dmdt;
     let mut xlamo = options.xlamo;
-    let mut domdt = options.domdt;
+    let mut _domdt = options.domdt;
     let mut xni = options.xni;
     let mut del2 = options.del2;
     let mut xfact = options.xfact;
@@ -307,12 +307,12 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     const ZNS: Float = 1.19459e-5;
 
     // -------------------- deep space initialization ------------
-    irez = 0.0;
+    _irez = 0.0;
     if (nm < 0.0052359877) && (nm > 0.0034906585) {
-        irez = 1.0;
+        _irez = 1.0;
     }
     if (nm >= 8.26e-3) && (nm <= 9.24e-3) && (em >= 0.5) {
-        irez = 2.0;
+        _irez = 2.0;
     }
 
     // ------------------------ do solar terms -------------------
@@ -332,9 +332,9 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     let sgs = sghs - (cosim * shs);
 
     // ------------------------- do lunar terms ------------------
-    dedt = ses + (s1 * ZNL * s5);
-    didt = sis + (s2 * ZNL * (z11 + z13));
-    dmdt = sls - (ZNL * s3 * ((z1 + z3) - 14.0 - (6.0 * emsq)));
+    _dedt = ses + (s1 * ZNL * s5);
+    _didt = sis + (s2 * ZNL * (z11 + z13));
+    _dmdt = sls - (ZNL * s3 * ((z1 + z3) - 14.0 - (6.0 * emsq)));
     let sghl = s4 * ZNL * ((z31 + z33) - 6.0);
     let mut shll = -ZNL * s2 * (z21 + z23);
 
@@ -342,21 +342,21 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     if (inclm < 5.2359877e-2) || (inclm > (PI - 5.2359877e-2)) {
         shll = 0.0;
     }
-    domdt = sgs + sghl;
-    dnodt = shs;
+    _domdt = sgs + sghl;
+    _dnodt = shs;
     if sinim != 0.0 {
-        domdt -= (cosim / sinim) * shll;
-        dnodt += shll / sinim;
+        _domdt -= (cosim / sinim) * shll;
+        _dnodt += shll / sinim;
     }
 
     // ----------- calculate deep space resonance effects --------
     let dndt = 0.0;
     let theta = (gsto + (tc * RPTIM)) % TWO_PI;
-    em += dedt * t;
-    inclm += didt * t;
-    argpm += domdt * t;
-    nodem += dnodt * t;
-    mm += dmdt * t;
+    em += _dedt * t;
+    inclm += _didt * t;
+    argpm += _domdt * t;
+    nodem += _dnodt * t;
+    mm += _dmdt * t;
 
     // sgp4fix for negative inclinations
     // the following if statement should be commented out
@@ -368,11 +368,11 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     // }
 
     // -------------- initialize the resonance terms -------------
-    if irez != 0.0 {
+    if _irez != 0.0 {
         aonv = (nm / XKE).powf(X2O3);
 
         // ---------- geopotential resonance for 12 hour orbits ------
-        if irez == 2.0 {
+        if _irez == 2.0 {
             cosisq = cosim * cosim;
             let emo = em;
             em = ecco;
@@ -453,13 +453,13 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
             d5421 = temp * f542 * g521;
             d5433 = temp * f543 * g533;
             xlamo = ((mo + nodeo + nodeo) - (theta + theta)) % TWO_PI;
-            xfact = (mdot + dmdt + (2.0 * ((nodedot + dnodt) - RPTIM))) - no;
+            xfact = (mdot + _dmdt + (2.0 * ((nodedot + _dnodt) - RPTIM))) - no;
             em = emo;
             emsq = emsqo;
         }
 
         //  ---------------- synchronous resonance terms --------------
-        if irez == 1.0 {
+        if _irez == 1.0 {
             g200 = 1.0 + (emsq * (-2.5 + (0.8125 * emsq)));
             g310 = 1.0 + (2.0 * emsq);
             g300 = 1.0 + (emsq * (-6.0 + (6.60937 * emsq)));
@@ -472,7 +472,7 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
             del3 = 3.0 * del1 * f330 * g300 * Q33 * aonv;
             del1 = del1 * f311 * g310 * Q31 * aonv;
             xlamo = ((mo + nodeo + argpo) - theta) % TWO_PI;
-            xfact = (mdot + xpidot + dmdt + domdt + dnodt) - (no + RPTIM);
+            xfact = (mdot + xpidot + _dmdt + _domdt + _dnodt) - (no + RPTIM);
         }
 
         //  ------------ for sgp4, initialize the integrator ----------
@@ -490,7 +490,7 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
         nm,
         nodem,
 
-        irez,
+        irez: _irez,
         atime,
 
         d2201,
@@ -505,12 +505,12 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
         d5421,
         d5433,
 
-        dedt,
-        didt,
-        dmdt,
+        dedt: _dedt,
+        didt: _didt,
+        dmdt: _dmdt,
         dndt,
-        dnodt,
-        domdt,
+        dnodt: _dnodt,
+        domdt: _domdt,
 
         del1,
         del2,

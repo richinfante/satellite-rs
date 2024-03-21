@@ -1,5 +1,4 @@
 use crate::constants::*;
-use crate::ext;
 use crate::propogation::dpper::*;
 use crate::propogation::initl::*;
 use crate::propogation::sgp4::*;
@@ -244,7 +243,7 @@ pub fn parse_multiple(string: &str) -> (Vec<Satrec>, Vec<SatrecParseError>) {
         if lines[i].trim().len() != 25 && i + 2 < lines.len() {
             match twoline2satrec(lines[i + 1], lines[i + 2]) {
                 Ok(mut rec) => {
-                    if (lines[i].bytes().collect::<Vec<u8>>()[0] == '0' as u8) {
+                    if lines[i].bytes().collect::<Vec<u8>>()[0] == '0' as u8 {
                         rec.name = Some(lines[i][2..].trim().to_string());
                     } else {
                         rec.name = Some(lines[i].trim().to_string());
@@ -295,7 +294,7 @@ pub fn parse(string: &str) -> Result<Satrec, SatrecParseError> {
         // Because this is a 3le, we have a name. Extract/save it.
         match satrec {
             Ok(mut satrec) => {
-                if (lines[0].bytes().collect::<Vec<u8>>()[0] == '0' as u8) {
+                if lines[0].bytes().collect::<Vec<u8>>()[0] == '0' as u8 {
                     satrec.name = Some(lines[0][2..].to_string());
                 } else {
                     satrec.name = Some(lines[0].to_string());
@@ -363,7 +362,7 @@ fn parse_float(
 ) -> Result<Float, SatrecParseError> {
     match line[low..high].trim().parse::<Float>() {
         Ok(res) => Ok(res),
-        Err(num) => {
+        Err(_) => {
             return Err(SatrecParseError::IntParseError(
                 name,
                 low,
@@ -382,7 +381,7 @@ fn parse_int(
 ) -> Result<i64, SatrecParseError> {
     match line[low..high].trim().parse::<i64>() {
         Ok(res) => Ok(res),
-        Err(num) => {
+        Err(_) => {
             return Err(SatrecParseError::IntParseError(
                 name,
                 low,
@@ -489,7 +488,9 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
 #[cfg(test)]
 mod tests {
     use crate::tests::*;
+    #[allow(unused_imports)]
     use crate::*;
+
     #[test]
     fn test_parse_full() {
         let element = r###"

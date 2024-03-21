@@ -293,7 +293,6 @@ pub fn dpper(satrec: &Satrec, options: DpperOptions) -> DpperResult {
 
 #[cfg(test)]
 mod test {
-    use crate::io::Satrec;
     use crate::propogation::dpper::*;
     use crate::propogation::initl::*;
     use crate::tests::assert_similar;

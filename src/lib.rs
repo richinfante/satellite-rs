@@ -11,6 +11,7 @@ cfg_if! {
         extern crate core as std;
         extern crate alloc;
         use alloc::{string::{String,ToString},format,vec,vec::Vec,boxed::Box};
+        #[allow(unused_imports)]
         use micromath::F32Ext;
         use std::f32::consts::PI;
         use std::f32::consts::FRAC_PI_2;
@@ -108,7 +109,6 @@ mod tests {
 
         }else{
             const SIMILAR_EPSILON: Float = 0.3;
-
         }
     }
 
@@ -125,7 +125,6 @@ mod tests {
         }
     }
 
-    use crate::Vec3;
     struct TrackEntry {
         time: Float,
         known_pos: Vec3,
@@ -270,9 +269,8 @@ mod tests {
     #[test]
     fn test_parse_invalid_tle() {
         use crate::io::SatrecParseError;
-        use chrono::prelude::*;
 
-        let (sats, errors) = crate::io::parse_multiple("Test");
+        let (_sats, errors) = crate::io::parse_multiple("Test");
         assert_eq!(
             errors,
             vec![SatrecParseError::SatrecMultiError(

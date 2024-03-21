@@ -3,7 +3,6 @@ use crate::io::Satrec;
 use crate::propogation::dpper::*;
 use crate::propogation::initl::InitlMethod;
 use crate::*;
-use crate::{Eci, Vec3};
 /*----------------------------------------------------------------------------
 *
 *                             procedure sgp4
@@ -308,8 +307,8 @@ pub fn sgp4(satrec: &mut Satrec, tsince: Float) -> Result<SGP4Result, SGP4Error>
         let dpper_result = dpper(&satrec, dpper_parameters);
         let DpperResult {
             ep,
-            mut nodep,
-            mut argpp,
+            nodep: mut _nodep,
+            argpp: mut _argpp,
             mp: _,
             ..
         } = dpper_result;
@@ -318,8 +317,8 @@ pub fn sgp4(satrec: &mut Satrec, tsince: Float) -> Result<SGP4Result, SGP4Error>
 
         if xincp < 0.0 {
             xincp = -xincp;
-            nodep += PI;
-            argpp -= PI;
+            _nodep += PI;
+            _argpp -= PI;
         }
         if ep < 0.0 || ep > 1.0 {
             //  printf("// error ep %f\n", ep);

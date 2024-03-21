@@ -13,7 +13,6 @@ use crate::io::*;
 use crate::propogation::sgp4::*;
 use crate::*;
 use chrono::prelude::*;
-use chrono::DateTime;
 
 /// Propogate changes to a satrec for a specific datetime.
 pub fn propogate_datetime(satrec: &Satrec, time: DateTime<Utc>) -> Result<SGP4Result, SGP4Error> {

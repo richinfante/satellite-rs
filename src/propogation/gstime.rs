@@ -1,5 +1,4 @@
 use crate::constants::*;
-use crate::ext;
 use crate::*;
 use chrono::prelude::*;
 /// Convert a julian date to GMST (Greenwich Mean Sidereal Time)

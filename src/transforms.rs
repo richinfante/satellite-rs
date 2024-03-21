@@ -1,8 +1,4 @@
 use crate::constants::*;
-use crate::Bearing;
-use crate::Geodedic;
-use crate::TopoCentric;
-use crate::Vec3;
 use crate::*;
 
 pub fn radians_to_degrees(radians: Float) -> Float {
@@ -49,7 +45,7 @@ pub fn geodedic_to_ecf(geodetic: &Geodedic) -> Ecf {
     const A: Float = 6378.137;
     const B: Float = 6356.7523142;
     const F: Float = (A - B) / A;
-    const E2: Float = ((2.0 * F) - (F * F));
+    const E2: Float = (2.0 * F) - (F * F);
 
     let normal = A / (1.0 - (E2 * geodetic.latitude.sin().powf(2.0))).sqrt();
 
@@ -65,7 +61,7 @@ pub fn eci_to_geodedic(eci: &Eci, gmst: Float) -> Geodedic {
     const B: Float = 6356.7523142;
     let r: Float = ((eci.x * eci.x) + (eci.y * eci.y)).sqrt();
     const F: Float = (A - B) / A;
-    const E2: Float = ((2.0 * F) - (F * F));
+    const E2: Float = (2.0 * F) - (F * F);
 
     let mut longitude = eci.y.atan2(eci.x) - gmst;
 
