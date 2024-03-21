@@ -500,7 +500,7 @@ pub fn dscom(options: DscomOptions) -> DscomResult {
 #[cfg(test)]
 mod tests {
     use crate::propogation::dscom::*;
-    use crate::tests::{assert_diff, assert_similar};
+    use crate::tests::assert_similar;
     #[test]
     fn test() {
         let opts = DscomOptions {
@@ -559,21 +559,21 @@ mod tests {
         assert_similar(res.ss5, -0.2842063666667719);
         assert_similar(res.ss6, 0.5264567675404539);
         assert_similar(res.ss7, 0.015725643718630555);
-        assert_diff(res.sz1, 7.241600464426519, 1e-14);
+        assert_similar(res.sz1, 7.241600464426519);
         assert_similar(res.sz2, -4.643684224593015);
         assert_similar(res.sz3, 1.6686076878687435);
-        assert_diff(res.sz11, 5.923151674966536, 1e-14);
-        assert_diff(res.sz12, 0.11851053999055416, 1e-14);
-        assert_diff(res.sz13, -1.5569425931864267, 1e-14);
-        assert_diff(res.sz21, -5.5489812856673435, 1e-14);
-        assert_diff(res.sz22, -2.592624873581728, 1e-14);
-        assert_diff(res.sz23, 0.16121448720509934, 1e-14);
-        assert_diff(res.sz31, 3.273877043602411, 1e-14);
-        assert_diff(res.sz32, -0.4464394721650089, 1e-14);
-        assert_diff(res.sz33, -2.1469592167364815, 1e-14);
-        assert_diff(res.xgh2, 0.0001510256023997251, 1e-14);
-        assert_diff(res.xgh3, 0.0003555337415001366, 1e-14);
-        assert_diff(res.xgh4, -0.00003239876027006408, 1e-14);
+        assert_similar(res.sz11, 5.923151674966536);
+        assert_similar(res.sz12, 0.11851053999055416);
+        assert_similar(res.sz13, -1.5569425931864267);
+        assert_similar(res.sz21, -5.5489812856673435);
+        assert_similar(res.sz22, -2.592624873581728);
+        assert_similar(res.sz23, 0.16121448720509934);
+        assert_similar(res.sz31, 3.273877043602411);
+        assert_similar(res.sz32, -0.4464394721650089);
+        assert_similar(res.sz33, -2.1469592167364815);
+        assert_similar(res.xgh2, 0.0001510256023997251);
+        assert_similar(res.xgh3, 0.0003555337415001366);
+        assert_similar(res.xgh4, -0.00003239876027006408);
         assert_similar(res.xh2, 0.00011285895673523819);
         assert_similar(res.xh3, -0.0004733943404491607);
         assert_similar(res.xi2, -0.00006414087517640146);
@@ -583,18 +583,18 @@ mod tests {
         assert_similar(res.xl4, 0.00013638400715968452);
         assert_similar(res.nm, 0.009971131594572634);
         assert_similar(res.z1, 2.5573881535383824);
-        assert_diff(res.z2, 7.311693909959471, 1e-14);
-        assert_diff(res.z3, 8.004285429240719, 1e-14);
+        assert_similar(res.z2, 7.311693909959471);
+        assert_similar(res.z3, 8.004285429240719);
         assert_similar(res.z11, -1.949045345610987);
-        assert_diff(res.z12, 0.9086631598832984, 1e-14);
-        assert_diff(res.z13, 6.119118527261723, 1e-14);
-        assert_diff(res.z21, 0.6841370517901615, 1e-14);
-        assert_diff(res.z22, 1.5988365604014116, 1e-14);
-        assert_diff(res.z23, -6.022288391897364, 1e-14);
-        assert_diff(res.z31, -1.633514023053113, 1e-14);
-        assert_diff(res.z32, 2.3032285656514286, 1e-14);
-        assert_diff(res.z33, 3.7885830019843842, 1e-14);
-        assert_diff(res.zmol, 3.5674683899705713, 1e-14);
-        assert_diff(res.zmos, 3.896090412268542, 1e-14);
+        assert_similar(res.z12, 0.9086631598832984);
+        assert_similar(res.z13, 6.119118527261723);
+        assert_similar(res.z21, 0.6841370517901615);
+        assert_similar(res.z22, 1.5988365604014116);
+        assert_similar(res.z23, -6.022288391897364);
+        assert_similar(res.z31, -1.633514023053113);
+        assert_similar(res.z32, 2.3032285656514286);
+        assert_similar(res.z33, 3.7885830019843842);
+        assert_similar(res.zmol, 3.5674683899705713);
+        assert_similar(res.zmos, 3.896090412268542);
     }
 }

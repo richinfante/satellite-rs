@@ -12,5 +12,5 @@ chrono = { version = "0.4", default-features = false }
 cfg-if = "1.0"
 micromath = "2.1.0"
 [features]
-default = []
+default = ["std"]
 std = []

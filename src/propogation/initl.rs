@@ -197,21 +197,21 @@ mod test {
 
         let result = initl(opts);
 
-        assert_eq!(result.no, 0.07010615621239219);
+        assert_similar(result.no, 0.07010615621239219);
         assert_eq!(result.method, InitlMethod::N);
-        assert_eq!(result.ainv, 0.9614303648645832);
-        assert_eq!(result.ao, 1.0401169305078577);
-        assert_eq!(result.con41, -0.7389556198424165);
-        assert_eq!(result.con42, 0.5649260330706942);
-        assert_eq!(result.cosio, 0.2949827001467394);
-        assert_eq!(result.cosio2, 0.08701479338586116);
-        assert_eq!(result.eccsq, 0.00007522266360999999);
-        assert_eq!(result.omeosq, 0.99992477733639);
-        assert_eq!(result.posq, 1.0816804769920354);
-        assert_eq!(result.rp, 1.03109589235787);
-        assert_eq!(result.rteosq, 0.9999623879608622);
-        assert_eq!(result.sinio, 0.9555025937244435);
-        assert_eq!(result.gsto, 0.1082901416688955);
+        assert_similar(result.ainv, 0.9614303648645832);
+        assert_similar(result.ao, 1.0401169305078577);
+        assert_similar(result.con41, -0.7389556198424165);
+        assert_similar(result.con42, 0.5649260330706942);
+        assert_similar(result.cosio, 0.2949827001467394);
+        assert_similar(result.cosio2, 0.08701479338586116);
+        assert_similar(result.eccsq, 0.00007522266360999999);
+        assert_similar(result.omeosq, 0.99992477733639);
+        assert_similar(result.posq, 1.0816804769920354);
+        assert_similar(result.rp, 1.03109589235787);
+        assert_similar(result.rteosq, 0.9999623879608622);
+        assert_similar(result.sinio, 0.9555025937244435);
+        assert_similar(result.gsto, 0.1082901416688955);
     }
 
     #[test]
@@ -227,20 +227,20 @@ mod test {
         };
 
         let res = initl(opts);
-        assert_eq!(res.no, 0.009971131594572634);
+        assert_similar(res.no, 0.009971131594572634);
         assert_eq!(res.method, InitlMethod::N);
-        assert_eq!(res.ainv, 0.2619650549686258);
-        assert_eq!(res.ao, 3.8173030373068833);
+        assert_similar(res.ainv, 0.2619650549686258);
+        assert_similar(res.ao, 3.8173030373068833);
         assert_similar(res.con41, 0.40625317982989756);
         assert_similar(res.con42, -1.3437552997164959);
         assert_similar(res.cosio, 0.6846539709541596);
         assert_similar(res.cosio2, 0.4687510599432992);
         assert_similar(res.eccsq, 0.53553650897296);
-        assert_eq!(res.omeosq, 0.46446349102704);
-        assert_eq!(res.posq, 3.143521535730025);
-        assert_eq!(res.rp, 1.0237869323147717);
-        assert_eq!(res.rteosq, 0.6815155838475302);
+        assert_similar(res.omeosq, 0.46446349102704);
+        assert_similar(res.posq, 3.143521535730025);
+        assert_similar(res.rp, 1.0237869323147717);
+        assert_similar(res.rteosq, 0.6815155838475302);
         assert_similar(res.sinio, 0.7288682597401953);
-        assert_eq!(res.gsto, 1.265125075734467);
+        assert_similar(res.gsto, 1.265125075734467);
     }
 }

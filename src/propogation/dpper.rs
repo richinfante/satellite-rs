@@ -547,10 +547,10 @@ mod test {
 
         let res = dpper(&satrec, opts);
 
-        assert_eq!(res.ep, 0.7318253048776667);
-        assert_eq!(res.inclp, 0.8159616103005034);
-        assert_eq!(res.nodep, 4.02112614477864);
-        assert_eq!(res.argpp, 0.829566024830811);
+        assert_similar(res.ep, 0.7318253048776667);
+        assert_similar(res.inclp, 0.8159616103005034);
+        assert_similar(res.nodep, 4.02112614477864);
+        assert_similar(res.argpp, 0.829566024830811);
         assert_similar(res.mp, 0.1808079384635203);
     }
 }

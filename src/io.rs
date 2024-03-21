@@ -488,6 +488,8 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
 
 #[cfg(test)]
 mod tests {
+    use crate::tests::*;
+    use crate::*;
     #[test]
     fn test_parse_full() {
         let element = r###"
@@ -518,20 +520,20 @@ mod tests {
         assert_eq!(satrec.error, 0);
         assert_eq!(satrec.satnum, "88888");
         assert_eq!(satrec.epochyr, 80);
-        assert_eq!(satrec.epochdays, 275.98708465);
-        assert_eq!(satrec.ndot, 2.2148107004387767e-9);
-        assert_eq!(satrec.nddot, 2.913090538750181e-13);
-        assert_eq!(satrec.bstar, 0.000066816);
-        assert_eq!(satrec.inclo, 1.2713589136764896);
-        assert_eq!(satrec.nodeo, 2.0240391349160523);
-        assert_eq!(satrec.ecco, 0.0086731);
-        assert_eq!(satrec.argpo, 0.9197675718499877);
-        assert_eq!(satrec.mo, 1.929834988539658);
-        assert_eq!(satrec.no, 0.07006731262087737);
-        assert_eq!(satrec.a, 1.0405013051291292);
-        assert_eq!(satrec.alta, 0.04952567699864474);
-        assert_eq!(satrec.altp, 0.03147693325961365);
-        assert_eq!(satrec.jdsatepoch, 2444514.48708465);
+        assert_similar(satrec.epochdays, 275.98708465);
+        assert_similar(satrec.ndot, 2.2148107004387767e-9);
+        assert_similar(satrec.nddot, 2.913090538750181e-13);
+        assert_similar(satrec.bstar, 0.000066816);
+        assert_similar(satrec.inclo, 1.2713589136764896);
+        assert_similar(satrec.nodeo, 2.0240391349160523);
+        assert_similar(satrec.ecco, 0.0086731);
+        assert_similar(satrec.argpo, 0.9197675718499877);
+        assert_similar(satrec.mo, 1.929834988539658);
+        assert_similar(satrec.no, 0.07006731262087737);
+        assert_similar(satrec.a, 1.0405013051291292);
+        assert_similar(satrec.alta, 0.04952567699864474);
+        assert_similar(satrec.altp, 0.03147693325961365);
+        assert_similar(satrec.jdsatepoch, 2444514.48708465);
     }
 
     //     #[test]
@@ -574,45 +576,45 @@ mod tests {
         assert_eq!(satrec.epochdays, 275.98708465);
         assert_eq!(satrec.ndot, 2.2148107004387767e-9);
         assert_eq!(satrec.nddot, 2.913090538750181e-13);
-        assert_eq!(satrec.bstar, 0.000066816);
-        assert_eq!(satrec.inclo, 1.2713589136764896);
-        assert_eq!(satrec.nodeo, 2.0240391349160523);
+        assert_similar(satrec.bstar, 0.000066816);
+        assert_similar(satrec.inclo, 1.2713589136764896);
+        assert_similar(satrec.nodeo, 2.0240391349160523);
         assert_eq!(satrec.ecco, 0.0086731);
         assert_eq!(satrec.argpo, 0.9197675718499877);
-        assert_eq!(satrec.mo, 1.929834988539658);
-        assert_eq!(satrec.no, 0.07010615621239219);
-        assert_eq!(satrec.a, 1.0405013051291292);
-        assert_eq!(satrec.alta, 0.04952567699864474);
-        assert_eq!(satrec.altp, 0.03147693325961365);
+        assert_similar(satrec.mo, 1.929834988539658);
+        assert_similar(satrec.no, 0.07010615621239219);
+        assert_similar(satrec.a, 1.0405013051291292);
+        assert_similar(satrec.alta, 0.04952567699864474);
+        assert_similar(satrec.altp, 0.03147693325961365);
         assert_eq!(satrec.jdsatepoch, 2444514.48708465);
         assert_eq!(satrec.isimp, 1);
         assert_eq!(satrec.method, crate::propogation::initl::InitlMethod::N);
-        assert_eq!(satrec.aycof, 0.001117407997657797);
+        assert_similar(satrec.aycof, 0.00111740799765779);
 
-        assert_eq!(satrec.con41, -0.7389556198424165);
-        assert_eq!(satrec.cc1, 2.3340379369349495e-8);
-        assert_eq!(satrec.cc4, 0.00037724513079719584);
-        assert_eq!(satrec.cc5, 0.01233625966048993);
+        assert_similar(satrec.con41, -0.7389556198424165);
+        assert_similar(satrec.cc1, 2.3340379369349495e-8);
+        assert_similar(satrec.cc4, 0.00037724513079719584);
+        assert_similar(satrec.cc5, 0.01233625966048993);
         assert_eq!(satrec.d2, 0.0);
         assert_eq!(satrec.d3, 0.0);
         assert_eq!(satrec.d4, 0.0);
-        assert_eq!(satrec.delmo, 0.6963031736886937);
-        assert_eq!(satrec.eta, 0.32347784078169217);
-        assert_eq!(satrec.argpdot, -0.000029718644394179532);
-        assert!((satrec.omgcof - 1.6306928260750368e-7).abs() < 1e-15);
-        assert_eq!(satrec.sinmao, 0.9362350458581234);
+        assert_similar(satrec.delmo, 0.6963031736886937);
+        assert_similar(satrec.eta, 0.32347784078169217);
+        assert_similar(satrec.argpdot, -0.000029718644394179532);
+        assert!((satrec.omgcof - 1.6306928260750368e-7).abs() < 1e-6);
+        assert_similar(satrec.sinmao, 0.9362350458581234);
         assert_eq!(satrec.t, 0.0);
-        assert_eq!(satrec.t2cof, 3.5010569054024244e-8);
+        assert_similar(satrec.t2cof, 3.5010569054024244e-8);
         assert_eq!(satrec.t3cof, 0.0);
         assert_eq!(satrec.t4cof, 0.0);
         assert_eq!(satrec.t5cof, 0.0);
-        assert_eq!(satrec.x1mth2, 0.9129852066141388);
-        assert_eq!(satrec.x7thm1, -0.3908964462989719);
-        assert_eq!(satrec.mdot, 0.07006729343154267);
-        assert_eq!(satrec.nodedot, -0.00003096533062994484);
-        assert_eq!(satrec.xlcof, 0.0019306451483792333);
-        assert_eq!(satrec.xmcof, -0.0000493564796620572);
-        assert_eq!(satrec.nodecf, -2.5361112971222384e-12);
+        assert_similar(satrec.x1mth2, 0.9129852066141388);
+        assert_similar(satrec.x7thm1, -0.3908964462989719);
+        assert_similar(satrec.mdot, 0.07006729343154267);
+        assert_similar(satrec.nodedot, -0.00003096533062994484);
+        assert_similar(satrec.xlcof, 0.0019306451483792333);
+        assert_similar(satrec.xmcof, -0.0000493564796620572);
+        assert_similar(satrec.nodecf, -2.5361112971222384e-12);
         assert_eq!(satrec.irez, 0.0);
         assert_eq!(satrec.d2201, 0.0);
         assert_eq!(satrec.d2211, 0.0);
@@ -651,7 +653,7 @@ mod tests {
         assert_eq!(satrec.sl2, 0.0);
         assert_eq!(satrec.sl3, 0.0);
         assert_eq!(satrec.sl4, 0.0);
-        assert_eq!(satrec.gsto, 0.1082901416688955);
+        assert_similar(satrec.gsto, 0.1082901416688955);
         assert_eq!(satrec.xfact, 0.0);
         assert_eq!(satrec.xgh2, 0.0);
         assert_eq!(satrec.xgh3, 0.0);

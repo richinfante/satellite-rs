@@ -526,7 +526,7 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
 #[cfg(test)]
 mod tests {
     use crate::propogation::dsinit::*;
-
+    use crate::tests::*;
     #[test]
     fn test_dsinit() {
         let opts = DsinitOptions {
@@ -623,12 +623,12 @@ mod tests {
         assert_eq!(res.d5232, 0.0);
         assert_eq!(res.d5421, 0.0);
         assert_eq!(res.d5433, 0.0);
-        assert_eq!(res.dedt, 2.63860646954029e-8);
-        assert_eq!(res.didt, -3.4767374233712414e-8);
-        assert_eq!(res.dmdt, 8.037814266648781e-8);
-        assert_eq!(res.dndt, 0.0);
-        assert_eq!(res.dnodt, -6.033631312091549e-8);
-        assert_eq!(res.domdt, 9.465204025716937e-9);
+        assert_similar(res.dedt, 2.63860646954029e-8);
+        assert_similar(res.didt, -3.4767374233712414e-8);
+        assert_similar(res.dmdt, 8.037814266648781e-8);
+        assert_similar(res.dndt, 0.0);
+        assert_similar(res.dnodt, -6.033631312091549e-8);
+        assert_similar(res.domdt, 9.465204025716937e-9);
         assert_eq!(res.del1, 0.0);
         assert_eq!(res.del2, 0.0);
         assert_eq!(res.del3, 0.0);

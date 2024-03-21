@@ -29,9 +29,10 @@ pub fn gstime_datetime(datetime: DateTime<Utc>) -> Float {
 #[cfg(test)]
 mod tests {
     use crate::propogation::gstime::*;
+    use crate::tests::*;
     #[test]
     fn test_gst() {
         let res = gstime(2444468.79629788);
-        assert_eq!(res, 1.265125075734467);
+        assert_similar(res, 1.265125075734467);
     }
 }

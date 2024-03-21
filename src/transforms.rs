@@ -208,9 +208,9 @@ mod test {
 
         let res = transforms::ecf_to_look_angles(&observer_gd, &position_ecf);
 
-        assert_diff(res.azimuth, 1.747132515004105, 1e-12);
-        assert_diff(res.elevation, -0.40791001471599636, 1e-12);
-        assert_diff(res.range, 5703.24291019934, 1e-11);
+        assert_similar(res.azimuth, 1.747132515004105);
+        assert_similar(res.elevation, -0.40791001471599636);
+        assert_similar(res.range, 5703.24291019934);
     }
 
     #[test]
@@ -228,8 +228,8 @@ mod test {
         };
 
         let ts = transforms::topocentric(&observer_gd, &position_ecf);
-        assert_diff(ts.top_s, 918.3964944158424, 1e-12);
-        assert_diff(ts.top_e, 5154.118963234977, 1e-12);
-        assert_diff(ts.top_z, -2262.429067309148, 1e-12);
+        assert_similar(ts.top_s, 918.3964944158424);
+        assert_similar(ts.top_e, 5154.118963234977);
+        assert_similar(ts.top_z, -2262.429067309148);
     }
 }

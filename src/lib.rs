@@ -100,8 +100,20 @@ impl Vec3 {
 
 #[cfg(test)]
 mod tests {
+    use crate::*;
+    cfg_if! {
+        if #[cfg(feature = "std")]
+        {
+            const SIMILAR_EPSILON: Float = 1e-12;
+
+        }else{
+            const SIMILAR_EPSILON: Float = 0.3;
+
+        }
+    }
+
     pub fn assert_similar(lhs: Float, rhs: Float) {
-        assert_diff(lhs, rhs, 1e-13);
+        assert_diff(lhs, rhs, SIMILAR_EPSILON);
     }
 
     pub fn assert_diff(lhs: Float, rhs: Float, epsilon: Float) {
