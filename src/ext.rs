@@ -1,12 +1,11 @@
+use crate::*;
 use chrono::prelude::*;
-use chrono::DateTime;
-
 pub struct MDHMS {
-    pub month: f64,
-    pub day: f64,
-    pub hour: f64,
-    pub minute: f64,
-    pub second: f64,
+    pub month: Float,
+    pub day: Float,
+    pub hour: Float,
+    pub minute: Float,
+    pub second: Float,
 }
 
 /* -----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ pub struct MDHMS {
  *  coupling      :
  *    none.
  * --------------------------------------------------------------------------- */
-pub fn days2mdhms(year: u64, days: f64) -> MDHMS {
+pub fn days2mdhms(year: u64, days: Float) -> MDHMS {
     let mut lmonth: [u64; 12] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     if year % 4 == 0 {
         lmonth[1] = 29
@@ -61,13 +60,13 @@ pub fn days2mdhms(year: u64, days: f64) -> MDHMS {
         i += 1;
     }
 
-    let month = i as f64;
-    let day = (dayofyr - inttemp) as f64;
-    let mut temp = (days - dayofyr as f64) * 24.0;
+    let month = i as Float;
+    let day = (dayofyr - inttemp) as Float;
+    let mut temp = (days - dayofyr as Float) * 24.0;
     let hour = temp.floor();
-    temp = (temp - hour as f64) * 60.0;
+    temp = (temp - hour as Float) * 60.0;
     let minute = temp.floor();
-    let second = (temp - minute as f64) * 60.0;
+    let second = (temp - minute as Float) * 60.0;
 
     MDHMS {
         month,
@@ -78,7 +77,15 @@ pub fn days2mdhms(year: u64, days: f64) -> MDHMS {
     }
 }
 
-pub fn jday(year: f64, mon: f64, day: f64, hr: f64, minute: f64, sec: f64, msec: f64) -> f64 {
+pub fn jday(
+    year: Float,
+    mon: Float,
+    day: Float,
+    hr: Float,
+    minute: Float,
+    sec: Float,
+    msec: Float,
+) -> Float {
     ((367.0 * year) - ((7.0 * (year + ((mon + 9.0) / 12.0).floor())) * 0.25).floor())
         + ((275.0 * mon) / 9.0).floor()
         + day
@@ -86,14 +93,14 @@ pub fn jday(year: f64, mon: f64, day: f64, hr: f64, minute: f64, sec: f64, msec:
         + (((((msec / 60000.0) + (sec / 60.0) + minute) / 60.0) + hr) / 24.0) // ut in days
 }
 
-pub fn jday_datetime(time: DateTime<Utc>) -> f64 {
+pub fn jday_datetime(time: DateTime<Utc>) -> Float {
     jday(
-        time.year() as f64,
-        time.month() as f64,
-        time.day() as f64,
-        time.hour() as f64,
-        time.minute() as f64,
-        time.second() as f64,
-        0 as f64
+        time.year() as Float,
+        time.month() as Float,
+        time.day() as Float,
+        time.hour() as Float,
+        time.minute() as Float,
+        time.second() as Float,
+        0 as Float,
     )
 }

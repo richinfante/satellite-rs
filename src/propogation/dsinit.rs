@@ -1,111 +1,111 @@
 use crate::constants::*;
-
+use crate::*;
 pub struct DsinitOptions {
-    pub cosim: f64,
-    pub argpo: f64,
-    pub s1: f64,
-    pub s2: f64,
-    pub s3: f64,
-    pub s4: f64,
-    pub s5: f64,
-    pub sinim: f64,
-    pub ss1: f64,
-    pub ss2: f64,
-    pub ss3: f64,
-    pub ss4: f64,
-    pub ss5: f64,
-    pub sz1: f64,
-    pub sz3: f64,
-    pub sz11: f64,
-    pub sz13: f64,
-    pub sz21: f64,
-    pub sz23: f64,
-    pub sz31: f64,
-    pub sz33: f64,
-    pub t: f64,
-    pub tc: f64,
-    pub gsto: f64,
-    pub mo: f64,
-    pub mdot: f64,
-    pub no: f64,
-    pub nodeo: f64,
-    pub nodedot: f64,
-    pub xpidot: f64,
-    pub z1: f64,
-    pub z3: f64,
-    pub z11: f64,
-    pub z13: f64,
-    pub z21: f64,
-    pub z23: f64,
-    pub z31: f64,
-    pub z33: f64,
-    pub ecco: f64,
-    pub eccsq: f64,
-    pub emsq: f64,
-    pub em: f64,
-    pub argpm: f64,
-    pub inclm: f64,
-    pub mm: f64,
-    pub nm: f64,
-    pub nodem: f64,
-    pub irez: f64,
-    pub atime: f64,
-    pub d2201: f64,
-    pub d2211: f64,
-    pub d3210: f64,
-    pub d3222: f64,
-    pub d4410: f64,
-    pub d4422: f64,
-    pub d5220: f64,
-    pub d5232: f64,
-    pub d5421: f64,
-    pub d5433: f64,
-    pub dedt: f64,
-    pub didt: f64,
-    pub dmdt: f64,
-    pub dnodt: f64,
-    pub domdt: f64,
-    pub del1: f64,
-    pub del2: f64,
-    pub del3: f64,
-    pub xfact: f64,
-    pub xlamo: f64,
-    pub xli: f64,
-    pub xni: f64,
+    pub cosim: Float,
+    pub argpo: Float,
+    pub s1: Float,
+    pub s2: Float,
+    pub s3: Float,
+    pub s4: Float,
+    pub s5: Float,
+    pub sinim: Float,
+    pub ss1: Float,
+    pub ss2: Float,
+    pub ss3: Float,
+    pub ss4: Float,
+    pub ss5: Float,
+    pub sz1: Float,
+    pub sz3: Float,
+    pub sz11: Float,
+    pub sz13: Float,
+    pub sz21: Float,
+    pub sz23: Float,
+    pub sz31: Float,
+    pub sz33: Float,
+    pub t: Float,
+    pub tc: Float,
+    pub gsto: Float,
+    pub mo: Float,
+    pub mdot: Float,
+    pub no: Float,
+    pub nodeo: Float,
+    pub nodedot: Float,
+    pub xpidot: Float,
+    pub z1: Float,
+    pub z3: Float,
+    pub z11: Float,
+    pub z13: Float,
+    pub z21: Float,
+    pub z23: Float,
+    pub z31: Float,
+    pub z33: Float,
+    pub ecco: Float,
+    pub eccsq: Float,
+    pub emsq: Float,
+    pub em: Float,
+    pub argpm: Float,
+    pub inclm: Float,
+    pub mm: Float,
+    pub nm: Float,
+    pub nodem: Float,
+    pub irez: Float,
+    pub atime: Float,
+    pub d2201: Float,
+    pub d2211: Float,
+    pub d3210: Float,
+    pub d3222: Float,
+    pub d4410: Float,
+    pub d4422: Float,
+    pub d5220: Float,
+    pub d5232: Float,
+    pub d5421: Float,
+    pub d5433: Float,
+    pub dedt: Float,
+    pub didt: Float,
+    pub dmdt: Float,
+    pub dnodt: Float,
+    pub domdt: Float,
+    pub del1: Float,
+    pub del2: Float,
+    pub del3: Float,
+    pub xfact: Float,
+    pub xlamo: Float,
+    pub xli: Float,
+    pub xni: Float,
 }
 
 pub struct DinitResult {
-    pub em: f64,
-    pub argpm: f64,
-    pub inclm: f64,
-    pub mm: f64,
-    pub nm: f64,
-    pub nodem: f64,
-    pub irez: f64,
-    pub atime: f64,
-    pub d2201: f64,
-    pub d2211: f64,
-    pub d3210: f64,
-    pub d3222: f64,
-    pub d4410: f64,
-    pub d4422: f64,
-    pub d5220: f64,
-    pub d5232: f64,
-    pub d5421: f64,
-    pub d5433: f64,
-    pub dedt: f64,
-    pub didt: f64,
-    pub dmdt: f64,
-    pub dndt: f64,
-    pub dnodt: f64,
-    pub domdt: f64,
-    pub del1: f64,
-    pub del2: f64,
-    pub del3: f64,
-    pub xfact: f64,
-    pub xlamo: f64,
-    pub xli: f64,
-    pub xni: f64,
+    pub em: Float,
+    pub argpm: Float,
+    pub inclm: Float,
+    pub mm: Float,
+    pub nm: Float,
+    pub nodem: Float,
+    pub irez: Float,
+    pub atime: Float,
+    pub d2201: Float,
+    pub d2211: Float,
+    pub d3210: Float,
+    pub d3222: Float,
+    pub d4410: Float,
+    pub d4422: Float,
+    pub d5220: Float,
+    pub d5232: Float,
+    pub d5421: Float,
+    pub d5433: Float,
+    pub dedt: Float,
+    pub didt: Float,
+    pub dmdt: Float,
+    pub dndt: Float,
+    pub dnodt: Float,
+    pub domdt: Float,
+    pub del1: Float,
+    pub del2: Float,
+    pub del3: Float,
+    pub xfact: Float,
+    pub xlamo: Float,
+    pub xli: Float,
+    pub xni: Float,
 }
 
 /*-----------------------------------------------------------------------------
@@ -236,7 +236,7 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     let mut mm = options.mm;
     let mut nm = options.nm;
     let mut nodem = options.nodem;
-    let mut irez = options.irez;
+    let mut _irez = options.irez;
     let mut atime = options.atime;
     let mut d3222 = options.d3222;
     let mut d2201 = options.d2201;
@@ -246,73 +246,73 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     let mut d3210 = options.d3210;
     let mut d5433 = options.d5433;
     let mut d4410 = options.d4410;
-    let mut didt = options.didt;
+    let mut _didt = options.didt;
     let mut d5220 = options.d5220;
-    let mut dnodt = options.dnodt;
+    let mut _dnodt = options.dnodt;
     let mut d5421 = options.d5421;
     let mut del1 = options.del1;
-    let mut dedt = options.dedt;
+    let mut _dedt = options.dedt;
     let mut del3 = options.del3;
-    let mut dmdt = options.dmdt;
+    let mut _dmdt = options.dmdt;
     let mut xlamo = options.xlamo;
-    let mut domdt = options.domdt;
+    let mut _domdt = options.domdt;
     let mut xni = options.xni;
     let mut del2 = options.del2;
     let mut xfact = options.xfact;
     let mut xli = options.xli;
 
-    let mut f220: f64;
-    let f221: f64;
-    let f311: f64;
-    let f321: f64;
-    let f322: f64;
-    let mut f330: f64;
-    let f441: f64;
-    let f442: f64;
-    let f522: f64;
-    let f523: f64;
-    let f542: f64;
-    let f543: f64;
-    let g200: f64;
-    let g201: f64;
-    let g211: f64;
-    let g300: f64;
-    let mut g310: f64;
-    let g322: f64;
-    let g410: f64;
-    let g422: f64;
-    let g520: f64;
-    let g521: f64;
-    let g532: f64;
-    let g533: f64;
-    let sini2: f64;
-    let mut temp: f64;
-    let mut temp1: f64;
-    let xno2: f64;
-    let ainv2: f64;
-    let aonv: f64;
-    let cosisq: f64;
-    let eoc: f64;
+    let mut f220: Float;
+    let f221: Float;
+    let f311: Float;
+    let f321: Float;
+    let f322: Float;
+    let mut f330: Float;
+    let f441: Float;
+    let f442: Float;
+    let f522: Float;
+    let f523: Float;
+    let f542: Float;
+    let f543: Float;
+    let g200: Float;
+    let g201: Float;
+    let g211: Float;
+    let g300: Float;
+    let mut g310: Float;
+    let g322: Float;
+    let g410: Float;
+    let g422: Float;
+    let g520: Float;
+    let g521: Float;
+    let g532: Float;
+    let g533: Float;
+    let sini2: Float;
+    let mut temp: Float;
+    let mut temp1: Float;
+    let xno2: Float;
+    let ainv2: Float;
+    let aonv: Float;
+    let cosisq: Float;
+    let eoc: Float;
 
-    const Q22: f64 = 1.7891679e-6;
-    const Q31: f64 = 2.1460748e-6;
-    const Q33: f64 = 2.2123015e-7;
-    const ROOT22: f64 = 1.7891679e-6;
-    const ROOT44: f64 = 7.3636953e-9;
-    const ROOT54: f64 = 2.1765803e-9;
-    const RPTIM: f64 = 4.37526908801129966e-3; // equates to 7.29211514668855e-5 rad/sec
-    const ROOT32: f64 = 3.7393792e-7;
-    const ROOT52: f64 = 1.1428639e-7;
-    const ZNL: f64 = 1.5835218e-4;
-    const ZNS: f64 = 1.19459e-5;
+    const Q22: Float = 1.7891679e-6;
+    const Q31: Float = 2.1460748e-6;
+    const Q33: Float = 2.2123015e-7;
+    const ROOT22: Float = 1.7891679e-6;
+    const ROOT44: Float = 7.3636953e-9;
+    const ROOT54: Float = 2.1765803e-9;
+    const RPTIM: Float = 4.37526908801129966e-3; // equates to 7.29211514668855e-5 rad/sec
+    const ROOT32: Float = 3.7393792e-7;
+    const ROOT52: Float = 1.1428639e-7;
+    const ZNL: Float = 1.5835218e-4;
+    const ZNS: Float = 1.19459e-5;
 
     // -------------------- deep space initialization ------------
-    irez = 0.0;
+    _irez = 0.0;
     if (nm < 0.0052359877) && (nm > 0.0034906585) {
-        irez = 1.0;
+        _irez = 1.0;
     }
     if (nm >= 8.26e-3) && (nm <= 9.24e-3) && (em >= 0.5) {
-        irez = 2.0;
+        _irez = 2.0;
     }
 
     // ------------------------ do solar terms -------------------
@@ -332,9 +332,9 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     let sgs = sghs - (cosim * shs);
 
     // ------------------------- do lunar terms ------------------
-    dedt = ses + (s1 * ZNL * s5);
-    didt = sis + (s2 * ZNL * (z11 + z13));
-    dmdt = sls - (ZNL * s3 * ((z1 + z3) - 14.0 - (6.0 * emsq)));
+    _dedt = ses + (s1 * ZNL * s5);
+    _didt = sis + (s2 * ZNL * (z11 + z13));
+    _dmdt = sls - (ZNL * s3 * ((z1 + z3) - 14.0 - (6.0 * emsq)));
     let sghl = s4 * ZNL * ((z31 + z33) - 6.0);
     let mut shll = -ZNL * s2 * (z21 + z23);
 
@@ -342,21 +342,21 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     if (inclm < 5.2359877e-2) || (inclm > (PI - 5.2359877e-2)) {
         shll = 0.0;
     }
-    domdt = sgs + sghl;
-    dnodt = shs;
+    _domdt = sgs + sghl;
+    _dnodt = shs;
     if sinim != 0.0 {
-        domdt -= (cosim / sinim) * shll;
-        dnodt += shll / sinim;
+        _domdt -= (cosim / sinim) * shll;
+        _dnodt += shll / sinim;
     }
 
     // ----------- calculate deep space resonance effects --------
     let dndt = 0.0;
     let theta = (gsto + (tc * RPTIM)) % TWO_PI;
-    em += dedt * t;
-    inclm += didt * t;
-    argpm += domdt * t;
-    nodem += dnodt * t;
-    mm += dmdt * t;
+    em += _dedt * t;
+    inclm += _didt * t;
+    argpm += _domdt * t;
+    nodem += _dnodt * t;
+    mm += _dmdt * t;
 
     // sgp4fix for negative inclinations
     // the following if statement should be commented out
@@ -368,11 +368,11 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
     // }
 
     // -------------- initialize the resonance terms -------------
-    if irez != 0.0 {
+    if _irez != 0.0 {
         aonv = (nm / XKE).powf(X2O3);
 
         // ---------- geopotential resonance for 12 hour orbits ------
-        if irez == 2.0 {
+        if _irez == 2.0 {
             cosisq = cosim * cosim;
             let emo = em;
             em = ecco;
@@ -453,13 +453,13 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
             d5421 = temp * f542 * g521;
             d5433 = temp * f543 * g533;
             xlamo = ((mo + nodeo + nodeo) - (theta + theta)) % TWO_PI;
-            xfact = (mdot + dmdt + (2.0 * ((nodedot + dnodt) - RPTIM))) - no;
+            xfact = (mdot + _dmdt + (2.0 * ((nodedot + _dnodt) - RPTIM))) - no;
             em = emo;
             emsq = emsqo;
         }
 
         //  ---------------- synchronous resonance terms --------------
-        if irez == 1.0 {
+        if _irez == 1.0 {
             g200 = 1.0 + (emsq * (-2.5 + (0.8125 * emsq)));
             g310 = 1.0 + (2.0 * emsq);
             g300 = 1.0 + (emsq * (-6.0 + (6.60937 * emsq)));
@@ -472,7 +472,7 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
             del3 = 3.0 * del1 * f330 * g300 * Q33 * aonv;
             del1 = del1 * f311 * g310 * Q31 * aonv;
             xlamo = ((mo + nodeo + argpo) - theta) % TWO_PI;
-            xfact = (mdot + xpidot + dmdt + domdt + dnodt) - (no + RPTIM);
+            xfact = (mdot + xpidot + _dmdt + _domdt + _dnodt) - (no + RPTIM);
         }
 
         //  ------------ for sgp4, initialize the integrator ----------
@@ -490,7 +490,7 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
         nm,
         nodem,
 
-        irez,
+        irez: _irez,
         atime,
 
         d2201,
@@ -505,12 +505,12 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
         d5421,
         d5433,
 
-        dedt,
-        didt,
-        dmdt,
+        dedt: _dedt,
+        didt: _didt,
+        dmdt: _dmdt,
         dndt,
-        dnodt,
-        domdt,
+        dnodt: _dnodt,
+        domdt: _domdt,
 
         del1,
         del2,
@@ -526,7 +526,7 @@ pub fn dsinit(options: DsinitOptions) -> DinitResult {
 #[cfg(test)]
 mod tests {
     use crate::propogation::dsinit::*;
-
+    use crate::tests::*;
     #[test]
     fn test_dsinit() {
         let opts = DsinitOptions {
@@ -623,12 +623,12 @@ mod tests {
         assert_eq!(res.d5232, 0.0);
         assert_eq!(res.d5421, 0.0);
         assert_eq!(res.d5433, 0.0);
-        assert_eq!(res.dedt, 2.63860646954029e-8);
-        assert_eq!(res.didt, -3.4767374233712414e-8);
-        assert_eq!(res.dmdt, 8.037814266648781e-8);
-        assert_eq!(res.dndt, 0.0);
-        assert_eq!(res.dnodt, -6.033631312091549e-8);
-        assert_eq!(res.domdt, 9.465204025716937e-9);
+        assert_similar(res.dedt, 2.63860646954029e-8);
+        assert_similar(res.didt, -3.4767374233712414e-8);
+        assert_similar(res.dmdt, 8.037814266648781e-8);
+        assert_similar(res.dndt, 0.0);
+        assert_similar(res.dnodt, -6.033631312091549e-8);
+        assert_similar(res.domdt, 9.465204025716937e-9);
         assert_eq!(res.del1, 0.0);
         assert_eq!(res.del2, 0.0);
         assert_eq!(res.del3, 0.0);

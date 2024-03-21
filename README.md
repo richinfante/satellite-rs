@@ -11,6 +11,13 @@ Since this library is currently unstable, you may want to simply grab the latest
 ```bash
 satellite = { git = "https://github.com/richinfante/satellite-rs.git", branch = "master" }
 ```
+This crate can be used without the standard library (`#![no_std]`) by disabling
+the default `std`.
+
+```toml
+satellite = { git = "https://github.com/richinfante/satellite-rs.git", branch = "master" , default-features = false} 
+```
+
 
 ### How to use
 1. Get updated tles from a source such as [celestrak](https://celestrak.com/NORAD/elements/stations.txt).

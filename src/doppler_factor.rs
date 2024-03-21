@@ -1,7 +1,7 @@
 use crate::constants::*;
-use crate::Vec3;
 
-fn sign(val: f64) -> f64 {
+use crate::*;
+fn sign(val: Float) -> Float {
     if val >= 0.0 {
         1.0
     } else {
@@ -9,7 +9,7 @@ fn sign(val: f64) -> f64 {
     }
 }
 
-pub fn doppler_factor(location: Vec3, position: Vec3, velocity: Vec3) -> f64 {
+pub fn doppler_factor(location: Vec3, position: Vec3, velocity: Vec3) -> Float {
     let current_range = position.range(&location);
 
     let next_pos = position.add(&velocity);

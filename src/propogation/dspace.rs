@@ -1,56 +1,56 @@
-use std::f64::consts::PI;
-const TWO_PI: f64 = PI * 2.0;
+use crate::*;
+const TWO_PI: Float = PI * 2.0;
 
 pub struct DspaceOptions {
-    pub irez: f64,
-    pub d2201: f64,
-    pub d2211: f64,
-    pub d3210: f64,
-    pub d3222: f64,
-    pub d4410: f64,
-    pub d4422: f64,
-    pub d5220: f64,
-    pub d5232: f64,
-    pub d5421: f64,
-    pub d5433: f64,
-    pub dedt: f64,
-    pub del1: f64,
-    pub del2: f64,
-    pub del3: f64,
-    pub didt: f64,
-    pub dmdt: f64,
-    pub dnodt: f64,
-    pub domdt: f64,
-    pub argpo: f64,
-    pub argpdot: f64,
-    pub t: f64,
-    pub tc: f64,
-    pub gsto: f64,
-    pub xfact: f64,
-    pub xlamo: f64,
-    pub no: f64,
-    pub atime: f64,
-    pub em: f64,
-    pub argpm: f64,
-    pub inclm: f64,
-    pub xli: f64,
-    pub mm: f64,
-    pub xni: f64,
-    pub nodem: f64,
-    pub nm: f64,
+    pub irez: Float,
+    pub d2201: Float,
+    pub d2211: Float,
+    pub d3210: Float,
+    pub d3222: Float,
+    pub d4410: Float,
+    pub d4422: Float,
+    pub d5220: Float,
+    pub d5232: Float,
+    pub d5421: Float,
+    pub d5433: Float,
+    pub dedt: Float,
+    pub del1: Float,
+    pub del2: Float,
+    pub del3: Float,
+    pub didt: Float,
+    pub dmdt: Float,
+    pub dnodt: Float,
+    pub domdt: Float,
+    pub argpo: Float,
+    pub argpdot: Float,
+    pub t: Float,
+    pub tc: Float,
+    pub gsto: Float,
+    pub xfact: Float,
+    pub xlamo: Float,
+    pub no: Float,
+    pub atime: Float,
+    pub em: Float,
+    pub argpm: Float,
+    pub inclm: Float,
+    pub xli: Float,
+    pub mm: Float,
+    pub xni: Float,
+    pub nodem: Float,
+    pub nm: Float,
 }
 
 pub struct DspaceResult {
-    pub atime: f64,
-    pub em: f64,
-    pub argpm: f64,
-    pub inclm: f64,
-    pub xli: f64,
-    pub mm: f64,
-    pub xni: f64,
-    pub nodem: f64,
-    pub dndt: f64,
-    pub nm: f64,
+    pub atime: Float,
+    pub em: Float,
+    pub argpm: Float,
+    pub inclm: Float,
+    pub xli: Float,
+    pub mm: Float,
+    pub xni: Float,
+    pub nodem: Float,
+    pub dndt: Float,
+    pub nm: Float,
 }
 /*-----------------------------------------------------------------------------
 *
@@ -169,18 +169,18 @@ pub fn dspace(options: DspaceOptions) -> DspaceResult {
         ..
     } = options;
 
-    const FASX2: f64 = 0.13130908;
-    const FASX4: f64 = 2.8843198;
-    const FASX6: f64 = 0.37448087;
-    const G22: f64 = 5.7686396;
-    const G32: f64 = 0.95240898;
-    const G44: f64 = 1.8014998;
-    const G52: f64 = 1.0508330;
-    const G54: f64 = 4.4108898;
-    const RPTIM: f64 = 4.37526908801129966e-3; // equates to 7.29211514668855e-5 rad/sec
-    const STEPP: f64 = 720.0;
-    const STEPN: f64 = -720.0;
-    const STEP2: f64 = 259200.0;
+    const FASX2: Float = 0.13130908;
+    const FASX4: Float = 2.8843198;
+    const FASX6: Float = 0.37448087;
+    const G22: Float = 5.7686396;
+    const G32: Float = 0.95240898;
+    const G44: Float = 1.8014998;
+    const G52: Float = 1.0508330;
+    const G54: Float = 4.4108898;
+    const RPTIM: Float = 4.37526908801129966e-3; // equates to 7.29211514668855e-5 rad/sec
+    const STEPP: Float = 720.0;
+    const STEPN: Float = -720.0;
+    const STEP2: Float = 259200.0;
 
     let delt;
     let mut x2li;

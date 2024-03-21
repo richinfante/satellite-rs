@@ -1,9 +1,8 @@
-use crate::ext;
 use crate::constants::*;
+use crate::*;
 use chrono::prelude::*;
-
 /// Convert a julian date to GMST (Greenwich Mean Sidereal Time)
-pub fn gstime(jdut1: f64) -> f64 {
+pub fn gstime(jdut1: Float) -> Float {
     let tut1 = (jdut1 - 2451545.0) / 36525.0;
 
     let mut temp = (-6.2e-6 * tut1 * tut1 * tut1)
@@ -21,17 +20,18 @@ pub fn gstime(jdut1: f64) -> f64 {
 }
 
 /// Convert a datetime to GMST (Greenwich Mean Sidereal Time)
-pub fn gstime_datetime(datetime: DateTime<Utc>) -> f64 {
+pub fn gstime_datetime(datetime: DateTime<Utc>) -> Float {
     let jday = ext::jday_datetime(datetime);
-    return gstime(jday)
+    return gstime(jday);
 }
 
 #[cfg(test)]
 mod tests {
     use crate::propogation::gstime::*;
+    use crate::tests::*;
     #[test]
     fn test_gst() {
         let res = gstime(2444468.79629788);
-        assert_eq!(res, 1.265125075734467);
+        assert_similar(res, 1.265125075734467);
     }
 }

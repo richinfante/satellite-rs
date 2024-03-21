@@ -1,97 +1,97 @@
 use crate::constants::*;
-
+use crate::*;
 pub struct DscomOptions {
-    pub epoch: f64,
-    pub ep: f64,
-    pub argpp: f64,
-    pub tc: f64,
-    pub inclp: f64,
-    pub nodep: f64,
-    pub np: f64,
+    pub epoch: Float,
+    pub ep: Float,
+    pub argpp: Float,
+    pub tc: Float,
+    pub inclp: Float,
+    pub nodep: Float,
+    pub np: Float,
 }
 
 pub struct DscomResult {
-    pub snodm: f64,
-    pub cnodm: f64,
-    pub sinim: f64,
-    pub cosim: f64,
-    pub sinomm: f64,
-    pub cosomm: f64,
-    pub day: f64,
-    pub e3: f64,
-    pub ee2: f64,
-    pub em: f64,
-    pub emsq: f64,
-    pub gam: f64,
-    pub peo: f64,
-    pub pgho: f64,
-    pub pho: f64,
-    pub pinco: f64,
-    pub plo: f64,
-    pub rtemsq: f64,
-    pub se2: f64,
-    pub se3: f64,
-    pub sgh2: f64,
-    pub sgh3: f64,
-    pub sgh4: f64,
-    pub sh2: f64,
-    pub sh3: f64,
-    pub si2: f64,
-    pub si3: f64,
-    pub sl2: f64,
-    pub sl3: f64,
-    pub sl4: f64,
-    pub s1: f64,
-    pub s2: f64,
-    pub s3: f64,
-    pub s4: f64,
-    pub s5: f64,
-    pub s6: f64,
-    pub s7: f64,
-    pub ss1: f64,
-    pub ss2: f64,
-    pub ss3: f64,
-    pub ss4: f64,
-    pub ss5: f64,
-    pub ss6: f64,
-    pub ss7: f64,
-    pub sz1: f64,
-    pub sz2: f64,
-    pub sz3: f64,
-    pub sz11: f64,
-    pub sz12: f64,
-    pub sz13: f64,
-    pub sz21: f64,
-    pub sz22: f64,
-    pub sz23: f64,
-    pub sz31: f64,
-    pub sz32: f64,
-    pub sz33: f64,
-    pub xgh2: f64,
-    pub xgh3: f64,
-    pub xgh4: f64,
-    pub xh2: f64,
-    pub xh3: f64,
-    pub xi2: f64,
-    pub xi3: f64,
-    pub xl2: f64,
-    pub xl3: f64,
-    pub xl4: f64,
-    pub nm: f64,
-    pub z1: f64,
-    pub z2: f64,
-    pub z3: f64,
-    pub z11: f64,
-    pub z12: f64,
-    pub z13: f64,
-    pub z21: f64,
-    pub z22: f64,
-    pub z23: f64,
-    pub z31: f64,
-    pub z32: f64,
-    pub z33: f64,
-    pub zmol: f64,
-    pub zmos: f64,
+    pub snodm: Float,
+    pub cnodm: Float,
+    pub sinim: Float,
+    pub cosim: Float,
+    pub sinomm: Float,
+    pub cosomm: Float,
+    pub day: Float,
+    pub e3: Float,
+    pub ee2: Float,
+    pub em: Float,
+    pub emsq: Float,
+    pub gam: Float,
+    pub peo: Float,
+    pub pgho: Float,
+    pub pho: Float,
+    pub pinco: Float,
+    pub plo: Float,
+    pub rtemsq: Float,
+    pub se2: Float,
+    pub se3: Float,
+    pub sgh2: Float,
+    pub sgh3: Float,
+    pub sgh4: Float,
+    pub sh2: Float,
+    pub sh3: Float,
+    pub si2: Float,
+    pub si3: Float,
+    pub sl2: Float,
+    pub sl3: Float,
+    pub sl4: Float,
+    pub s1: Float,
+    pub s2: Float,
+    pub s3: Float,
+    pub s4: Float,
+    pub s5: Float,
+    pub s6: Float,
+    pub s7: Float,
+    pub ss1: Float,
+    pub ss2: Float,
+    pub ss3: Float,
+    pub ss4: Float,
+    pub ss5: Float,
+    pub ss6: Float,
+    pub ss7: Float,
+    pub sz1: Float,
+    pub sz2: Float,
+    pub sz3: Float,
+    pub sz11: Float,
+    pub sz12: Float,
+    pub sz13: Float,
+    pub sz21: Float,
+    pub sz22: Float,
+    pub sz23: Float,
+    pub sz31: Float,
+    pub sz32: Float,
+    pub sz33: Float,
+    pub xgh2: Float,
+    pub xgh3: Float,
+    pub xgh4: Float,
+    pub xh2: Float,
+    pub xh3: Float,
+    pub xi2: Float,
+    pub xi3: Float,
+    pub xl2: Float,
+    pub xl3: Float,
+    pub xl4: Float,
+    pub nm: Float,
+    pub z1: Float,
+    pub z2: Float,
+    pub z3: Float,
+    pub z11: Float,
+    pub z12: Float,
+    pub z13: Float,
+    pub z21: Float,
+    pub z22: Float,
+    pub z23: Float,
+    pub z31: Float,
+    pub z32: Float,
+    pub z33: Float,
+    pub zmol: Float,
+    pub zmos: Float,
 }
 
 /*-----------------------------------------------------------------------------
@@ -227,14 +227,14 @@ pub fn dscom(options: DscomOptions) -> DscomResult {
     let mut z33 = 0.0;
 
     // -------------------------- constants -------------------------
-    const ZES: f64 = 0.01675;
-    const ZEL: f64 = 0.05490;
-    const C1SS: f64 = 2.9864797e-6;
-    const C1L: f64 = 4.7968065e-7;
-    const ZSINIS: f64 = 0.39785416;
-    const ZCOSIS: f64 = 0.91744867;
-    const ZCOSGS: f64 = 0.1945905;
-    const ZSINGS: f64 = -0.98088458;
+    const ZES: Float = 0.01675;
+    const ZEL: Float = 0.05490;
+    const C1SS: Float = 2.9864797e-6;
+    const C1L: Float = 4.7968065e-7;
+    const ZSINIS: Float = 0.39785416;
+    const ZCOSIS: Float = 0.91744867;
+    const ZCOSGS: Float = 0.1945905;
+    const ZSINGS: Float = -0.98088458;
 
     //  --------------------- local variables ------------------------
     let nm = options.np;
@@ -500,7 +500,7 @@ pub fn dscom(options: DscomOptions) -> DscomResult {
 #[cfg(test)]
 mod tests {
     use crate::propogation::dscom::*;
-    use crate::tests::{assert_diff, assert_similar};
+    use crate::tests::assert_similar;
     #[test]
     fn test() {
         let opts = DscomOptions {
@@ -559,21 +559,21 @@ mod tests {
         assert_similar(res.ss5, -0.2842063666667719);
         assert_similar(res.ss6, 0.5264567675404539);
         assert_similar(res.ss7, 0.015725643718630555);
-        assert_diff(res.sz1, 7.241600464426519, 1e-14);
+        assert_similar(res.sz1, 7.241600464426519);
         assert_similar(res.sz2, -4.643684224593015);
         assert_similar(res.sz3, 1.6686076878687435);
-        assert_diff(res.sz11, 5.923151674966536, 1e-14);
-        assert_diff(res.sz12, 0.11851053999055416, 1e-14);
-        assert_diff(res.sz13, -1.5569425931864267, 1e-14);
-        assert_diff(res.sz21, -5.5489812856673435, 1e-14);
-        assert_diff(res.sz22, -2.592624873581728, 1e-14);
-        assert_diff(res.sz23, 0.16121448720509934, 1e-14);
-        assert_diff(res.sz31, 3.273877043602411, 1e-14);
-        assert_diff(res.sz32, -0.4464394721650089, 1e-14);
-        assert_diff(res.sz33, -2.1469592167364815, 1e-14);
-        assert_diff(res.xgh2, 0.0001510256023997251, 1e-14);
-        assert_diff(res.xgh3, 0.0003555337415001366, 1e-14);
-        assert_diff(res.xgh4, -0.00003239876027006408, 1e-14);
+        assert_similar(res.sz11, 5.923151674966536);
+        assert_similar(res.sz12, 0.11851053999055416);
+        assert_similar(res.sz13, -1.5569425931864267);
+        assert_similar(res.sz21, -5.5489812856673435);
+        assert_similar(res.sz22, -2.592624873581728);
+        assert_similar(res.sz23, 0.16121448720509934);
+        assert_similar(res.sz31, 3.273877043602411);
+        assert_similar(res.sz32, -0.4464394721650089);
+        assert_similar(res.sz33, -2.1469592167364815);
+        assert_similar(res.xgh2, 0.0001510256023997251);
+        assert_similar(res.xgh3, 0.0003555337415001366);
+        assert_similar(res.xgh4, -0.00003239876027006408);
         assert_similar(res.xh2, 0.00011285895673523819);
         assert_similar(res.xh3, -0.0004733943404491607);
         assert_similar(res.xi2, -0.00006414087517640146);
@@ -583,18 +583,18 @@ mod tests {
         assert_similar(res.xl4, 0.00013638400715968452);
         assert_similar(res.nm, 0.009971131594572634);
         assert_similar(res.z1, 2.5573881535383824);
-        assert_diff(res.z2, 7.311693909959471, 1e-14);
-        assert_diff(res.z3, 8.004285429240719, 1e-14);
+        assert_similar(res.z2, 7.311693909959471);
+        assert_similar(res.z3, 8.004285429240719);
         assert_similar(res.z11, -1.949045345610987);
-        assert_diff(res.z12, 0.9086631598832984, 1e-14);
-        assert_diff(res.z13, 6.119118527261723, 1e-14);
-        assert_diff(res.z21, 0.6841370517901615, 1e-14);
-        assert_diff(res.z22, 1.5988365604014116, 1e-14);
-        assert_diff(res.z23, -6.022288391897364, 1e-14);
-        assert_diff(res.z31, -1.633514023053113, 1e-14);
-        assert_diff(res.z32, 2.3032285656514286, 1e-14);
-        assert_diff(res.z33, 3.7885830019843842, 1e-14);
-        assert_diff(res.zmol, 3.5674683899705713, 1e-14);
-        assert_diff(res.zmos, 3.896090412268542, 1e-14);
+        assert_similar(res.z12, 0.9086631598832984);
+        assert_similar(res.z13, 6.119118527261723);
+        assert_similar(res.z21, 0.6841370517901615);
+        assert_similar(res.z22, 1.5988365604014116);
+        assert_similar(res.z23, -6.022288391897364);
+        assert_similar(res.z31, -1.633514023053113);
+        assert_similar(res.z32, 2.3032285656514286);
+        assert_similar(res.z33, 3.7885830019843842);
+        assert_similar(res.zmol, 3.5674683899705713);
+        assert_similar(res.zmos, 3.896090412268542);
     }
 }

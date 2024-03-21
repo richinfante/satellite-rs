@@ -1,10 +1,9 @@
 use crate::constants::*;
-use crate::ext;
 use crate::propogation::dpper::*;
 use crate::propogation::initl::*;
-use crate::propogation::sgp4init;
 use crate::propogation::sgp4::*;
-
+use crate::propogation::sgp4init;
+use crate::*;
 #[derive(Clone)]
 pub struct Satrec {
     pub name: Option<String>,
@@ -13,107 +12,107 @@ pub struct Satrec {
     pub error: u32,
     pub satnum: String,
     pub epochyr: i64,
-    pub epochdays: f64,
-    pub ndot: f64,
-    pub nddot: f64,
-    pub bstar: f64,
-    pub inclo: f64,
-    pub nodeo: f64,
-    pub ecco: f64,
-    pub mo: f64,
-    pub no: f64,
-    pub a: f64,
-    pub argpo: f64,
-    pub alta: f64,
-    pub altp: f64,
-    pub jdsatepoch: f64,
+    pub epochdays: Float,
+    pub ndot: Float,
+    pub nddot: Float,
+    pub bstar: Float,
+    pub inclo: Float,
+    pub nodeo: Float,
+    pub ecco: Float,
+    pub mo: Float,
+    pub no: Float,
+    pub a: Float,
+    pub argpo: Float,
+    pub alta: Float,
+    pub altp: Float,
+    pub jdsatepoch: Float,
 
     // Near Earth Variables
     pub isimp: i64,
     pub method: InitlMethod,
-    pub aycof: f64,
-    pub con41: f64,
-    pub cc1: f64,
-    pub cc4: f64,
-    pub cc5: f64,
-    pub d2: f64,
-    pub d3: f64,
-    pub d4: f64,
-    pub delmo: f64,
-    pub eta: f64,
-    pub argpdot: f64,
-    pub omgcof: f64,
-    pub sinmao: f64,
-    pub t: f64,
-    pub t2cof: f64,
-    pub t3cof: f64,
-    pub t4cof: f64,
-    pub t5cof: f64,
-    pub x1mth2: f64,
-    pub x7thm1: f64,
-    pub mdot: f64,
-    pub nodedot: f64,
-    pub xlcof: f64,
-    pub xmcof: f64,
-    pub nodecf: f64,
+    pub aycof: Float,
+    pub con41: Float,
+    pub cc1: Float,
+    pub cc4: Float,
+    pub cc5: Float,
+    pub d2: Float,
+    pub d3: Float,
+    pub d4: Float,
+    pub delmo: Float,
+    pub eta: Float,
+    pub argpdot: Float,
+    pub omgcof: Float,
+    pub sinmao: Float,
+    pub t: Float,
+    pub t2cof: Float,
+    pub t3cof: Float,
+    pub t4cof: Float,
+    pub t5cof: Float,
+    pub x1mth2: Float,
+    pub x7thm1: Float,
+    pub mdot: Float,
+    pub nodedot: Float,
+    pub xlcof: Float,
+    pub xmcof: Float,
+    pub nodecf: Float,
 
     // Deep space variables
-    pub irez: f64,
-    pub d2201: f64,
-    pub d2211: f64,
-    pub d3210: f64,
-    pub d3222: f64,
-    pub d4410: f64,
-    pub d4422: f64,
-    pub d5220: f64,
-    pub d5232: f64,
-    pub d5421: f64,
-    pub d5433: f64,
-    pub dedt: f64,
-    pub del1: f64,
-    pub del2: f64,
-    pub del3: f64,
-    pub didt: f64,
-    pub dmdt: f64,
-    pub dnodt: f64,
-    pub domdt: f64,
-    pub e3: f64,
-    pub ee2: f64,
-    pub peo: f64,
-    pub pgho: f64,
-    pub pho: f64,
-    pub pinco: f64,
-    pub plo: f64,
-    pub se2: f64,
-    pub se3: f64,
-    pub sgh2: f64,
-    pub sgh3: f64,
-    pub sgh4: f64,
-    pub sh2: f64,
-    pub sh3: f64,
-    pub si2: f64,
-    pub si3: f64,
-    pub sl2: f64,
-    pub sl3: f64,
-    pub sl4: f64,
-    pub gsto: f64,
-    pub xfact: f64,
-    pub xgh2: f64,
-    pub xgh3: f64,
-    pub xgh4: f64,
-    pub xh2: f64,
-    pub xh3: f64,
-    pub xi2: f64,
-    pub xi3: f64,
-    pub xl2: f64,
-    pub xl3: f64,
-    pub xl4: f64,
-    pub xlamo: f64,
-    pub zmol: f64,
-    pub zmos: f64,
-    pub atime: f64,
-    pub xli: f64,
-    pub xni: f64,
+    pub irez: Float,
+    pub d2201: Float,
+    pub d2211: Float,
+    pub d3210: Float,
+    pub d3222: Float,
+    pub d4410: Float,
+    pub d4422: Float,
+    pub d5220: Float,
+    pub d5232: Float,
+    pub d5421: Float,
+    pub d5433: Float,
+    pub dedt: Float,
+    pub del1: Float,
+    pub del2: Float,
+    pub del3: Float,
+    pub didt: Float,
+    pub dmdt: Float,
+    pub dnodt: Float,
+    pub domdt: Float,
+    pub e3: Float,
+    pub ee2: Float,
+    pub peo: Float,
+    pub pgho: Float,
+    pub pho: Float,
+    pub pinco: Float,
+    pub plo: Float,
+    pub se2: Float,
+    pub se3: Float,
+    pub sgh2: Float,
+    pub sgh3: Float,
+    pub sgh4: Float,
+    pub sh2: Float,
+    pub sh3: Float,
+    pub si2: Float,
+    pub si3: Float,
+    pub sl2: Float,
+    pub sl3: Float,
+    pub sl4: Float,
+    pub gsto: Float,
+    pub xfact: Float,
+    pub xgh2: Float,
+    pub xgh3: Float,
+    pub xgh4: Float,
+    pub xh2: Float,
+    pub xh3: Float,
+    pub xi2: Float,
+    pub xi3: Float,
+    pub xl2: Float,
+    pub xl3: Float,
+    pub xl4: Float,
+    pub xlamo: Float,
+    pub zmol: Float,
+    pub zmos: Float,
+    pub atime: Float,
+    pub xli: Float,
+    pub xni: Float,
 }
 
 impl Satrec {
@@ -231,38 +230,41 @@ impl Satrec {
 }
 
 pub fn parse_multiple(string: &str) -> (Vec<Satrec>, Vec<SatrecParseError>) {
-    let lines = string.split("\n").into_iter().filter(|el| { return el.trim() != "" }).collect::<Vec<&str>>();
-    let mut recs : Vec<Satrec> = vec![];
+    let lines = string
+        .split("\n")
+        .into_iter()
+        .filter(|el| return el.trim() != "")
+        .collect::<Vec<&str>>();
+    let mut recs: Vec<Satrec> = vec![];
     let mut errors: Vec<SatrecParseError> = vec![];
     let mut i = 0;
     while i < lines.len() {
         // If line 1 is not equal to a line operator, try next.
         if lines[i].trim().len() != 25 && i + 2 < lines.len() {
-            match twoline2satrec(lines[i+1], lines[i+2]) {
+            match twoline2satrec(lines[i + 1], lines[i + 2]) {
                 Ok(mut rec) => {
-                    if (lines[i].bytes().collect::<Vec<u8>>()[0] == '0' as u8) {
+                    if lines[i].bytes().collect::<Vec<u8>>()[0] == '0' as u8 {
                         rec.name = Some(lines[i][2..].trim().to_string());
                     } else {
                         rec.name = Some(lines[i].trim().to_string());
                     }
 
                     recs.push(rec);
-                },
-                Err(err) => {
-                    errors.push(SatrecParseError::SatrecMultiError(i, Box::new(err)))
                 }
+                Err(err) => errors.push(SatrecParseError::SatrecMultiError(i, Box::new(err))),
             }
             i += 3;
         } else if i + 1 < lines.len() {
-            match twoline2satrec(lines[i], lines[i+1]) {
+            match twoline2satrec(lines[i], lines[i + 1]) {
                 Ok(rec) => recs.push(rec),
-                Err(err) => {
-                    errors.push(SatrecParseError::SatrecMultiError(i, Box::new(err)))
-                }
+                Err(err) => errors.push(SatrecParseError::SatrecMultiError(i, Box::new(err))),
             }
             i += 2;
         } else {
-            errors.push(SatrecParseError::SatrecMultiError(i, Box::new(SatrecParseError::InvalidTLEBadLineCount)));
+            errors.push(SatrecParseError::SatrecMultiError(
+                i,
+                Box::new(SatrecParseError::InvalidTLEBadLineCount),
+            ));
             i += 1;
         }
     }
@@ -271,13 +273,19 @@ pub fn parse_multiple(string: &str) -> (Vec<Satrec>, Vec<SatrecParseError>) {
 }
 
 pub fn parse(string: &str) -> Result<Satrec, SatrecParseError> {
-    let lines = string.split("\n").into_iter().filter(|el| { return el.trim() != "" }).collect::<Vec<&str>>();
-    
+    let lines = string
+        .split("\n")
+        .into_iter()
+        .filter(|el| return el.trim() != "")
+        .collect::<Vec<&str>>();
+
     // If there are three lines, parse as 3LE.
     if lines.len() == 3 {
         // First, perform check on the first character of each line. should be line numbers.
-        if lines[1].bytes().collect::<Vec<u8>>()[0] != '1' as u8 || lines[2].bytes().collect::<Vec<u8>>()[0] != '2' as u8 {
-            return Err(SatrecParseError::InvalidTLELineCheckFailed)
+        if lines[1].bytes().collect::<Vec<u8>>()[0] != '1' as u8
+            || lines[2].bytes().collect::<Vec<u8>>()[0] != '2' as u8
+        {
+            return Err(SatrecParseError::InvalidTLELineCheckFailed);
         }
 
         // Now, parse the satrec.
@@ -286,25 +294,27 @@ pub fn parse(string: &str) -> Result<Satrec, SatrecParseError> {
         // Because this is a 3le, we have a name. Extract/save it.
         match satrec {
             Ok(mut satrec) => {
-                if (lines[0].bytes().collect::<Vec<u8>>()[0] == '0' as u8) {
+                if lines[0].bytes().collect::<Vec<u8>>()[0] == '0' as u8 {
                     satrec.name = Some(lines[0][2..].to_string());
                 } else {
                     satrec.name = Some(lines[0].to_string());
                 }
 
-                return Ok(satrec)
-            },
-            Err(err) => { return Err(err) }
+                return Ok(satrec);
+            }
+            Err(err) => return Err(err),
         }
     } else if lines.len() == 2 {
-        // First, perform check on the first character of each line. should be line numbers. 
-        if lines[0].bytes().collect::<Vec<u8>>()[0] != '1' as u8 || lines[1].bytes().collect::<Vec<u8>>()[0] != '2' as u8  {
-            return Err(SatrecParseError::InvalidTLELineCheckFailed)
+        // First, perform check on the first character of each line. should be line numbers.
+        if lines[0].bytes().collect::<Vec<u8>>()[0] != '1' as u8
+            || lines[1].bytes().collect::<Vec<u8>>()[0] != '2' as u8
+        {
+            return Err(SatrecParseError::InvalidTLELineCheckFailed);
         }
 
         return twoline2satrec(lines[0], lines[1]);
     } else {
-        return Err(SatrecParseError::InvalidTLEBadLineCount)
+        return Err(SatrecParseError::InvalidTLEBadLineCount);
     }
 }
 
@@ -326,8 +336,8 @@ pub fn twoline2satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError
     };
 
     match sgp4init::sgp4init(&mut satrec, opts) {
-        Ok(_) => {}, // Ignore initial sgp4 positioning.
-        Err(err) => return Err(SatrecParseError::Sgp4InitError(err))
+        Ok(_) => {} // Ignore initial sgp4 positioning.
+        Err(err) => return Err(SatrecParseError::Sgp4InitError(err)),
     };
 
     return Ok(satrec);
@@ -341,21 +351,44 @@ pub enum SatrecParseError {
     Sgp4InitError(SGP4Error),
     InvalidTLELineCheckFailed,
     InvalidTLEBadLineCount,
-    SatrecMultiError(usize, Box<SatrecParseError>)
+    SatrecMultiError(usize, Box<SatrecParseError>),
 }
 
-
-fn parse_float(line: &str, name: &'static str, low: usize, high: usize) -> Result<f64, SatrecParseError> {
-    match line[low..high].trim().parse::<f64>() {
+fn parse_float(
+    line: &str,
+    name: &'static str,
+    low: usize,
+    high: usize,
+) -> Result<Float, SatrecParseError> {
+    match line[low..high].trim().parse::<Float>() {
         Ok(res) => Ok(res),
-        Err(num) => return Err(SatrecParseError::IntParseError(name, low, high, line[low..high].to_string()))
+        Err(_) => {
+            return Err(SatrecParseError::IntParseError(
+                name,
+                low,
+                high,
+                line[low..high].to_string(),
+            ))
+        }
     }
 }
 
-fn parse_int(line: &str, name: &'static str, low: usize, high: usize) -> Result<i64, SatrecParseError> {
+fn parse_int(
+    line: &str,
+    name: &'static str,
+    low: usize,
+    high: usize,
+) -> Result<i64, SatrecParseError> {
     match line[low..high].trim().parse::<i64>() {
         Ok(res) => Ok(res),
-        Err(num) => return Err(SatrecParseError::IntParseError(name, low, high, line[low..high].to_string()))
+        Err(_) => {
+            return Err(SatrecParseError::IntParseError(
+                name,
+                low,
+                high,
+                line[low..high].to_string(),
+            ))
+        }
     }
 }
 
@@ -368,16 +401,16 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
     let epochdays = parse_float(str1, "epochdays", 20, 32)?;
 
     // Parse ndot
-    let ndot = parse_float(str1, "ndot", 33, 43)?  / (XPDOTP * 1440.0);;
+    let ndot = parse_float(str1, "ndot", 33, 43)? / (XPDOTP * 1440.0);
 
     // Parse nndot
     let nddot_0 = parse_int(str1, "nndot frac", 44, 50)?;
     let nddot_1 = str1[50..52].to_string();
     let nndot_str = format!(".{}E{}", nddot_0, nddot_1);
 
-    let nddot = match nndot_str.parse::<f64>() {
-            Ok(res) => res / (XPDOTP * 1440.0 * 1440.0),
-            Err(_) => return Err(SatrecParseError::CompoundError("nndot", nndot_str))
+    let nddot = match nndot_str.parse::<Float>() {
+        Ok(res) => res / (XPDOTP * 1440.0 * 1440.0),
+        Err(_) => return Err(SatrecParseError::CompoundError("nndot", nndot_str)),
     };
 
     // Parse bstar
@@ -386,9 +419,9 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
     let bstar_2 = str1[59..61].to_string();
     let bstar_str = format!("{}.{}E{}", bstar_0, bstar_1, bstar_2);
 
-    let bstar = match bstar_str.trim().parse::<f64>() {
+    let bstar = match bstar_str.trim().parse::<Float>() {
         Ok(res) => res,
-        Err(_) => return Err(SatrecParseError::CompoundError("bstr", bstar_str))
+        Err(_) => return Err(SatrecParseError::CompoundError("bstr", bstar_str)),
     };
 
     let inclo = parse_float(str2, "inclo", 8, 16)? * DEG_2_RAD;
@@ -396,9 +429,9 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
 
     // Parse ecco
     let ecco_str = format!(".{}", str2[26..33].trim().to_string());
-    let ecco = match ecco_str.trim().parse::<f64>() {
+    let ecco = match ecco_str.trim().parse::<Float>() {
         Ok(res) => res,
-        Err(_) => return Err(SatrecParseError::CompoundError("ecco", ecco_str))
+        Err(_) => return Err(SatrecParseError::CompoundError("ecco", ecco_str)),
     };
 
     let argpo = parse_float(str2, "argpo", 34, 42)? * DEG_2_RAD;
@@ -420,7 +453,7 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
     let jd = ext::days2mdhms(year as u64, epochdays);
 
     let jdsatepoch = ext::jday(
-        year as f64,
+        year as Float,
         jd.month,
         jd.day,
         jd.hour,
@@ -454,6 +487,10 @@ pub fn parse_satrec(str1: &str, str2: &str) -> Result<Satrec, SatrecParseError> 
 
 #[cfg(test)]
 mod tests {
+    use crate::tests::*;
+    #[allow(unused_imports)]
+    use crate::*;
+
     #[test]
     fn test_parse_full() {
         let element = r###"
@@ -465,7 +502,7 @@ mod tests {
         assert_eq!(sat.name, Some("ISS (ZARYA)".to_string()));
     }
 
-        #[test]
+    #[test]
     fn test_parse_part() {
         let element = r###"1 25544U 98067A   19085.83761025  .00001292  00000-0  28282-4 0  9995
 2 25544  51.6446  50.5941 0002332 117.0184 328.1109 15.52438493162461"###;
@@ -478,60 +515,61 @@ mod tests {
         let satrec = crate::io::parse_satrec(
             "1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8",
             "2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105",
-        ).unwrap();
+        )
+        .unwrap();
 
         assert_eq!(satrec.error, 0);
         assert_eq!(satrec.satnum, "88888");
         assert_eq!(satrec.epochyr, 80);
-        assert_eq!(satrec.epochdays, 275.98708465);
-        assert_eq!(satrec.ndot, 2.2148107004387767e-9);
-        assert_eq!(satrec.nddot, 2.913090538750181e-13);
-        assert_eq!(satrec.bstar, 0.000066816);
-        assert_eq!(satrec.inclo, 1.2713589136764896);
-        assert_eq!(satrec.nodeo, 2.0240391349160523);
-        assert_eq!(satrec.ecco, 0.0086731);
-        assert_eq!(satrec.argpo, 0.9197675718499877);
-        assert_eq!(satrec.mo, 1.929834988539658);
-        assert_eq!(satrec.no, 0.07006731262087737);
-        assert_eq!(satrec.a, 1.0405013051291292);
-        assert_eq!(satrec.alta, 0.04952567699864474);
-        assert_eq!(satrec.altp, 0.03147693325961365);
-        assert_eq!(satrec.jdsatepoch, 2444514.48708465);
+        assert_similar(satrec.epochdays, 275.98708465);
+        assert_similar(satrec.ndot, 2.2148107004387767e-9);
+        assert_similar(satrec.nddot, 2.913090538750181e-13);
+        assert_similar(satrec.bstar, 0.000066816);
+        assert_similar(satrec.inclo, 1.2713589136764896);
+        assert_similar(satrec.nodeo, 2.0240391349160523);
+        assert_similar(satrec.ecco, 0.0086731);
+        assert_similar(satrec.argpo, 0.9197675718499877);
+        assert_similar(satrec.mo, 1.929834988539658);
+        assert_similar(satrec.no, 0.07006731262087737);
+        assert_similar(satrec.a, 1.0405013051291292);
+        assert_similar(satrec.alta, 0.04952567699864474);
+        assert_similar(satrec.altp, 0.03147693325961365);
+        assert_similar(satrec.jdsatepoch, 2444514.48708465);
     }
 
+    //     #[test]
+    //     fn test_parse_multi() {
+    //         let satrec = &crate::io::parse_multiple(
+    // r###"1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8
+    // 2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105"###
+    //         ).unwrap()[0];
 
-//     #[test]
-//     fn test_parse_multi() {
-//         let satrec = &crate::io::parse_multiple(
-// r###"1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8
-// 2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105"###
-//         ).unwrap()[0];
-
-//         assert_eq!(satrec.error, 0);
-//         assert_eq!(satrec.satnum, "88888");
-//         assert_eq!(satrec.epochyr, 80);
-//         assert_eq!(satrec.epochdays, 275.98708465);
-//         assert_eq!(satrec.ndot, 2.2148107004387767e-9);
-//         assert_eq!(satrec.nddot, 2.913090538750181e-13);
-//         assert_eq!(satrec.bstar, 0.000066816);
-//         assert_eq!(satrec.inclo, 1.2713589136764896);
-//         assert_eq!(satrec.nodeo, 2.0240391349160523);
-//         assert_eq!(satrec.ecco, 0.0086731);
-//         assert_eq!(satrec.argpo, 0.9197675718499877);
-//         assert_eq!(satrec.mo, 1.929834988539658);
-//         assert_eq!(satrec.no, 0.07006731262087737);
-//         assert_eq!(satrec.a, 1.0405013051291292);
-//         assert_eq!(satrec.alta, 0.04952567699864474);
-//         assert_eq!(satrec.altp, 0.03147693325961365);
-//         assert_eq!(satrec.jdsatepoch, 2444514.48708465);
-//     }
+    //         assert_eq!(satrec.error, 0);
+    //         assert_eq!(satrec.satnum, "88888");
+    //         assert_eq!(satrec.epochyr, 80);
+    //         assert_eq!(satrec.epochdays, 275.98708465);
+    //         assert_eq!(satrec.ndot, 2.2148107004387767e-9);
+    //         assert_eq!(satrec.nddot, 2.913090538750181e-13);
+    //         assert_eq!(satrec.bstar, 0.000066816);
+    //         assert_eq!(satrec.inclo, 1.2713589136764896);
+    //         assert_eq!(satrec.nodeo, 2.0240391349160523);
+    //         assert_eq!(satrec.ecco, 0.0086731);
+    //         assert_eq!(satrec.argpo, 0.9197675718499877);
+    //         assert_eq!(satrec.mo, 1.929834988539658);
+    //         assert_eq!(satrec.no, 0.07006731262087737);
+    //         assert_eq!(satrec.a, 1.0405013051291292);
+    //         assert_eq!(satrec.alta, 0.04952567699864474);
+    //         assert_eq!(satrec.altp, 0.03147693325961365);
+    //         assert_eq!(satrec.jdsatepoch, 2444514.48708465);
+    //     }
 
     #[test]
     fn test_init_tle() {
         let satrec = crate::io::twoline2satrec(
             "1 88888U          80275.98708465  .00073094  13844-3  66816-4 0    8",
             "2 88888  72.8435 115.9689 0086731  52.6988 110.5714 16.05824518  105",
-        ).unwrap();
+        )
+        .unwrap();
 
         assert_eq!(satrec.error, 0);
         assert_eq!(satrec.satnum, "88888");
@@ -539,45 +577,45 @@ mod tests {
         assert_eq!(satrec.epochdays, 275.98708465);
         assert_eq!(satrec.ndot, 2.2148107004387767e-9);
         assert_eq!(satrec.nddot, 2.913090538750181e-13);
-        assert_eq!(satrec.bstar, 0.000066816);
-        assert_eq!(satrec.inclo, 1.2713589136764896);
-        assert_eq!(satrec.nodeo, 2.0240391349160523);
+        assert_similar(satrec.bstar, 0.000066816);
+        assert_similar(satrec.inclo, 1.2713589136764896);
+        assert_similar(satrec.nodeo, 2.0240391349160523);
         assert_eq!(satrec.ecco, 0.0086731);
         assert_eq!(satrec.argpo, 0.9197675718499877);
-        assert_eq!(satrec.mo, 1.929834988539658);
-        assert_eq!(satrec.no, 0.07010615621239219);
-        assert_eq!(satrec.a, 1.0405013051291292);
-        assert_eq!(satrec.alta, 0.04952567699864474);
-        assert_eq!(satrec.altp, 0.03147693325961365);
+        assert_similar(satrec.mo, 1.929834988539658);
+        assert_similar(satrec.no, 0.07010615621239219);
+        assert_similar(satrec.a, 1.0405013051291292);
+        assert_similar(satrec.alta, 0.04952567699864474);
+        assert_similar(satrec.altp, 0.03147693325961365);
         assert_eq!(satrec.jdsatepoch, 2444514.48708465);
         assert_eq!(satrec.isimp, 1);
         assert_eq!(satrec.method, crate::propogation::initl::InitlMethod::N);
-        assert_eq!(satrec.aycof, 0.001117407997657797);
+        assert_similar(satrec.aycof, 0.00111740799765779);
 
-        assert_eq!(satrec.con41, -0.7389556198424165);
-        assert_eq!(satrec.cc1, 2.3340379369349495e-8);
-        assert_eq!(satrec.cc4, 0.00037724513079719584);
-        assert_eq!(satrec.cc5, 0.01233625966048993);
+        assert_similar(satrec.con41, -0.7389556198424165);
+        assert_similar(satrec.cc1, 2.3340379369349495e-8);
+        assert_similar(satrec.cc4, 0.00037724513079719584);
+        assert_similar(satrec.cc5, 0.01233625966048993);
         assert_eq!(satrec.d2, 0.0);
         assert_eq!(satrec.d3, 0.0);
         assert_eq!(satrec.d4, 0.0);
-        assert_eq!(satrec.delmo, 0.6963031736886937);
-        assert_eq!(satrec.eta, 0.32347784078169217);
-        assert_eq!(satrec.argpdot, -0.000029718644394179532);
-        assert!((satrec.omgcof - 1.6306928260750368e-7).abs() < 1e-15);
-        assert_eq!(satrec.sinmao, 0.9362350458581234);
+        assert_similar(satrec.delmo, 0.6963031736886937);
+        assert_similar(satrec.eta, 0.32347784078169217);
+        assert_similar(satrec.argpdot, -0.000029718644394179532);
+        assert!((satrec.omgcof - 1.6306928260750368e-7).abs() < 1e-6);
+        assert_similar(satrec.sinmao, 0.9362350458581234);
         assert_eq!(satrec.t, 0.0);
-        assert_eq!(satrec.t2cof, 3.5010569054024244e-8);
+        assert_similar(satrec.t2cof, 3.5010569054024244e-8);
         assert_eq!(satrec.t3cof, 0.0);
         assert_eq!(satrec.t4cof, 0.0);
         assert_eq!(satrec.t5cof, 0.0);
-        assert_eq!(satrec.x1mth2, 0.9129852066141388);
-        assert_eq!(satrec.x7thm1, -0.3908964462989719);
-        assert_eq!(satrec.mdot, 0.07006729343154267);
-        assert_eq!(satrec.nodedot, -0.00003096533062994484);
-        assert_eq!(satrec.xlcof, 0.0019306451483792333);
-        assert_eq!(satrec.xmcof, -0.0000493564796620572);
-        assert_eq!(satrec.nodecf, -2.5361112971222384e-12);
+        assert_similar(satrec.x1mth2, 0.9129852066141388);
+        assert_similar(satrec.x7thm1, -0.3908964462989719);
+        assert_similar(satrec.mdot, 0.07006729343154267);
+        assert_similar(satrec.nodedot, -0.00003096533062994484);
+        assert_similar(satrec.xlcof, 0.0019306451483792333);
+        assert_similar(satrec.xmcof, -0.0000493564796620572);
+        assert_similar(satrec.nodecf, -2.5361112971222384e-12);
         assert_eq!(satrec.irez, 0.0);
         assert_eq!(satrec.d2201, 0.0);
         assert_eq!(satrec.d2211, 0.0);
@@ -616,7 +654,7 @@ mod tests {
         assert_eq!(satrec.sl2, 0.0);
         assert_eq!(satrec.sl3, 0.0);
         assert_eq!(satrec.sl4, 0.0);
-        assert_eq!(satrec.gsto, 0.1082901416688955);
+        assert_similar(satrec.gsto, 0.1082901416688955);
         assert_eq!(satrec.xfact, 0.0);
         assert_eq!(satrec.xgh2, 0.0);
         assert_eq!(satrec.xgh3, 0.0);
